@@ -1,0 +1,60 @@
+@font-face {
+  font-family: "LINESeedJP";
+  src: url("/fonts/LINESeedJP_OTF_Rg.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LINESeedJP";
+  src: url("/fonts/LINESeedJP_OTF_Bd.woff2") format("woff2");
+  font-style: normal;
+  font-weight: bold;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LINESeedJP";
+  src: url("/fonts/LINESeedJP_OTF_Eb.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-smoothing: antialiased;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -moz-font-smoothing: antialiased;
+  -moz-text-size-adjust: 100%;
+  -ms-font-smoothing: antialiased;
+  -ms-text-size-adjust: 100%;
+  -o-font-smoothing: antialiased;
+  -o-text-size-adjust: 100%;
+
+  font-family: var.$font-base;
+  font-family: var.$font-line;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var.$c-text;
+  letter-spacing: 0.05em;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+  vertical-align: baseline;
+}

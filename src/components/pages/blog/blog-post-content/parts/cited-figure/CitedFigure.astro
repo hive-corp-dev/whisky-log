@@ -1,0 +1,44 @@
+---
+import {Image} from 'astro:assets';
+const {src, alt, heading = '引用元:', url} = Astro.props;
+---
+
+<figure class="figure">
+  <Image src={src} alt={alt} />
+  <figcaption class="figure-caption">
+    <span class="figure-heading">{heading}</span>
+    <a href={url} target="_blank" rel="noopener noreferrer" class="figure-link">{url}</a>
+  </figcaption>
+</figure>
+
+<style lang="scss">
+  .figure {
+  }
+
+  .figure-caption {
+    // display: flex;
+    font-size: 1.4rem;
+    color: var.$c-text;
+    padding: 1.2rem 0 0;
+
+    @include mixin.sp {
+      font-size: 1.2rem;
+    }
+  }
+
+  .figure-heading {
+    flex-shrink: 0;
+  }
+
+  .figure-link {
+    color: var.$c-text;
+    text-decoration: underline;
+    transition: all .3s;
+
+    @include mixin.hover {
+      &:hover {
+        color: #f99015;
+      }
+    }
+  }
+</style>

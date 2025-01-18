@@ -1,0 +1,18 @@
+---
+import {render} from 'astro:content';
+const {blogPost} = Astro.props;
+const {Content} = await render(blogPost);
+import CitedFigure from '@/components/pages/blog/blog-post-content/parts/cited-figure/CitedFigure.astro';
+import Img from '@/components/pages/blog/blog-post-content/parts/img/Img.astro';
+import Spacer from '@/components/pages/blog/blog-post-content/parts/spacer/Spacer.astro';
+import styles from './blog-post-content.module.scss';
+---
+
+<div class={styles.content}>
+  <Content components={{CitedFigure, Img, Spacer}} />
+</div>
+
+<style lang="scss">
+  .content {
+  }
+</style>

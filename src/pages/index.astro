@@ -1,11 +1,97 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from '@/layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import Container from '@/components/container/Container.astro';
+import coverImg from '@/assets/images/cover.png';
+import NewBlog from '@/components/pages/home/NewBlog.astro';
 ---
 
 <Layout>
-	<Welcome />
+  <!-- <div class="cover">
+    <Image class="cover" src={coverImg} alt='WHISKY LOGのカバー画像' />
+
+    <div class="cover-content">
+        <h1 class="cover-title">Whisky Log</h1>
+        <p class="cover-text">ウイスキーの感想・レビューをシェアするサイトです。<br>おすすめのウイスキーを見つけてみましょう！
+        </p>
+    </div>
+  </div> -->
+  
+  <NewBlog />
+
+  <div class="sale">
+    <Container>
+      <h2 class="sec-title">新着セール情報</h2>
+      <p>Amazonや楽天などのセール情報を更新しています！<br />※個人で更新しておりますので、ズレや記載漏れがある場合がございます。</p>
+    </Container>
+  </div>
+
 </Layout>
+
+
+<style lang="scss">
+	.cover {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 5/ 2;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &::after {
+      content: '';
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      backdrop-filter: blur(1rem);
+      background-color: rgba(#303030, .2);
+    }
+  }
+
+  .sec-title {
+    font-size: 2.4rem;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: .08em;
+    border-top: .2rem solid;
+    border-bottom: .2rem solid;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+  }
+
+  .cover-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    z-index: 1;
+  }
+
+  .cover-title {
+    font-size: 4.8rem;
+    font-weight: bold;
+  }
+
+  .cover-text {
+    font-size: 1.6rem;
+    letter-spacing: .1em;
+    margin-top: 1.6rem;
+    line-height: 2;
+  }
+
+  .sale {
+    padding: 12rem 0;
+    background-color: #fff;
+  }
+</style>

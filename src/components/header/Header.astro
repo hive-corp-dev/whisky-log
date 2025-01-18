@@ -1,0 +1,74 @@
+---
+import logo from '@/assets/images/logo.svg'
+import imgProfile from '@/assets/images/profile.png'
+import { Image } from 'astro:assets'
+---
+
+<header class="header">
+  <a class="logo" href="/">
+    <Image class="logo-img" src={imgProfile} alt='whisky log' />
+  <h1 class="title">Whisky Log</h1>
+  <!-- <h1 class="title">ウイスキーログ</h1> -->
+  </a>
+</header>
+
+<style lang="scss">
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8rem;
+    display: flex;
+    align-items: center;
+    padding: 0 3.2rem;
+    // background-color: #e1b89e;
+    // background-color: #ffdbb2;
+    // background-color: #303030;
+    z-index: var.$z-header;
+    // border-bottom: .3rem solid #e9a457;
+    // background-color: #fff9f3;
+    background-color: var.$c-white;
+    border-bottom: .1rem solid rgba(var.$c-text, .1);
+    // box-shadow: 0 .2rem .8rem rgba(var.$c-text, .1);
+    // border-top: .3rem solid #ee8108;
+
+    @include mixin.sp {
+      height: 6.4rem;
+      padding: 0 2rem;
+    }
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-img {
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 1.2rem;
+
+    @include mixin.sp {
+      width: 3.2rem;
+      height: 3.2rem;
+      margin-right: .8rem;
+    }
+  }
+
+  .title {
+		font-family: var.$font-line;
+		font-size: 2rem;
+		font-weight: bold;
+		letter-spacing: 0.05em;
+		// text-transform: uppercase;
+    // color: white;
+    // color: #45230e;
+
+    @include mixin.sp {
+      font-size: 1.4rem;
+    }
+	}
+</style>

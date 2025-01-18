@@ -1,0 +1,32 @@
+---
+const {type} = Astro.props;
+---
+
+<div class:list={["container", type]}>
+  <slot />
+</div>
+
+<style lang="scss">
+  .container {
+    max-width: 126rem;
+    width: 100%;
+    padding: 0 4rem;
+    margin: 0 auto;
+
+    @include mixin.sp {
+      padding: 0 1.6rem;
+    }
+
+    &.mx-l {
+      max-width: 144rem;
+    }
+
+    &.px-m {
+      padding: 0 4rem;
+
+      @include mixin.sp {
+        padding: 1.6rem;
+      }
+    }
+  }
+</style>

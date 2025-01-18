@@ -1,0 +1,110 @@
+.content {
+  line-height: 2;
+  font-size: 1.7rem;
+
+  @include mixin.sp {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 2.8rem;
+    font-weight: bold;
+    background-color: var.$c-main;
+    color: var.$c-white;
+    padding: 1.2rem 2.4rem;
+
+    @include mixin.sp {
+      font-size: 2.2rem;
+      padding: 1rem 1.6rem;
+      line-height: 1.5;
+      letter-spacing: 0.02em;
+    }
+  }
+
+  h3 {
+    font-size: 2.4rem;
+    font-weight: bold;
+    border-left: 0.4rem solid var.$c-main;
+    padding: 0.4rem 1.6rem;
+
+    @include mixin.sp {
+      font-size: 2.2rem;
+      line-height: 1.75;
+      padding: 0.2rem 1.2rem;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-top: 2em;
+
+    th,
+    td {
+      padding: 1em;
+      border: 1px solid #e0e0e0;
+    }
+
+    th {
+      background-color: #f8f8f8;
+      font-weight: bold;
+    }
+  }
+
+  ul {
+    padding: 2.4rem;
+    background-color: #fff6ef;
+
+    li {
+      position: relative;
+      padding-left: 0.8em;
+
+      span {
+        color: #f99015;
+      }
+
+      &::before {
+        content: "";
+        width: 0.6rem;
+        height: 0.6rem;
+        background-color: #f99015;
+        border-radius: 50%;
+        position: absolute;
+        left: 0;
+        top: 1.3rem;
+      }
+    }
+  }
+
+  strong {
+    $c-hl: #ffbc22;
+    font-weight: bold;
+    background-image: linear-gradient(to right, rgba($c-hl, 0.7), rgba($c-hl, 0.7));
+    background-size: 100% 0.3rem;
+    background-position: left bottom 0.3rem;
+    background-repeat: no-repeat;
+  }
+
+  // margins
+
+  & > * {
+    margin-top: 1.5em;
+  }
+
+  h2 {
+    margin-top: 3em;
+  }
+
+  h3 {
+    margin-top: 3em;
+  }
+
+  ul {
+    li {
+      &:not(:first-child) {
+        margin-top: 0.25em;
+      }
+    }
+  }
+}

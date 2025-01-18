@@ -1,0 +1,31 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+const {articles} = Astro.props as {articles: CollectionEntry<'blog'>[]};
+import BlogPostCard from '@/components/pages/blog/BlogPostCard.astro';
+---
+
+<ul class="list">
+  {
+    articles.map(article => (
+      <li class="item">
+        <BlogPostCard article={article} />
+      </li>
+    ))
+  }
+</ul>
+
+<style lang="scss">
+  .list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem 2.4rem;
+    margin-top: 6.4rem;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+</style>

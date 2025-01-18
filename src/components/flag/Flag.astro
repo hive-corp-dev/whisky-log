@@ -1,0 +1,66 @@
+---
+import { Image } from "astro:assets"
+import flagJapan from '@/assets/images/flags/flag-japan.svg';
+import flagScotLand from '@/assets/images/flags/flag-scotland.svg';
+import flagIreland from '@/assets/images/flags/flag-ireland.svg';
+import flagUs from '@/assets/images/flags/flag-us.svg';
+import flagUk from '@/assets/images/flags/flag-uk.svg';
+import flagIndia from '@/assets/images/flags/flag-india.svg';
+import flagCanada from '@/assets/images/flags/flag-canada.svg';
+import flagTaiwan from '@/assets/images/flags/flag-taiwan.svg';
+import type { ImageMetadata } from "astro";
+
+interface CountryMap {
+  [key: string]: { image: ImageMetadata; name: string }
+}
+
+const countryMap: CountryMap = {
+  japan: {
+    image: flagJapan,
+    name: '日本'
+  },
+  scotland: {
+    image: flagScotLand,
+    name: 'スコットランド'
+  },
+  ireland: {
+    image: flagIreland,
+    name: 'アイルランド'
+  },
+  us: {
+    image: flagUs,
+    name: 'アメリカ'
+  },
+  uk: {
+    image: flagUk,
+    name: 'イギリス'
+  },
+  india: {
+    image: flagIndia,
+    name: 'インド'
+  },
+  canada: {
+    image: flagCanada,
+    name: 'カナダ'
+  },
+  taiwan: {
+    image: flagTaiwan,
+    name: '台湾'
+  }
+}
+
+interface Props {
+  country: "japan" | "scotland" | "ireland" | "us" | "uk" | "india" | "canada" | "taiwan";
+}
+
+const {country} = Astro.props;
+
+const selectedCountry = countryMap[country] || { image: '', name: 'Unknown Country' };
+---
+
+{selectedCountry.image ? (
+  <Image src={selectedCountry.image} alt={selectedCountry.name} />
+) : (
+  <p>No image available for the selected country.</p>
+)}
+

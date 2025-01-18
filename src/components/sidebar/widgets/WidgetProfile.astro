@@ -1,0 +1,81 @@
+---
+import { Image } from "astro:assets";
+import { FaXTwitter } from "react-icons/fa6";
+import imgProfile from '@/assets/images/profile.png';
+---
+
+<div class="widget">
+  <div class="img-wrap">
+    <Image src={imgProfile} alt='プロフィール画像' />
+  </div>
+  <p class="name">たつや@ウイスキーログ</p>
+  <div class="profile-text">
+    <p>2024年11月からウイスキーを飲み始めた、ウイスキー初心者のブログです。</p>
+    <p>ウイスキーレビューやセール情報など、ウイスキーに関するコンテンツを発信していきます！</p>
+  </div>
+  <div class="sns">
+    <a href='' target="_blank" class="sns-icon"><FaXTwitter /></a>
+  </div>
+</div>
+
+<style lang="scss">
+  .widget {
+    border: .1rem solid rgba(var.$c-text, .1);
+    background-color: var.$c-white;
+    padding: 2.4rem;
+  }
+
+  .img-wrap {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .name {
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+    color: rgba(var.$c-text, .8);
+    margin-top: 1.2rem;
+  }
+
+  .profile-text {
+    margin-top: 1.2rem;
+    font-size: 1.3rem;
+
+    p {
+      margin-bottom: 1.2rem;
+    }
+  }
+
+  .sns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .8rem;
+    margin-top: 2.4rem;
+
+    @include mixin.sp {
+      margin-top: 4rem;
+    }
+  }
+
+  .sns-icon {
+    width: 3.6rem;
+    height: 3.6rem;
+    background-color: #e9a457;
+    color: var.$c-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all .3s;
+  }
+</style>

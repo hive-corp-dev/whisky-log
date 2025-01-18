@@ -1,0 +1,20 @@
+---
+import WidgetProfile from "@/components/sidebar/widgets/WidgetProfile.astro";
+---
+
+<aside class="sidebar">
+  <div class="sidebar-static">
+    <WidgetProfile />
+  </div>
+</aside>
+
+<style lang="scss">
+  .sidebar {
+    width: 28rem;
+    flex-shrink: 0;
+
+    @include mixin.tab {
+      width: 100%;
+    }
+  }
+</style>

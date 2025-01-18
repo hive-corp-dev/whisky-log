@@ -1,0 +1,34 @@
+$mq-tab: 1024px;
+$mq-tab-s: 900px;
+$mq-sp: 768px;
+$mq-sp-s: 600px;
+
+@mixin tab {
+  @media (max-width: ($mq-tab)) {
+    @content;
+  }
+}
+
+@mixin tab-s {
+  @media (max-width: ($mq-tab)) {
+    @content;
+  }
+}
+
+@mixin sp {
+  @media (max-width: ($mq-sp)) {
+    @content;
+  }
+}
+
+@mixin sp-s {
+  @media (max-width: ($mq-sp-s)) {
+    @content;
+  }
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    @content;
+  }
+}

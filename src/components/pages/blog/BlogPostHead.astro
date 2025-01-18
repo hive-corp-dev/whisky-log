@@ -1,0 +1,155 @@
+---
+import type { BlogCategory } from '@/types/blog';
+import { Image } from 'astro:assets';
+import { PiClock, PiClockClockwise } from "react-icons/pi";
+import type { BlogTag } from '@/types/blog';
+import { getCategoryData } from '@/utils/blog/category';
+import {getCategoryLink} from '@/utils/blog/slugs';
+import {formatDate, convertToJST} from '@/utils/date/date';
+import { getTagData } from '@/utils/blog/tag';
+
+const {title, image, category, tags, publishedAt, updatedAt} = Astro.props;
+const categoryData: BlogCategory = getCategoryData(category);
+---
+
+<div class="head">
+  <div class="head-main">
+    <a class="head-cat" href={getCategoryLink(categoryData.slug)}>{categoryData.label}</a>
+    <div class="head-dates">
+      <time datetime={convertToJST(publishedAt)} class="head-date"><PiClock />{formatDate(publishedAt)}</time>
+      {updatedAt && <time datetime={convertToJST(updatedAt)} class="head-date"><PiClockClockwise />{formatDate(updatedAt)}</time>}
+    </div>
+  </div>
+  <h1 class="head-title">{title}</h1>
+  <div class="head-info">
+    
+    <ul class="head-tags">
+      {
+        tags.map((tag: string) => (
+          <li class="head-tag">
+            <span>{getTagData(tag).label}</span>
+          </li>
+        ))
+      }
+    </ul>
+    
+  </div>
+  <div class="head-thumb">
+    <Image src={image} alt={title} />
+  </div>
+</div>
+
+<style lang="scss">
+  .head {
+  }
+
+  .head-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include mixin.sp {
+      flex-direction: column;
+      align-items: flex-start;  
+    }
+  }
+
+  .head-title {
+    font-size: 3.2rem;
+    font-weight: bold;
+    letter-spacing: 0;
+    margin-top: 1.6rem;
+
+    @include mixin.sp {
+      font-size: 2.4rem;
+    }
+  }
+
+  .head-dates {
+    margin-top: 1.2rem;
+    display: flex;
+    gap: 1.6rem;
+  }
+
+  .head-info {
+  }
+
+  .head-cat {
+    display: inline-block;
+    color: white;
+    background-color: #303030;
+    padding: .3rem 1.2rem;
+    font-size: 1.3rem;
+    border-radius: 2rem;
+    margin-top: 1.6rem;
+    border: .1rem solid var.$c-text;
+    transition: all .3s;
+
+    @include mixin.sp {
+      margin-top: 0;
+      font-size: 1.2rem;
+      padding: .2rem 1rem;
+    }
+
+    @include mixin.hover {
+      &:hover {
+        background-color: #fff;
+        color: var.$c-text;
+      }
+    }
+  }
+
+  .head-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+    margin-top: 1.6rem;
+  }
+
+  .head-tag {
+    font-size: 1.2rem;
+    color: var.$c-text;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    border-radius: 2rem;
+    border: .1rem solid var.$c-text;
+    padding: .2rem .8rem;
+
+    &::before {
+      content: '#';
+      
+    }
+  }
+
+  .head-dates {
+    margin-top: 1.6rem;
+  }
+
+  .head-date {
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var.$c-text-gray;
+    letter-spacing: 0;
+
+    svg{
+      font-size: 1.5rem;
+      transform: translateY(-.1rem);
+    }
+  }
+
+  .head-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-top: 4rem;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+</style>

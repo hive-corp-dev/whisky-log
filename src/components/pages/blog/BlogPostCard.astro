@@ -1,0 +1,115 @@
+---
+import { Image } from "astro:assets";
+import Flag from "@/components/flag/Flag.astro";
+import { getBlogPostLink } from "@/utils/blog/slugs";
+import {getTagData} from "@/utils/blog/tag";
+import {formatDate, convertToJST} from '@/utils/date/date';
+import { PiClock } from "react-icons/pi";
+import { getCategoryData } from "@/utils/blog/category";
+
+const {article} = Astro.props;
+
+const {id} = article;
+const {title, image, category, country, publishedAt} = article.data;
+
+const {tags}: {tags: string[]} = article.data;
+---
+
+<a href={getBlogPostLink(id)} class="item-link">
+  <div class="thumb">
+    <Image src={image} alt={title} />
+    <div class="cat">{getCategoryData(category).label}</div>
+    {country && (
+      <div class="country">
+        <Flag country={country} />
+      </div>
+    )}
+  </div>
+  <div class="item-content">
+    <time datetime={convertToJST(publishedAt)} class="time"><PiClock />{formatDate(publishedAt)}</time>
+    <h2 class="item-title">{title}</h2>
+    <ul class="tags">
+      {
+        tags.map(tag => (
+          <li class="tag">
+            <span>{getTagData(tag).label}</span>
+          </li>
+        ))  
+      }
+    </ul>
+  </div>
+</a>
+
+<style lang="scss">
+  .item-link {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .thumb {
+    position: relative;
+    width: 100%;
+    border-radius: .8rem .8rem 0 0;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+  }
+
+  .cat {
+    position: absolute;
+    left: 0.8rem;
+    top: 0.8rem;
+    color: white;
+    background-color: #303030;
+    padding: .4rem .8rem;
+    font-size: 1.1rem;
+    border-radius: 2rem;
+  }
+
+  .country {
+    width: 2.4rem;
+    position: absolute;
+    right: .8rem;
+    top: .8rem;
+    display: flex;
+  }
+
+  .item-content {
+    padding: 1.6rem 1.6rem 2.4rem;
+    background-color: white;
+    border-radius: 0 0 .8rem .8rem;
+    flex-grow: 1;
+    overflow: hidden;
+  }
+
+  .time {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+  }
+
+  .item-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-top: .8rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+  }
+
+  .tag {
+    span {
+      font-size: 1.1rem;
+      border: .1rem solid;
+      padding: .2rem .8rem;
+      border-radius: 10rem;
+    }
+  }
+</style>
