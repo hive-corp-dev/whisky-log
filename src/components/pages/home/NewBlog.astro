@@ -23,6 +23,10 @@ const sortedBlogPosts = getSortedBlogPosts(allBlogPosts);
   .articles {
     padding: 16rem 0;
     background-color: var.$c-bg;
+
+    @include mixin.sp {
+      padding:12rem 0 8rem 0;
+    }
   }
 
   .sec-title {
@@ -34,5 +38,11 @@ const sortedBlogPosts = getSortedBlogPosts(allBlogPosts);
     border-bottom: .2rem solid;
     padding-top: 1.2rem;
     padding-bottom: 1.2rem;
+
+    @include mixin.sp {
+      font-size: 2rem;
+      padding-top: .8rem;
+      padding-bottom: .8rem;
+    }
   }
 </style>

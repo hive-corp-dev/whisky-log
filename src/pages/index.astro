@@ -61,6 +61,12 @@ import NewBlog from '@/components/pages/home/NewBlog.astro';
     border-bottom: .2rem solid;
     padding-top: 1.2rem;
     padding-bottom: 1.2rem;
+
+    @include mixin.sp {
+      font-size: 2rem;
+      padding-top: .8rem;
+      padding-bottom: .8rem;
+    }
   }
 
   .cover-content {
@@ -93,5 +99,9 @@ import NewBlog from '@/components/pages/home/NewBlog.astro';
   .sale {
     padding: 12rem 0;
     background-color: #fff;
+
+    @include mixin.sp {
+      padding: 8rem 0;
+    }
   }
 </style>
