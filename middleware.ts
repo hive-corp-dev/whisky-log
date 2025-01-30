@@ -1,8 +1,7 @@
 import { next } from "@vercel/edge";
 
 export const config = {
-  // matcher: "/(.*)",
-  matcher: ["/", "/blog/:path*"],
+  matcher: "/(.*)",
 };
 
 export default function middleware(request: Request) {
