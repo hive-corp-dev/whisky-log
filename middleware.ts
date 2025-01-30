@@ -1,7 +1,8 @@
 import { next } from "@vercel/edge";
 
 export const config = {
-  matcher: "/(.*)",
+  // matcher: "/(.*)",
+  matcher: ["/", "/blog/busker-tripple-cask-tripple-smooth"],
 };
 
 export default function middleware(request: Request) {
