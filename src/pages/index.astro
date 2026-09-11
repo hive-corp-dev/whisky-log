@@ -9,6 +9,7 @@ import { getSortedReviewPosts } from '@/utils/review/posts';
 import { reviewCategories } from '@/data/review/category';
 import { reviewTags } from '@/data/review/tag';
 import { getReviewCategoryLink, getReviewTagLink } from '@/utils/review/slugs';
+import { SITE_NAME, SITE_NAME_JA, SITE_URL, SITE_DESCRIPTION } from '@/data/siteData';
 
 const reviewPosts = await getCollection('review', ({ data }) => data.draft === false);
 const sortedPosts = getSortedReviewPosts(reviewPosts);
@@ -29,9 +30,21 @@ const types = reviewTags
     count: reviewPosts.filter((post) => (post.data.tags as string[]).includes(tag.slug)).length,
   }))
   .filter((tag) => tag.count > 0);
+
+// サイト名の構造化データ。検索結果に出るサイト名の表記（英語名と日本語名）を Google に伝える
+const websiteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE_NAME,
+  alternateName: SITE_NAME_JA,
+  url: `${SITE_URL}/`,
+  description: SITE_DESCRIPTION,
+  inLanguage: 'ja',
+};
 ---
 
 <Layout fullTitle="Whisky Log（ウイスキーログ）｜ウイスキーのレビューブログ">
+  <script type="application/ld+json" set:html={JSON.stringify(websiteLd)} />
   <section class="section">
     <Container>
       <div class="section-head">
