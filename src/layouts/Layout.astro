@@ -21,14 +21,16 @@ interface Props {
   ogType?: 'website' | 'article';
   /** 検索エンジンに載せないページ（サンクスページなど） */
   noindex?: boolean;
+  /** <title> をそのまま使う（トップページ用。「| サイト名」を付けない） */
+  fullTitle?: string;
 }
 
-const { title, description = SITE_DESCRIPTION, ogImage, ogType = 'website', noindex = false } = Astro.props;
+const { title, description = SITE_DESCRIPTION, ogImage, ogType = 'website', noindex = false, fullTitle } = Astro.props;
 // 記事以外のページはサイト共通の OGP 画像（src/assets/images/ogp.png、1200×630）を使う
 const defaultOg = await getImage({ src: imgOgp, width: 1200, height: 630, format: 'jpg' });
 const ogImageUrl = ogImage ?? (Astro.site ? new URL(defaultOg.src, Astro.site).toString() : undefined);
 
-const pageTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
+const pageTitle = fullTitle ?? (title ? `${title} | ${SITE_NAME}` : SITE_NAME);
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
 ---
 
