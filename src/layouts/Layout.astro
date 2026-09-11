@@ -9,7 +9,7 @@ import '@fontsource-variable/noto-sans-jp';
 import { SEO } from 'astro-seo';
 import Header from '@/components/header/Header.astro';
 import Footer from '@/components/footer/Footer.astro';
-import { SITE_NAME, SITE_DESCRIPTION } from '@/data/siteData';
+import { SITE_NAME, SITE_DESCRIPTION, GA_MEASUREMENT_ID } from '@/data/siteData';
 import { getImage } from 'astro:assets';
 import imgOgp from '@/assets/images/ogp.png';
 
@@ -42,6 +42,20 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString(
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    {
+      import.meta.env.PROD && GA_MEASUREMENT_ID && (
+        <>
+          {/* Google tag (gtag.js) */}
+          <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+          <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', GA_MEASUREMENT_ID);
+          </script>
+        </>
+      )
+    }
     <meta name="generator" content={Astro.generator} />
     <SEO
       title={pageTitle}
