@@ -4,10 +4,8 @@
 
 ## 公開直後にやること（外部サービス側）
 
-- [ ] Vercel のデプロイが成功しているか確認（Node 22.12 以上になっているか）
-- [ ] https://whisky-log.com/ をシークレットウィンドウで開いて、Basic 認証が出ないことを確認
+- [ ] Search Console のサイトマップのステータスが「成功しました」に変わるか、数時間後に確認（送信直後は「取得できませんでした」表示）
 - [ ] HyperForm の管理画面で、送信後のリダイレクト先を `https://whisky-log.com/contact/thanks/` に設定し、テスト送信して通知メールが届くことを確認
-- [ ] Google Search Console にサイトを登録し、`https://whisky-log.com/sitemap-index.xml` を送信
 - [ ] GA4 の「リアルタイム」で自分のアクセスが出ることを確認（本番だけ計測。ローカルは対象外）
 - [ ] Microsoft Clarity にセッションが記録され始めることを確認
 - [ ] バリューコマースに再申請（紹介文は前回の会話で用意済み。Yahoo!ショッピングと提携申請）
@@ -52,6 +50,9 @@
 4. `npm run build` が 0 エラーであることを確認してからコミット・プッシュ
 
 ## 済み（2026-09-11）
+
+- Vercel のデプロイ成功と Basic 認証の解除を確認（whisky-log.com が 200 で公開中）
+- Search Console: URL プレフィックス プロパティ `https://whisky-log.com/` を HTML タグ方式で所有権確認し、`sitemap-index.xml` を送信
 
 - 記事 14 本（公開 11・非表示 3）、記事テンプレート、産地別・種類別の一覧、サイドバー・フッター
 - プライバシーポリシー、お問い合わせ（HyperForm）、サンクスページ、404、robots.txt、sitemap、ファビコン、OGP
