@@ -24,7 +24,7 @@ export const CONTACT_FORM_ACTION = "https://hyperform.jp/api/OCb7789f";
 // アフィリエイト設定。ID が未設定の間は通常の検索リンクになる
 export const AFFILIATE = {
   // Amazon アソシエイトのトラッキング ID（例: "whiskylog-22"）
-  amazonTag: "",
+  amazonTag: "whiskylog-22",
   // 楽天アフィリエイト: 記事ごとの links.rakuten に管理画面で生成した URL を貼る運用。
   // ここに ID を入れると検索結果リンクも計測対象にできる（例: "1a2b3c4d.5e6f7g8h"）
   rakutenId: "",
