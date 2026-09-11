@@ -16,11 +16,11 @@ export async function getStaticPaths() {
   const reviewPosts = await getCollection('review', ({ data }) => data.draft === false);
 
   return reviewPosts.map(reviewPost => {
-    // 記事下の関連: 同じ産地の他の記事を優先し、足りなければ新着で埋める（最大 3 件）
+    // 記事下の関連: 同じ産地の他の記事を新しい順に優先し、足りなければ他の産地の新着で埋める（2 件）
     const others = getSortedReviewPosts(reviewPosts.filter((p) => p.id !== reviewPost.id));
     const sameRegion = others.filter((p) => p.data.category === reviewPost.data.category);
     const rest = others.filter((p) => p.data.category !== reviewPost.data.category);
-    const related = [...sameRegion, ...rest].slice(0, 3);
+    const related = [...sameRegion, ...rest].slice(0, 2);
 
     return {
       params: { category: reviewPost.data.category, slug: reviewPost.id },
@@ -159,6 +159,17 @@ const breadcrumbLd = {
 
     @include mixin.sp {
       margin-top: 3.2rem;
+    }
+
+    // 2 件なので PC でも 2 列（3 列だと右が空く）
+    :global(.list) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @include mixin.sp {
+      :global(.list) {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
   }
 
