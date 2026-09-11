@@ -15,6 +15,9 @@ export const X_PROFILE_URL = "https://x.com/ta_whiskylog";
 // Google アナリティクス（GA4）の測定 ID。公開値なので環境変数にはしない。本番ビルドのときだけ読み込む
 export const GA_MEASUREMENT_ID = "G-FQD24S9GQL";
 
+// Microsoft Clarity のプロジェクト ID。公開値。本番ビルドのときだけ読み込む
+export const CLARITY_PROJECT_ID = "yghgypmq2u";
+
 // お問い合わせフォームの送信先（HyperForm のエンドポイント。公開 URL なので環境変数にはしない）
 export const CONTACT_FORM_ACTION = "https://hyperform.jp/api/OCb7789f";
 
