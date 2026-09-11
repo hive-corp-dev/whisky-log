@@ -7,7 +7,8 @@ import Flag from '@/components/flag/Flag.astro';
 import { getCollection } from 'astro:content';
 import { getSortedReviewPosts } from '@/utils/review/posts';
 import { reviewCategories } from '@/data/review/category';
-import { getReviewCategoryLink } from '@/utils/review/slugs';
+import { reviewTags } from '@/data/review/tag';
+import { getReviewCategoryLink, getReviewTagLink } from '@/utils/review/slugs';
 
 const reviewPosts = await getCollection('review', ({ data }) => data.draft === false);
 const sortedPosts = getSortedReviewPosts(reviewPosts);
@@ -20,6 +21,14 @@ const regions = reviewCategories
     count: reviewPosts.filter((post) => post.data.category === category.slug).length,
   }))
   .filter((category) => category.count > 0);
+
+// 記事がある種類だけ、本数つきで出す
+const types = reviewTags
+  .map((tag) => ({
+    ...tag,
+    count: reviewPosts.filter((post) => (post.data.tags as string[]).includes(tag.slug)).length,
+  }))
+  .filter((tag) => tag.count > 0);
 ---
 
 <Layout>
@@ -47,6 +56,24 @@ const regions = reviewCategories
                 <span class="region-flag"><Flag country={region.country} /></span>
                 <span class="region-name">{region.label}</span>
                 <span class="region-count">{region.count}本</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </Container>
+  </section>
+
+  <section class="section regions" id="types">
+    <Container>
+      <SectionHeading ja="種類から探す" />
+      <ul class="region-list">
+        {
+          types.map((type) => (
+            <li>
+              <a href={getReviewTagLink(type.slug)} class="region">
+                <span class="region-name">{type.label}</span>
+                <span class="region-count">{type.count}本</span>
               </a>
             </li>
           ))
