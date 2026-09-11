@@ -1,0 +1,48 @@
+---
+// 記事一覧ページのサイドバー: 産地・種類の絞り込みを追従させる。
+// タブレット以下では非表示（一覧の上に出す ReviewFilters を使う）
+import WidgetRegions from "@/components/sidebar/widgets/WidgetRegions.astro";
+import WidgetTypes from "@/components/sidebar/widgets/WidgetTypes.astro";
+
+interface Props {
+  currentCategory?: string;
+  currentTag?: string;
+}
+
+const { currentCategory, currentTag } = Astro.props;
+---
+
+<aside class="sidebar">
+  <div class="sticky">
+    <WidgetRegions current={currentCategory} />
+    <WidgetTypes current={currentTag} />
+  </div>
+</aside>
+
+<style lang="scss">
+  // 固定ヘッダーの高さ + 余白
+  $sticky-top: 9.6rem;
+
+  .sidebar {
+    width: 28rem;
+    flex-shrink: 0;
+    align-self: stretch;
+
+    @include mixin.tab {
+      display: none;
+    }
+  }
+
+  .sticky {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    position: sticky;
+    top: $sticky-top;
+    max-height: calc(100vh - #{$sticky-top} - 2.4rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var.$c-text, 0.2) transparent;
+  }
+</style>

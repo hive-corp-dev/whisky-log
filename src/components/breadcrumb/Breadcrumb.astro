@@ -1,0 +1,81 @@
+---
+// パンくず。最後の項目はリンクなし
+interface Props {
+  items: { label: string; href?: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="breadcrumb" aria-label="パンくずリスト">
+  <ol class="list">
+    {
+      items.map((item, i) => (
+        <li class="item">
+          {item.href && i < items.length - 1 ? <a href={item.href}>{item.label}</a> : <span aria-current="page">{item.label}</span>}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style lang="scss">
+  // スマホでは折り返さず横スクロール。ページの左右パディングの分だけ外にはみ出させて、
+  // 文字が余白の手前で切れないようにする（--breadcrumb-bleed で親から余白幅を渡せる。既定は Container の 1.6rem）
+  .breadcrumb {
+    @include mixin.sp {
+      margin: 0 calc(var(--breadcrumb-bleed, 1.6rem) * -1);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 1.2rem;
+    color: var.$c-text-gray;
+
+    @include mixin.sp {
+      display: inline-flex;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      padding: 0 var(--breadcrumb-bleed, 1.6rem);
+    }
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 0;
+
+    @include mixin.sp {
+      flex: none;
+    }
+
+    &:not(:last-child)::after {
+      content: "›";
+      color: var.$c-text-gray;
+    }
+
+    a {
+      color: var.$c-text-gray;
+      transition: color 0.2s;
+
+      @include mixin.hover {
+        &:hover {
+          color: var.$c-main;
+        }
+      }
+    }
+
+  }
+</style>

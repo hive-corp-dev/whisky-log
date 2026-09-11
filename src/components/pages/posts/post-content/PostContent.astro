@@ -1,0 +1,65 @@
+---
+// レビュー記事本体。
+// 「結論 → 目次 → 基本情報 + 購入ボタン → 本文（MDX）→ 評価 + 購入ボタン」の順を全記事で固定する
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import { AFFILIATE_DISCLOSURE } from '@/data/siteData';
+
+import CitedFigure from '@/components/pages/posts/post-content/parts/cited-figure/CitedFigure.astro';
+import Img from '@/components/pages/posts/post-content/parts/img/Img.astro';
+import Spacer from '@/components/pages/posts/post-content/parts/spacer/Spacer.astro';
+import Speech from '@/components/pages/posts/post-content/parts/speech/Speech.astro';
+import TastingNote from '@/components/pages/posts/post-content/parts/tasting-note/TastingNote.astro';
+import ProsCons from '@/components/pages/posts/post-content/parts/pros-cons/ProsCons.astro';
+import KeyPoints from '@/components/pages/posts/post-content/parts/key-points/KeyPoints.astro';
+import TextLink from '@/components/pages/posts/post-content/parts/text-link/TextLink.astro';
+import ExternalLink from '@/components/pages/posts/post-content/parts/text-link/ExternalLink.astro';
+
+import Verdict from '@/components/pages/posts/post-content/parts/verdict/Verdict.astro';
+import Toc from '@/components/pages/posts/post-content/parts/toc/Toc.astro';
+import SpecTable from '@/components/pages/posts/post-content/parts/spec-table/SpecTable.astro';
+import AffiliateButtons from '@/components/pages/posts/post-content/parts/affiliate/AffiliateButtons.astro';
+import AffiliateBox from '@/components/pages/posts/post-content/parts/affiliate/AffiliateBox.astro';
+import Rating from '@/components/pages/posts/post-content/parts/rating/Rating.astro';
+
+import styles from './post-content.module.scss';
+
+interface Props {
+  post: CollectionEntry<'review'>;
+}
+
+const { post } = Astro.props;
+const { data } = post;
+const { Content, headings } = await render(post);
+
+const keyword = data.searchKeyword ?? data.name ?? data.title;
+
+const toParagraphs = (text?: string) =>
+  text ? text.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean) : [];
+const introParagraphs = toParagraphs(data.intro);
+
+// 目次: ページ側で描画する「基本情報」+ MDX の h2（評価まとめは MDX 側の見出し）
+const tocItems = [
+  { id: 'spec', text: '基本情報' },
+  ...headings.filter((h) => h.depth === 2).map((h) => ({ id: h.slug, text: h.text })),
+];
+---
+
+<div class={styles.content}>
+  <p class={styles.disclosure}>{AFFILIATE_DISCLOSURE}</p>
+
+  {introParagraphs.map((p) => <p>{p}</p>)}
+
+  {data.verdict && data.verdict.length > 0 && <Verdict items={data.verdict} />}
+
+  <Toc items={tocItems} />
+
+  <h2 id="spec">基本情報</h2>
+  <SpecTable data={data} />
+  {data.affiliate && <AffiliateButtons slug={post.id} title={data.name ?? data.title} keyword={keyword} links={data.links} />}
+
+  {/* MDX 側: 「○○とは → 香り・味・余韻 → 飲み方別の評価 → ○○の評価まとめ（<Rating /> + 文章 + <ProsCons />）」 */}
+  <Content components={{ a: TextLink, TextLink, ExternalLink, CitedFigure, Img, Spacer, Speech, TastingNote, ProsCons, AffiliateBox, Rating, KeyPoints }} />
+
+  {data.affiliate && <AffiliateButtons slug={post.id} title={data.name ?? data.title} keyword={keyword} links={data.links} />}
+</div>

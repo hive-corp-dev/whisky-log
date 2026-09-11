@@ -1,0 +1,279 @@
+---
+// 購入ボックス。ポチップ（web-dev.tech で使用中の設定）のレイアウト・色・サイズに合わせている。
+//   色: Amazon #f99a0c / 楽天 #e0423c / Yahoo #438ee8
+//   PC: 画像 100px 左、右に商品名・価格、その下にボタン 3 つ横並び
+//   SP: 画像を中央（最大 120px）、商品名・価格、ボタン縦積み
+// 画像・商品名・価格・楽天の商品リンクは scripts/fetch-rakuten.mjs のキャッシュ（src/data/rakuten/items.json）から出す
+import { AFFILIATE } from "@/data/siteData";
+import { getRakutenItem } from "@/utils/review/rakuten";
+
+interface Props {
+  /** 記事の slug（キャッシュのキー） */
+  slug: string;
+  /** 表示する商品名（frontmatter の name） */
+  title: string;
+  /** 検索リンク用のキーワード */
+  keyword: string;
+  links?: { amazon?: string; rakuten?: string; yahoo?: string };
+  /** ボタン上に出すセール文言（例: "＼楽天ポイント5倍セール！／"） */
+  sale?: { amazon?: string; rakuten?: string; yahoo?: string };
+}
+
+const { slug, title, keyword, links = {}, sale = {} } = Astro.props;
+const item = getRakutenItem(slug);
+const q = encodeURIComponent(keyword);
+
+const amazonSearch = `https://www.amazon.co.jp/s?k=${q}${AFFILIATE.amazonTag ? `&tag=${AFFILIATE.amazonTag}` : ""}`;
+const rakutenSearchPlain = `https://search.rakuten.co.jp/search/mall/${q}/`;
+const rakutenSearch = AFFILIATE.rakutenId
+  ? `https://hb.afl.rakuten.co.jp/hsc/${AFFILIATE.rakutenId}/?pc=${encodeURIComponent(rakutenSearchPlain)}`
+  : rakutenSearchPlain;
+const yahooSearch = `https://shopping.yahoo.co.jp/search?p=${q}`;
+
+// 楽天は「frontmatter の指定 > API のアフィリエイト URL > API の商品 URL > 検索リンク」の優先順
+const rakutenHref = links.rakuten ?? item?.affiliateUrl ?? item?.itemUrl ?? rakutenSearch;
+
+const buttons = [
+  { shop: "amazon", label: "Amazon", href: links.amazon ?? amazonSearch, sale: sale.amazon },
+  { shop: "rakuten", label: "楽天市場", href: rakutenHref, sale: sale.rakuten },
+  { shop: "yahoo", label: "Yahooショッピング", href: links.yahoo ?? yahooSearch, sale: sale.yahoo },
+];
+
+const fetchedAt = item
+  ? new Date(item.fetchedAt).toLocaleString("ja-JP", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZone: "Asia/Tokyo",
+    })
+  : null;
+---
+
+<aside class="box" aria-label="購入リンク">
+  {
+    item?.imageUrl && (
+      <div class="image">
+        <a href={rakutenHref} target="_blank" rel="nofollow sponsored noopener" tabindex="-1" aria-hidden="true">
+          <img src={item.imageUrl} alt="" width="120" height="120" loading="lazy" decoding="async" />
+        </a>
+      </div>
+    )
+  }
+  <div class="body">
+    <p class="title">{title}</p>
+    {
+      item ? (
+        <p class="price">
+          ¥{item.itemPrice.toLocaleString("ja-JP")}
+          <span>（税込 | {fetchedAt}時点 | 楽天市場調べ）</span>
+        </p>
+      ) : (
+        <p class="price">
+          <span>価格は各ショップでご確認ください</span>
+        </p>
+      )
+    }
+  </div>
+  <div class="btns">
+    {
+      buttons.map((b) => (
+        <div class:list={["btnwrap", b.shop, { "on-sale": !!b.sale }]}>
+          {b.sale && <div class="sale">{b.sale}</div>}
+          <a href={b.href} class="btn" target="_blank" rel="nofollow sponsored noopener">
+            <span>{b.label}</span>
+          </a>
+        </div>
+      ))
+    }
+  </div>
+</aside>
+
+<style lang="scss">
+  $c-amazon: #f99a0c;
+  $c-rakuten: #e0423c;
+  $c-yahoo: #438ee8;
+
+  .box {
+    position: relative;
+    display: grid;
+    grid-template-areas:
+      "img body"
+      "img btns";
+    grid-template-columns: 10rem 1fr;
+    grid-template-rows: auto auto;
+    gap: 0 2.4rem;
+    padding: 2.4rem;
+    color: #353535;
+    font-size: 1.6rem;
+    line-height: 1.6;
+    background: #fff;
+    box-shadow:
+      0 0.1rem 0.8rem -0.4rem rgba(0, 0, 0, 0.2),
+      0 0 0 0.1rem rgba(0, 0, 0, 0.02);
+
+    @include mixin.sp {
+      display: block;
+      font-size: 1.4rem;
+    }
+  }
+
+  .image {
+    grid-area: img;
+    margin: 0;
+
+    a {
+      display: block;
+      width: 100%;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 16rem;
+      object-fit: contain;
+      border-radius: 0.1rem;
+    }
+
+    @include mixin.sp {
+      width: 100%;
+      margin-bottom: 1.6rem;
+
+      img {
+        width: 60%;
+        max-width: 12rem;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  .body {
+    grid-area: body;
+    min-width: 0;
+  }
+
+  .title {
+    margin: 0 0 0.8rem !important;
+    font-weight: 700;
+    line-height: 1.6;
+  }
+
+  .price {
+    margin: 0.4rem 0 0 !important;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.5;
+
+    span {
+      margin-left: 0.4rem;
+      font-size: 1.1rem;
+      font-weight: 400;
+      opacity: 0.75;
+    }
+  }
+
+  .btns {
+    grid-area: btns;
+    position: relative;
+    left: -0.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    width: calc(100% + 0.8rem);
+    margin: 1.2rem 0 0;
+    padding: 0;
+  }
+
+  .btnwrap {
+    flex: 1;
+    min-width: max-content;
+    max-width: 50%;
+    padding: 0.4rem;
+    font-size: 1.5rem;
+
+    &.on-sale {
+      order: -1;
+    }
+
+    @include mixin.sp {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+  }
+
+  .btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 0;
+    padding: 1.2rem;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1em;
+    line-height: 1;
+    letter-spacing: 0.05em;
+    text-align: center;
+    border-radius: 0.1rem;
+    background-color: #3c3c3c;
+    box-shadow: 0 0.1rem 0.4rem -0.1rem rgba(0, 0, 0, 0.2);
+    transition: opacity 0.2s;
+
+    span {
+      width: 100%;
+    }
+
+    @include mixin.hover {
+      &:hover {
+        opacity: 0.85;
+      }
+    }
+  }
+
+  .amazon .btn {
+    background-color: $c-amazon;
+  }
+
+  .rakuten .btn {
+    background-color: $c-rakuten;
+  }
+
+  .yahoo .btn {
+    background-color: $c-yahoo;
+  }
+
+  .sale {
+    margin-bottom: 0.4rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    animation: 1.5s linear 0s infinite flash;
+  }
+
+  .amazon .sale {
+    color: $c-amazon;
+  }
+
+  .rakuten .sale {
+    color: $c-rakuten;
+  }
+
+  .yahoo .sale {
+    color: $c-yahoo;
+  }
+
+  @keyframes flash {
+    20% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+  }
+</style>

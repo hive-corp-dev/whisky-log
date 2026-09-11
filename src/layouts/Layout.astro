@@ -1,12 +1,35 @@
 ---
-import 'the-new-css-reset';
+import 'the-new-css-reset/css/reset.css';
 import '@/styles/global.scss';
 
 import '@fontsource/dm-serif-text';
 import '@fontsource-variable/noto-serif-jp';
 import '@fontsource-variable/noto-sans-jp';
 
+import { SEO } from 'astro-seo';
 import Header from '@/components/header/Header.astro';
+import Footer from '@/components/footer/Footer.astro';
+import { SITE_NAME, SITE_DESCRIPTION } from '@/data/siteData';
+import { getImage } from 'astro:assets';
+import imgOgp from '@/assets/images/ogp.png';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** OGP 画像の絶対 URL（省略時はサイト共通の OGP 画像） */
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  /** 検索エンジンに載せないページ（サンクスページなど） */
+  noindex?: boolean;
+}
+
+const { title, description = SITE_DESCRIPTION, ogImage, ogType = 'website', noindex = false } = Astro.props;
+// 記事以外のページはサイト共通の OGP 画像（src/assets/images/ogp.png、1200×630）を使う
+const defaultOg = await getImage({ src: imgOgp, width: 1200, height: 630, format: 'jpg' });
+const ogImageUrl = ogImage ?? (Astro.site ? new URL(defaultOg.src, Astro.site).toString() : undefined);
+
+const pageTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
 ---
 
 <!doctype html>
@@ -14,23 +37,82 @@ import Header from '@/components/header/Header.astro';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
+    <SEO
+      title={pageTitle}
+      description={description}
+      canonical={canonical}
+      noindex={noindex}
+      nofollow={noindex}
+      openGraph={{
+        basic: {
+          title: pageTitle,
+          type: ogType,
+          image: ogImageUrl ?? '',
+        },
+        optional: {
+          description,
+          siteName: SITE_NAME,
+          locale: 'ja_JP',
+        },
+      }}
+      twitter={{
+        card: ogImageUrl ? 'summary_large_image' : 'summary',
+        title: pageTitle,
+        description,
+        image: ogImageUrl,
+      }}
+    />
   </head>
   <body>
     <div class="wrap">
       <Header />
-      <slot />
+      <div class="page-body">
+        <slot />
+        <Footer />
+      </div>
     </div>
   </body>
 </html>
 
-<style>
-.wrap {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: #f5f5f7;
-}
+<style lang="scss">
+  .wrap {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: 8rem; // 固定ヘッダーの高さ分
+    background-color: var.$c-bg;
+
+    @include mixin.sp {
+      padding-top: 6.4rem;
+    }
+  }
+
+  // ページ遷移が一瞬で切り替わらないように、読み込み時に本文とフッターの不透明度だけを上げる
+  // （View Transitions は使わない。固定ヘッダーは対象外）
+  .page-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    animation: page-fade-in 0.35s ease-out both;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  @keyframes page-fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
 </style>

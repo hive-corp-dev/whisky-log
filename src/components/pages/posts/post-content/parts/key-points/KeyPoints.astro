@@ -1,0 +1,74 @@
+---
+// 「○○とは」の最後に置く、その銘柄の重要な情報の箇条書きボックス（2〜4 項目）
+interface Props {
+  items: string[];
+  title?: string;
+}
+
+const { items, title = "ポイント" } = Astro.props;
+---
+
+<div class="key-points">
+  <p class="title">{title}</p>
+  <ul class="list">{items.map((item) => <li>{item}</li>)}</ul>
+</div>
+
+<style lang="scss">
+  // 「こんな人におすすめ」（ProsCons）と同じ見た目: 枠 + #fcfcfc、ピル型の見出し、✓ マーカー
+  .key-points {
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.8rem;
+    background-color: #fcfcfc;
+    padding: 2rem 2.2rem;
+    font-size: 1.5rem;
+    line-height: 1.9;
+
+    @include mixin.sp {
+      padding: 1.6rem;
+      font-size: 1.4rem;
+    }
+  }
+
+  .title {
+    display: inline-block;
+    margin: 0 !important;
+    padding: 0.3rem 1.4rem;
+    border-radius: 999px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+    line-height: 1.6;
+    background-color: var.$c-main;
+    color: var.$c-white;
+  }
+
+  .list {
+    margin: 1rem 0 0 !important;
+    padding: 0 !important;
+    background: none !important;
+
+    li {
+      position: relative;
+      padding-left: 2.6rem !important;
+
+      & + li {
+        margin-top: 0.4rem !important;
+      }
+
+      &::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        top: 0.45em;
+        width: 1.8rem;
+        height: 1.8rem;
+        border-radius: 50%;
+        font-size: 1.1rem;
+        line-height: 1.8rem;
+        text-align: center;
+        color: var.$c-white;
+        background-color: var.$c-main !important;
+      }
+    }
+  }
+</style>

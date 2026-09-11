@@ -1,0 +1,64 @@
+---
+// frontmatter から基本情報表を自動生成する
+import type { ReviewData } from "@/utils/review/spec";
+import { COUNTRY_LABELS, WAY_LABELS, formatYen, formatYearMonth } from "@/utils/review/spec";
+import { getReviewTagData } from "@/utils/review/tag";
+
+interface Props {
+  data: ReviewData;
+}
+
+const { data } = Astro.props;
+
+const rows: { label: string; value: string | undefined }[] = [
+  { label: "商品名", value: data.name },
+  { label: "メーカー", value: data.maker },
+  { label: "蒸留所", value: data.distillery },
+  { label: "産地", value: data.country ? COUNTRY_LABELS[data.country] : undefined },
+  { label: "分類", value: data.tags.map((t) => getReviewTagData(t).label).join(" / ") },
+  { label: "熟成樽", value: data.casks?.join(" / ") },
+  { label: "度数", value: data.abv ? `${data.abv}%` : undefined },
+  { label: "容量", value: data.volume ? `${data.volume}ml` : undefined },
+  {
+    label: "参考価格",
+    // 総額表示義務に合わせて税込を明記する
+    value: data.price
+      ? `${formatYen(data.price)}前後（税込${data.priceCheckedAt ? `・${formatYearMonth(data.priceCheckedAt)}時点` : ""}）`
+      : undefined,
+  },
+  {
+    label: "おすすめの飲み方",
+    value: data.recommendedWay
+      ? (Array.isArray(data.recommendedWay) ? data.recommendedWay : [data.recommendedWay]).map((w) => WAY_LABELS[w]).join("・")
+      : undefined,
+  },
+].filter((row) => row.value);
+---
+
+<table class="spec">
+  <tbody>
+    {
+      rows.map((row) => (
+        <tr>
+          <th scope="row">{row.label}</th>
+          <td>{row.value}</td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+
+<style lang="scss">
+  .spec {
+    th {
+      width: 30%;
+      white-space: nowrap;
+      text-align: left;
+
+      @include mixin.sp {
+        width: 38%;
+        white-space: normal;
+      }
+    }
+  }
+</style>

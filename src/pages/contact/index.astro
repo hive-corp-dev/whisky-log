@@ -1,0 +1,62 @@
+---
+import Container from '@/components/container/Container.astro';
+import Layout from '@/layouts/Layout.astro';
+import SectionHeading from '@/components/section-heading/SectionHeading.astro';
+import ContactForm from '@/components/pages/contact/ContactForm.astro';
+import Breadcrumb from '@/components/breadcrumb/Breadcrumb.astro';
+---
+
+<Layout title="お問い合わせ" description="Whisky Logへのお問い合わせフォームです。記事の内容や誤りの指摘、掲載や広告のご相談はこちらから。">
+  <section class="page">
+    <Container type="narrow">
+      <Breadcrumb items={[{ label: 'ホーム', href: '/' }, { label: 'お問い合わせ' }]} />
+      <div class="inner">
+        <SectionHeading ja="お問い合わせ" tag="h1" />
+        <p class="lead">記事の内容へのご質問、誤りの指摘、レビューや掲載のご依頼、広告のご相談は、下のフォームからお送りください。</p>
+        <p class="note">返信が必要なものには、ご記入いただいたメールアドレスにお返事します。数日いただくことがあります。</p>
+        <div class="card">
+          <ContactForm />
+        </div>
+      </div>
+    </Container>
+  </section>
+</Layout>
+
+<style lang="scss">
+  .page {
+    padding: 3.2rem 0 8rem;
+
+    @include mixin.sp {
+      padding: 2rem 0 6.4rem;
+    }
+  }
+
+  .inner {
+    margin-top: 1.6rem;
+  }
+
+  .lead {
+    margin-top: 2.4rem;
+    font-size: 1.5rem;
+    line-height: 1.9;
+  }
+
+  .note {
+    margin-top: 0.8rem;
+    font-size: 1.3rem;
+    line-height: 1.8;
+    color: var.$c-text-gray;
+  }
+
+  .card {
+    margin-top: 3.2rem;
+    padding: 4.8rem 4.8rem;
+    background-color: var.$c-white;
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.8rem;
+
+    @include mixin.sp {
+      padding: 2.4rem 1.6rem;
+    }
+  }
+</style>

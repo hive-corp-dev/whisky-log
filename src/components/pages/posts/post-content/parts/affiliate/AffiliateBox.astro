@@ -1,0 +1,21 @@
+---
+// MDX 本文の中に置く購入ボックス（大容量版・別サイズなど、記事の主商品以外の商品用）。
+//   <AffiliateBox id="riku-4000" title="キリンウイスキー 陸 4,000ml" keyword="キリン ウイスキー 陸 4000ml" volume={4000} />
+// id は items.json のキー（サイト全体で一意にする）。
+// volume / itemCode は scripts/fetch-rakuten.mjs がこのタグを読んで商品検索に使う（表示には使わない）。
+import AffiliateButtons from "./AffiliateButtons.astro";
+
+interface Props {
+  id: string;
+  title: string;
+  keyword: string;
+  volume?: number;
+  itemCode?: string;
+  links?: { amazon?: string; rakuten?: string; yahoo?: string };
+  sale?: { amazon?: string; rakuten?: string; yahoo?: string };
+}
+
+const { id, title, keyword, links, sale } = Astro.props;
+---
+
+<AffiliateButtons slug={id} title={title} keyword={keyword} links={links} sale={sale} />

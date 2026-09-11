@@ -8,6 +8,7 @@ const {type} = Astro.props;
 
 <style lang="scss">
   .container {
+    position: relative;
     max-width: 126rem;
     width: 100%;
     padding: 0 4rem;
@@ -19,6 +20,11 @@ const {type} = Astro.props;
 
     &.mx-l {
       max-width: 144rem;
+    }
+
+    // 文章中心のページ（プライバシーポリシー・お問い合わせ・サンクス）用の狭い幅
+    &.narrow {
+      max-width: 92rem;
     }
 
     &.px-m {

@@ -1,0 +1,42 @@
+---
+// ★5 段階（0.5 刻み対応）。灰色の★の上に、値に応じた幅だけ色付きの★を重ねる
+interface Props {
+  value: number; // 1〜5、0.5 刻み
+  /** font-size（rem） */
+  size?: number;
+}
+
+const { value, size = 1.6 } = Astro.props;
+const clamped = Math.min(5, Math.max(0, value));
+const width = `${(clamped / 5) * 100}%`;
+---
+
+<span class="stars" style={`font-size:${size}rem`} role="img" aria-label={`5段階中${clamped}`}>
+  <span class="base" aria-hidden="true">★★★★★</span>
+  <span class="fill" aria-hidden="true" style={`width:${width}`}>★★★★★</span>
+</span>
+
+<style lang="scss">
+  .stars {
+    position: relative;
+    display: inline-block;
+    width: max-content; // flex の子になっても伸びないように（伸びると fill の % 幅が狂う）
+    flex: none;
+    line-height: 1;
+    letter-spacing: 0;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  .base {
+    color: #d9d4cc;
+  }
+
+  .fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    color: var.$c-main;
+  }
+</style>

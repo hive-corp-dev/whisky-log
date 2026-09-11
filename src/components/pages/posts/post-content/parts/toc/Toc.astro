@@ -1,0 +1,76 @@
+---
+// 目次（h2 のみ）
+interface Props {
+  items: { id: string; text: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="toc" aria-label="目次">
+  <p class="toc-title">目次</p>
+  <ol class="toc-list">
+    {
+      items.map((item) => (
+        <li>
+          <a href={`#${item.id}`}>{item.text}</a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style lang="scss">
+  .toc {
+    margin-top: 4rem !important; // 結論ボックスとの間を広めに
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.8rem;
+    padding: 1.6rem 2rem;
+    background-color: var.$c-bg;
+    font-size: 1.4rem;
+
+    @include mixin.sp {
+      margin-top: 3.2rem !important;
+    }
+  }
+
+  .toc-title {
+    margin: 0 !important;
+    font-weight: bold;
+    font-size: 1.8rem;
+  }
+
+  .toc-list {
+    margin: 0.8rem 0 0;
+    padding: 0 0 0 1.6em !important;
+    background: none !important;
+    list-style: decimal;
+    counter-reset: none;
+
+    li {
+      padding-left: 0.2em !important;
+      line-height: 1.9;
+
+      &::before {
+        display: none;
+      }
+
+      &:not(:first-child) {
+        margin-top: 0 !important;
+      }
+    }
+
+    a {
+      color: var.$c-text;
+      text-decoration: underline;
+      text-decoration-color: rgba(var.$c-text, 0.25);
+      text-underline-offset: 0.3em;
+
+      @include mixin.hover {
+        &:hover {
+          color: var.$c-main;
+        }
+      }
+    }
+  }
+</style>

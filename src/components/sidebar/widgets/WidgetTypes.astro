@@ -1,0 +1,91 @@
+---
+// サイドバー: 種類一覧（記事があるものだけ、本数つき）
+import { getCollection } from 'astro:content';
+import { reviewTags } from '@/data/review/tag';
+import { getReviewTagLink } from '@/utils/review/slugs';
+
+interface Props {
+  /** 選択中の slug（一覧ページのサイドバーで使う） */
+  current?: string;
+}
+
+const { current } = Astro.props;
+const posts = await getCollection('review', ({ data }) => data.draft === false);
+
+const types = reviewTags
+  .map((tag) => ({
+    ...tag,
+    count: posts.filter((post) => (post.data.tags as string[]).includes(tag.slug)).length,
+  }))
+  .filter((tag) => tag.count > 0);
+---
+
+<div class="widget">
+  <p class="widget-title">種類から探す</p>
+  <ul class="list">
+    {
+      types.map((type) => (
+        <li>
+          <a href={getReviewTagLink(type.slug)} class:list={["item", { current: type.slug === current }]}>
+            <span class="name">{type.label}</span>
+            <span class="count">{type.count}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style lang="scss">
+  .widget {
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.6rem;
+    background-color: var.$c-white;
+    padding: 2rem;
+  }
+
+  .widget-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding-bottom: 1rem;
+    border-bottom: 0.2rem solid var.$c-main;
+  }
+
+  .list {
+    margin-top: 0.4rem;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 0;
+    border-bottom: 0.1rem solid var.$c-line;
+    font-size: 1.3rem;
+
+    @include mixin.hover {
+      &:hover .name {
+        color: var.$c-main;
+      }
+    }
+  }
+
+  li:last-child .item {
+    border-bottom: none;
+  }
+
+  .item.current .name {
+    color: var.$c-main;
+  }
+
+  .name {
+    font-weight: bold;
+    transition: color 0.2s;
+  }
+
+  .count {
+    margin-left: auto;
+    font-size: 1.2rem;
+    color: var.$c-text-gray;
+  }
+</style>

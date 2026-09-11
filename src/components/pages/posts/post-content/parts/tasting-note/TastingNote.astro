@@ -1,0 +1,70 @@
+---
+// 飲み方別のテイスティング。見出し + ★ + 写真 + 本文（slot）
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import type { Way } from "@/utils/review/spec";
+import { WAY_LABELS } from "@/utils/review/spec";
+import Stars from "@/components/stars/Stars.astro";
+
+interface Props {
+  way: Way;
+  rating: number; // 1〜5、0.5 刻み
+  image?: ImageMetadata;
+}
+
+const { way, rating, image } = Astro.props;
+const label = WAY_LABELS[way];
+---
+
+<section class="note">
+  <h3 class="heading">
+    {label}
+    <span class="score"><Stars value={rating} size={1.8} /><span class="num">{rating.toFixed(1)}</span></span>
+  </h3>
+  {image && (
+    <Image
+      class="image"
+      src={image}
+      alt={`${label}で飲んだ写真`}
+      width={1200}
+      widths={[480, 800, 1200]}
+      sizes="(max-width: 768px) 100vw, 800px"
+      loading="lazy"
+    />
+  )}
+  <div class="body">
+    <slot />
+  </div>
+</section>
+
+<style lang="scss">
+  .heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.6rem;
+  }
+
+  .score {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    white-space: nowrap;
+  }
+
+  .num {
+    font-size: 1.3rem;
+    font-weight: normal;
+    color: var.$c-text-gray;
+  }
+
+  .image {
+    margin-top: 1.2em;
+  }
+
+  .body {
+    :global(> *) {
+      margin-top: 1em;
+    }
+  }
+</style>

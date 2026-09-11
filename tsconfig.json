@@ -10,10 +10,9 @@
       "@/data/*": ["src/data/*"],
       "@/styles/*": ["src/styles/*"],
       "@/layouts/*": ["src/layouts/*"],
-      "@/article/*": ["src/content/article/*"],
       "@/assets/*": ["src/assets/*"],
       "@/types/*": ["src/types/*"],
-      "@/blog/*": ["src/content/blog/*"]
+      "@/review/*": ["src/content/review/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"

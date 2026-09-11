@@ -1,0 +1,61 @@
+---
+import Container from '@/components/container/Container.astro';
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout title="ページが見つかりません" description="お探しのページは見つかりませんでした。">
+  <section class="page">
+    <Container>
+      <p class="code">404</p>
+      <h1 class="title">ページが見つかりません</h1>
+      <p class="text">URLが変わったか、削除された可能性があります。</p>
+      <a href="/" class="btn">ホームへ</a>
+    </Container>
+  </section>
+</Layout>
+
+<style lang="scss">
+  .page {
+    padding: 8rem 0 10rem;
+    text-align: center;
+  }
+
+  .code {
+    font-size: 4.8rem;
+    font-weight: bold;
+    color: var.$c-main;
+    line-height: 1;
+  }
+
+  .title {
+    margin-top: 1.6rem;
+    font-size: 2.4rem;
+    font-weight: bold;
+  }
+
+  .text {
+    margin-top: 1.2rem;
+    font-size: 1.5rem;
+    color: var.$c-text-gray;
+  }
+
+  .btn {
+    display: inline-block;
+    margin-top: 3.2rem;
+    padding: 1.2rem 3.2rem;
+    border-radius: 999px;
+    background-color: var.$c-main;
+    border: 0.1rem solid var.$c-main;
+    color: var.$c-white;
+    font-size: 1.4rem;
+    font-weight: bold;
+    transition: all 0.3s;
+
+    @include mixin.hover {
+      &:hover {
+        background-color: var.$c-white;
+        color: var.$c-main;
+      }
+    }
+  }
+</style>

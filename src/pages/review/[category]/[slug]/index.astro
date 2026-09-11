@@ -1,0 +1,174 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
+import BlogSingleSidebar from '@/components/sidebar/BlogSingleSidebar.astro';
+import ReviewPostHead from "@/components/pages/review/ReviewPostHead.astro";
+import ReviewPostList from "@/components/pages/review/ReviewPostList.astro";
+import PostContent from "@/components/pages/posts/post-content/PostContent.astro";
+import Breadcrumb from "@/components/breadcrumb/Breadcrumb.astro";
+import { SITE_NAME, SITE_URL } from "@/data/siteData";
+import { getReviewCategoryData } from "@/utils/review/category";
+import { getReviewCategoryLink } from "@/utils/review/slugs";
+import { getSortedReviewPosts } from "@/utils/review/posts";
+
+export async function getStaticPaths() {
+  const reviewPosts = await getCollection('review', ({ data }) => data.draft === false);
+
+  return reviewPosts.map(reviewPost => {
+    // 記事下の関連: 同じ産地の他の記事を優先し、足りなければ新着で埋める（最大 3 件）
+    const others = getSortedReviewPosts(reviewPosts.filter((p) => p.id !== reviewPost.id));
+    const sameRegion = others.filter((p) => p.data.category === reviewPost.data.category);
+    const rest = others.filter((p) => p.data.category !== reviewPost.data.category);
+    const related = [...sameRegion, ...rest].slice(0, 3);
+
+    return {
+      params: { category: reviewPost.data.category, slug: reviewPost.id },
+      props: { reviewPost, related },
+    };
+  });
+}
+
+const { reviewPost, related } = Astro.props;
+const { title, description, image, category, tags, publishedAt, updatedAt, name, maker, rating } = reviewPost.data;
+const categoryData = getReviewCategoryData(category);
+
+const breadcrumb = [
+  { label: 'ホーム', href: '/' },
+  { label: 'レビュー', href: '/review/' },
+  { label: categoryData.label, href: getReviewCategoryLink(category) },
+  { label: title },
+];
+
+// OGP 用に 1200px 幅へ縮小した画像を生成する（元画像は数 MB あるため）
+const ogImageAsset = await getImage({ src: image, width: 1200, format: 'jpg' });
+const ogImage = Astro.site ? new URL(ogImageAsset.src, Astro.site).toString() : undefined;
+
+// 構造化データ: Review + パンくず
+const reviewLd = rating
+  ? {
+      "@context": "https://schema.org",
+      "@type": "Review",
+      name: title,
+      itemReviewed: {
+        "@type": "Product",
+        name: name ?? title,
+        ...(maker ? { brand: { "@type": "Brand", name: maker } } : {}),
+        ...(ogImage ? { image: ogImage } : {}),
+      },
+      author: { "@type": "Organization", name: SITE_NAME },
+      publisher: { "@type": "Organization", name: SITE_NAME },
+      datePublished: publishedAt.toISOString(),
+      ...(updatedAt ? { dateModified: updatedAt.toISOString() } : {}),
+      reviewRating: { "@type": "Rating", ratingValue: rating.overall, bestRating: 5, worstRating: 1 },
+      reviewBody: description,
+    }
+  : null;
+
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: breadcrumb.map((item, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, SITE_URL).toString() } : {}),
+  })),
+};
+---
+
+<Layout title={title} description={description} ogImage={ogImage} ogType="article">
+  {reviewLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(reviewLd)} />}
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+
+  <div class="content">
+    <Breadcrumb items={breadcrumb} />
+    <div class="columns">
+    <div class="primary">
+      <main class="main">
+        <ReviewPostHead title={title} image={image} category={category} tags={tags} publishedAt={publishedAt} updatedAt={updatedAt} />
+        <PostContent post={reviewPost} />
+      </main>
+
+      {
+        related.length > 0 && (
+          <section class="related">
+            <h2 class="related-title">あわせて読みたいレビュー</h2>
+            <ReviewPostList reviewPosts={related} />
+          </section>
+        )
+      }
+    </div>
+    <BlogSingleSidebar currentId={reviewPost.id} />
+    </div>
+  </div>
+</Layout>
+
+<style lang="scss">
+  .content {
+    max-width: 120rem;
+    width: 100%;
+    margin: 0 auto;
+    padding: 3.2rem 4rem 8rem;
+
+    @include mixin.sp {
+      padding: 2rem 1rem 6.4rem;
+      --breadcrumb-bleed: 1rem;
+    }
+  }
+
+  // パンくずの下で、本文とサイドバーの上端を揃える
+  .columns {
+    display: flex;
+    align-items: flex-start;
+    gap: 4rem;
+    margin-top: 1.6rem;
+
+    @include mixin.tab {
+      flex-direction: column;
+    }
+
+    @include mixin.sp {
+      margin-top: 1.2rem;
+    }
+  }
+
+  .primary {
+    flex-grow: 1;
+    min-width: 0;
+
+    // 縦積み時は align-items: flex-start の影響で幅が内容に引きずられるので、明示的に全幅にする
+    @include mixin.tab {
+      width: 100%;
+    }
+  }
+
+  .main {
+    background-color: var.$c-white;
+    padding: 6.4rem 4.8rem;
+    border: .1rem solid var.$c-line;
+    border-radius: .6rem;
+
+    @include mixin.sp {
+      padding: 4rem 2rem;
+    }
+  }
+
+  .related {
+    margin-top: 4.8rem;
+
+    @include mixin.sp {
+      margin-top: 3.2rem;
+    }
+  }
+
+  .related-title {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+
+    @include mixin.sp {
+      font-size: 1.8rem;
+    }
+  }
+</style>

@@ -1,0 +1,422 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import imgProfile from '@/assets/images/profile.png';
+import { FaXTwitter } from "react-icons/fa6";
+import Flag from '@/components/flag/Flag.astro';
+import { X_PROFILE_URL, SITE_NAME, SITE_NAME_JA, SITE_DESCRIPTION } from "@/data/siteData";
+import { reviewCategories } from '@/data/review/category';
+import { reviewTags } from '@/data/review/tag';
+import { getReviewCategoryLink, getReviewPostLink, getReviewTagLink } from '@/utils/review/slugs';
+import { getPopularReviewPosts } from '@/utils/review/popular';
+
+const year = new Date().getFullYear();
+
+const posts = await getCollection('review', ({ data }) => data.draft === false);
+const popular = getPopularReviewPosts(posts, 5);
+const regions = reviewCategories
+  .map((c) => ({ ...c, count: posts.filter((p) => p.data.category === c.slug).length }))
+  .filter((c) => c.count > 0);
+const types = reviewTags
+  .map((t) => ({ ...t, count: posts.filter((p) => (p.data.tags as string[]).includes(t.slug)).length }))
+  .filter((t) => t.count > 0);
+---
+
+<footer class="footer">
+  <div class="main">
+    <div class="inner">
+      <div class="col about">
+        <a href="/" class="logo">
+          <Image class="logo-img" src={imgProfile} alt='' width={96} height={96} />
+          <span class="logo-text">
+            <span>{SITE_NAME}</span>
+            <span>{SITE_NAME_JA}</span>
+          </span>
+        </a>
+        <p class="desc">{SITE_DESCRIPTION}</p>
+        <ul class="nav">
+          <li><a href="/">ホーム</a></li>
+          <li><a href="/review/">レビュー一覧</a></li>
+          <li><a href="/contact/">お問い合わせ</a></li>
+        </ul>
+        <a href={X_PROFILE_URL} target="_blank" rel="noopener noreferrer" class="sns-link" aria-label="X (旧Twitter)">
+          <FaXTwitter />
+        </a>
+      </div>
+
+      <div class="col">
+        <p class="col-title">産地から探す</p>
+        <ul class="regions">
+          {
+            regions.map((region) => (
+              <li>
+                <a href={getReviewCategoryLink(region.slug)} class="region">
+                  <span class="flag"><Flag country={region.country} /></span>
+                  <span>{region.label}</span>
+                  <span class="count">{region.count}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <p class="col-title types-title">種類から探す</p>
+        <ul class="regions">
+          {
+            types.map((type) => (
+              <li>
+                <a href={getReviewTagLink(type.slug)} class="region">
+                  <span>{type.label}</span>
+                  <span class="count">{type.count}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="col">
+        <p class="col-title">おすすめレビュー</p>
+        <ol class="latest">
+          {
+            popular.map((post, i) => (
+              <li>
+                <a href={getReviewPostLink(post.id, post.data.category)} class="latest-item">
+                  <span class="thumb">
+                    <Image src={post.data.image} alt="" width={160} height={90} loading="lazy" />
+                    <span class="rank">{i + 1}</span>
+                  </span>
+                  <span class="latest-title">{post.data.title}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+
+    <div class="inner bottom">
+      <div class="bottom-left">
+        <ul class="site-links">
+          <li><a href="/privacy-policy/">プライバシーポリシー</a></li>
+        </ul>
+        <p class="notice"><span>20歳未満の者の飲酒は法律で禁止されています。</span><span>お酒は適量を。</span></p>
+      </div>
+      {/* 楽天ウェブサービスの利用規約で表示が必須のクレジット。右端に小さく置く */}
+      <p class="credit">
+        <a href="https://webservice.rakuten.co.jp/" target="_blank" rel="noopener noreferrer">Supported by Rakuten Developers</a>
+      </p>
+    </div>
+  </div>
+  <div class="copy">
+    &copy; {year} {SITE_NAME} All Rights Reserved.
+  </div>
+</footer>
+
+<style lang="scss">
+  .footer {
+    margin-top: auto;
+  }
+
+  .main {
+    background-color: var.$c-white;
+    border-top: .1rem solid var.$c-line;
+  }
+
+  .inner {
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 4rem 4rem 0;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1.2fr;
+    gap: 4rem;
+
+    @include mixin.tab {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @include mixin.sp {
+      grid-template-columns: 1fr;
+      gap: 2.8rem;
+      padding: 3.2rem 1.6rem 0;
+    }
+  }
+
+  .about {
+    @include mixin.tab {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    font-weight: bold;
+    color: #6f4734;
+  }
+
+  .logo-img {
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 50%;
+    margin-right: 1rem;
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+
+    span {
+      line-height: 1;
+
+      &:last-child {
+        font-size: 1rem;
+        letter-spacing: .24em;
+        margin-top: .6rem;
+      }
+    }
+  }
+
+  .desc {
+    margin-top: 1.2rem;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var.$c-text-gray;
+    max-width: 40rem;
+  }
+
+  .sns-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.6rem;
+    height: 3.6rem;
+    margin-top: 1.6rem;
+    border-radius: 50%;
+    color: #fff;
+    background-color: #e9a457;
+    border: .1rem solid #e9a457;
+    transition: all .3s;
+
+    // ホバーで色反転（サイドバーのXアイコンと同じ）
+    @include mixin.hover {
+      &:hover {
+        background-color: #fff;
+        color: #e9a457;
+      }
+    }
+  }
+
+  .col-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding-bottom: .8rem;
+    margin-bottom: .8rem;
+    border-bottom: .2rem solid #e9a457;
+  }
+
+  .types-title {
+    margin-top: 2.4rem;
+  }
+
+  .regions,
+  .latest {
+    display: flex;
+    flex-direction: column;
+  }
+
+  // 産地・種類の本数は右端に丸いバッジで出す（薄いグレー文字だと見にくいため）
+  .regions {
+    .count {
+      margin-left: auto;
+      min-width: 2.2rem;
+      padding: 0 0.6rem;
+      border-radius: 999px;
+      background-color: var.$c-bg-deep;
+      color: var.$c-text;
+      font-size: 1.1rem;
+      font-weight: bold;
+      line-height: 1.8rem;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  .region,
+  .latest a {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .6rem 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: color .2s;
+
+    @include mixin.hover {
+      &:hover {
+        color: var.$c-main;
+      }
+    }
+  }
+
+  .latest-item {
+    align-items: center;
+    gap: 1rem;
+    line-height: 1.5;
+  }
+
+  .latest-title {
+    min-width: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .rank {
+    position: absolute;
+    left: 0;
+    top: 0;
+    min-width: 1.6rem;
+    height: 1.6rem;
+    padding: 0 .4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 0 .3rem 0;
+    background-color: #e9a457;
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .thumb {
+    position: relative;
+    flex-shrink: 0;
+    width: 6.4rem;
+    aspect-ratio: 16 / 9;
+    border-radius: .4rem;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .flag {
+    display: block;
+    width: 1.8rem;
+    height: 1.2rem;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .count {
+    font-size: 1.1rem;
+    font-weight: normal;
+    color: var.$c-text-gray;
+  }
+
+  .bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2.4rem;
+    padding-top: 2.4rem;
+    padding-bottom: 2rem;
+
+    @include mixin.sp {
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      text-align: center;
+    }
+  }
+
+  .bottom-left {
+    @include mixin.sp {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  // サイト内リンク（説明文の下）
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    margin-top: 1.6rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+
+    a {
+      transition: color .2s;
+
+      @include mixin.hover {
+        &:hover {
+          color: var.$c-main;
+        }
+      }
+    }
+  }
+
+  .site-links {
+    margin-top: 2.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    font-size: 1.1rem;
+    color: var.$c-text-gray;
+
+    a {
+      @include mixin.hover {
+        &:hover {
+          color: var.$c-main;
+        }
+      }
+    }
+  }
+
+  .notice {
+    margin-top: 1.6rem;
+    font-size: 1.1rem;
+    color: var.$c-text-gray;
+
+    // SP では「。」で改行して中央に
+    @include mixin.sp {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  .credit {
+    flex: none;
+    font-size: 1rem;
+    color: var.$c-text-gray;
+    opacity: 0.7;
+
+    @include mixin.sp {
+      align-self: center;
+    }
+  }
+
+  .copy {
+    background-color: #e9a457;
+    text-align: center;
+    font-weight: bold;
+    padding: 1rem 0;
+    font-size: 1.2rem;
+    color: #fff;
+  }
+</style>

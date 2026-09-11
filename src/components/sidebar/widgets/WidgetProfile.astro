@@ -1,26 +1,28 @@
 ---
 import { Image } from "astro:assets";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaXTwitter, FaEnvelope } from "react-icons/fa6";
 import imgProfile from '@/assets/images/profile.png';
+import { X_PROFILE_URL, SITE_NAME, SITE_DESCRIPTION_PARAGRAPHS } from '@/data/siteData';
 ---
 
 <div class="widget">
   <div class="img-wrap">
-    <Image src={imgProfile} alt='プロフィール画像' />
+    <Image src={imgProfile} alt={`${SITE_NAME}のアイコン`} />
   </div>
-  <p class="name">たつや@ウイスキーログ</p>
+  <p class="name">{SITE_NAME}</p>
   <div class="profile-text">
-    <p>2024年11月からウイスキーを飲み始めた、ウイスキー初心者のブログです。</p>
-    <p>ウイスキーレビューやセール情報など、ウイスキーに関するコンテンツを発信していきます！</p>
+    {SITE_DESCRIPTION_PARAGRAPHS.map((p) => <p>{p}</p>)}
   </div>
   <div class="sns">
-    <a href='' target="_blank" class="sns-icon"><FaXTwitter /></a>
+    <a href={X_PROFILE_URL} target="_blank" rel="noopener noreferrer" class="sns-icon" aria-label="X (旧Twitter)"><FaXTwitter /></a>
+    <a href="/contact/" class="sns-icon" aria-label="お問い合わせ"><FaEnvelope /></a>
   </div>
 </div>
 
 <style lang="scss">
   .widget {
-    border: .1rem solid rgba(var.$c-text, .1);
+    border: .1rem solid var.$c-line;
+    border-radius: .6rem;
     background-color: var.$c-white;
     padding: 2.4rem;
   }
@@ -70,12 +72,21 @@ import imgProfile from '@/assets/images/profile.png';
   .sns-icon {
     width: 3.6rem;
     height: 3.6rem;
-    background-color: #e9a457;
+    background-color: var.$c-main;
     color: var.$c-white;
+    border: .1rem solid var.$c-main;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     transition: all .3s;
+
+    // ホバーで色反転（白背景・オレンジの縁・オレンジのアイコン）
+    @include mixin.hover {
+      &:hover {
+        background-color: var.$c-white;
+        color: var.$c-main;
+      }
+    }
   }
 </style>

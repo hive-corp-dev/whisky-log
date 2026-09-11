@@ -1,0 +1,101 @@
+---
+// 飲み方別 + コスパ + 総合の ★5 段階評価表（0.5 刻み）
+import type { ReviewData, Way } from "@/utils/review/spec";
+import { WAY_LABELS } from "@/utils/review/spec";
+import Stars from "@/components/stars/Stars.astro";
+
+interface Props {
+  rating: NonNullable<ReviewData["rating"]>;
+  recommendedWay?: Way | Way[];
+}
+
+const { rating, recommendedWay } = Astro.props;
+const recommended = new Set<Way>(Array.isArray(recommendedWay) ? recommendedWay : recommendedWay ? [recommendedWay] : []);
+
+const rows: { key: string; label: string; value: number; recommended?: boolean }[] = [
+  { key: "straight", label: WAY_LABELS.straight, value: rating.straight, recommended: recommended.has("straight") },
+  { key: "rock", label: WAY_LABELS.rock, value: rating.rock, recommended: recommended.has("rock") },
+  { key: "highball", label: WAY_LABELS.highball, value: rating.highball, recommended: recommended.has("highball") },
+  { key: "cost", label: "コスパ", value: rating.cost },
+];
+
+const fmt = (n: number) => n.toFixed(1);
+---
+
+<table class="rating">
+  <tbody>
+    {
+      rows.map((row) => (
+        <tr>
+          <th scope="row">
+            {row.label}
+            {row.recommended && <span class="badge">おすすめ</span>}
+          </th>
+          <td>
+            <Stars value={row.value} size={1.8} />
+            <span class="num">{fmt(row.value)}</span>
+          </td>
+        </tr>
+      ))
+    }
+    <tr class="overall">
+      <th scope="row">総合</th>
+      <td>
+        <Stars value={rating.overall} size={2.2} />
+        <span class="num">{fmt(rating.overall)}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<style lang="scss">
+  .rating {
+    th {
+      width: 30%;
+      text-align: left;
+      white-space: nowrap;
+
+      @include mixin.sp {
+        width: 38%;
+        white-space: normal;
+      }
+    }
+  }
+
+  .badge {
+    display: inline-block;
+    margin-left: 0.8rem;
+    padding: 0.1rem 0.7rem;
+    border-radius: 2rem;
+    background-color: var.$c-main;
+    color: #fff;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    vertical-align: middle;
+    white-space: nowrap;
+
+    // スマホでは見出しの横に入りきらないので、飲み方の下に段を分けて置く
+    @include mixin.sp {
+      display: block;
+      width: max-content;
+      margin: 0.3rem 0 0;
+      font-size: 1rem;
+      padding: 0 0.6rem;
+    }
+  }
+
+  .num {
+    margin-left: 0.8rem;
+    font-size: 1.3rem;
+    color: var.$c-text-gray;
+    vertical-align: middle;
+  }
+
+  .overall {
+    th,
+    td {
+      background-color: var.$c-main-light;
+      font-weight: bold;
+    }
+  }
+</style>

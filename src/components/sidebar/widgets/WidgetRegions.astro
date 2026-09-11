@@ -1,0 +1,107 @@
+---
+// サイドバー: 産地一覧（記事があるものだけ、本数つき）
+import { getCollection } from 'astro:content';
+import { reviewCategories } from '@/data/review/category';
+import { getReviewCategoryLink } from '@/utils/review/slugs';
+import Flag from '@/components/flag/Flag.astro';
+
+interface Props {
+  /** 選択中の slug（一覧ページのサイドバーで使う） */
+  current?: string;
+}
+
+const { current } = Astro.props;
+const posts = await getCollection('review', ({ data }) => data.draft === false);
+
+const regions = reviewCategories
+  .map((category) => ({
+    ...category,
+    count: posts.filter((post) => post.data.category === category.slug).length,
+  }))
+  .filter((category) => category.count > 0);
+---
+
+<div class="widget">
+  <p class="widget-title">産地から探す</p>
+  <ul class="list">
+    {
+      regions.map((region) => (
+        <li>
+          <a href={getReviewCategoryLink(region.slug)} class:list={["item", { current: region.slug === current }]}>
+            <span class="flag"><Flag country={region.country} /></span>
+            <span class="name">{region.label}</span>
+            <span class="count">{region.count}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style lang="scss">
+  .widget {
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.6rem;
+    background-color: var.$c-white;
+    padding: 2rem;
+  }
+
+  .widget-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding-bottom: 1rem;
+    border-bottom: 0.2rem solid var.$c-main;
+  }
+
+  .list {
+    margin-top: 0.4rem;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 0;
+    border-bottom: 0.1rem solid var.$c-line;
+    font-size: 1.3rem;
+
+    @include mixin.hover {
+      &:hover .name {
+        color: var.$c-main;
+      }
+    }
+  }
+
+  li:last-child .item {
+    border-bottom: none;
+  }
+
+  .item.current .name {
+    color: var.$c-main;
+  }
+
+  .flag {
+    display: block;
+    width: 2rem;
+    height: 1.4rem;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .name {
+    font-weight: bold;
+    transition: color 0.2s;
+  }
+
+  .count {
+    margin-left: auto;
+    font-size: 1.2rem;
+    color: var.$c-text-gray;
+  }
+</style>

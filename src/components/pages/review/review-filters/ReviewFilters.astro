@@ -1,0 +1,157 @@
+---
+// レビュー一覧の絞り込み。産地の行と種類の行を出す。
+// 記事が1件以上ある産地・種類だけを表示する（空のページを作らないため）
+import type { CollectionEntry } from "astro:content";
+import { reviewCategories } from "@/data/review/category";
+import { reviewTags } from "@/data/review/tag";
+import { getReviewCategoryLink, getReviewTagLink } from "@/utils/review/slugs";
+import Flag from "@/components/flag/Flag.astro";
+
+interface Props {
+  /** 公開中の全記事（件数の算出用） */
+  posts: CollectionEntry<"review">[];
+  /** 選択中の産地 slug */
+  currentCategory?: string;
+  /** 選択中の種類 slug */
+  currentTag?: string;
+}
+
+const { posts, currentCategory, currentTag } = Astro.props;
+
+const categories = reviewCategories
+  .map((c) => ({ ...c, count: posts.filter((p) => p.data.category === c.slug).length }))
+  .filter((c) => c.count > 0);
+const tags = reviewTags
+  .map((t) => ({ ...t, count: posts.filter((p) => (p.data.tags as string[]).includes(t.slug)).length }))
+  .filter((t) => t.count > 0);
+const isAll = !currentCategory && !currentTag;
+---
+
+<div class="filters">
+  <div class="row">
+    <p class="row-title">産地</p>
+    <ul class="list">
+      <li>
+        {isAll ? (
+          <span class="filter current">すべて（{posts.length}）</span>
+        ) : (
+          <a href="/review/" class="filter">すべて（{posts.length}）</a>
+        )}
+      </li>
+      {
+        categories.map((c) => (
+          <li>
+            <a href={getReviewCategoryLink(c.slug)} class:list={["filter", { current: c.slug === currentCategory }]}>
+              <span class="filter-flag"><Flag country={c.country} /></span>
+              <span>{c.label}</span>
+              <span class="count">{c.count}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <div class="row">
+    <p class="row-title">種類</p>
+    <ul class="list">
+      {
+        tags.map((t) => (
+          <li>
+            <a href={getReviewTagLink(t.slug)} class:list={["filter", { current: t.slug === currentTag }]}>
+              <span>{t.label}</span>
+              <span class="count">{t.count}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<style lang="scss">
+  .filters {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-top: 2.4rem;
+  }
+
+  .row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+
+    @include mixin.sp {
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+  }
+
+  .row-title {
+    flex: none;
+    width: 4rem;
+    padding-top: 0.7rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var.$c-text-gray;
+
+    @include mixin.sp {
+      width: auto;
+      padding-top: 0;
+    }
+  }
+
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .filter-flag {
+    display: block;
+    width: 1.8rem;
+    height: 1.2rem;
+    overflow: hidden;
+
+    :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .count {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var.$c-text-gray;
+  }
+
+  .filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    padding: 0.6rem 1.4rem;
+    border-radius: 0.4rem;
+    border: 0.1rem solid var.$c-line;
+    background-color: var.$c-white;
+    transition: border-color 0.2s;
+
+    &.current {
+      background-color: var.$c-text;
+      border-color: var.$c-text;
+      color: var.$c-white;
+
+      .count {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+
+    @include mixin.hover {
+      &:hover {
+        border-color: var.$c-main;
+      }
+    }
+  }
+</style>

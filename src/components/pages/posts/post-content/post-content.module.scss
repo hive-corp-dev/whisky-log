@@ -1,0 +1,124 @@
+.content {
+  line-height: 2;
+  font-size: 1.7rem;
+
+  @include mixin.sp {
+    font-size: 1.5rem;
+    line-height: 1.9;
+  }
+
+  h2 {
+    font-size: 2.8rem;
+    font-weight: bold;
+    line-height: 1.4;
+    background-color: var.$c-main;
+    color: var.$c-white;
+    padding: 1.8rem 2.4rem;
+
+    @include mixin.sp {
+      font-size: 2rem;
+      padding: 1.4rem 1.6rem;
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+    }
+  }
+
+  h3 {
+    font-size: 2.4rem;
+    font-weight: bold;
+    line-height: 1.4;
+    border-left: 0.4rem solid var.$c-main;
+    padding: 0.4rem 1.6rem;
+
+    @include mixin.sp {
+      font-size: 1.8rem;
+      padding: 0.2rem 1.2rem;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-top: 2em;
+    font-size: 1.6rem;
+    line-height: 1.6;
+
+    @include mixin.sp {
+      font-size: 1.4rem;
+    }
+
+    th,
+    td {
+      padding: 0.7em 1em;
+      border: 0.1rem solid var.$c-line;
+    }
+
+    th {
+      background-color: var.$c-bg;
+      font-weight: bold;
+    }
+  }
+
+  ul {
+    padding: 2.4rem;
+    background-color: var.$c-bg;
+
+    li {
+      position: relative;
+      padding-left: 0.8em;
+
+      span {
+        color: var.$c-main;
+      }
+
+      &::before {
+        content: "";
+        width: 0.6rem;
+        height: 0.6rem;
+        background-color: var.$c-main;
+        border-radius: 50%;
+        position: absolute;
+        left: 0;
+        top: 1.3rem;
+      }
+    }
+  }
+
+  strong {
+    $c-hl: var.$c-main;
+    font-weight: bold;
+    background-image: linear-gradient(to right, rgba($c-hl, 0.35), rgba($c-hl, 0.35));
+    background-size: 100% 0.3rem;
+    background-position: left bottom 0.3rem;
+    background-repeat: no-repeat;
+  }
+
+  // margins
+
+  & > * {
+    margin-top: 1.5em;
+  }
+
+  h2 {
+    margin-top: 3em;
+  }
+
+  h3 {
+    margin-top: 3em;
+  }
+
+  ul {
+    li {
+      &:not(:first-child) {
+        margin-top: 0.25em;
+      }
+    }
+  }
+}
+
+.disclosure {
+  font-size: 1.2rem;
+  color: var.$c-text-gray;
+  margin-top: 1rem !important;
+}

@@ -1,0 +1,187 @@
+---
+import type { ReviewCategory } from "@/types/review";
+import { Image } from "astro:assets";
+import { PiClock, PiClockClockwise } from "react-icons/pi";
+import {formatDate, convertToJST} from '@/utils/date/date';
+import { getReviewCategoryData } from '@/utils/review/category';
+import { getReviewTagData } from "@/utils/review/tag";
+import { getReviewCategoryLink, getReviewTagLink } from "@/utils/review/slugs";
+import Flag from "@/components/flag/Flag.astro";
+
+const {title, image, category, tags, publishedAt, updatedAt} = Astro.props;
+const categoryData: ReviewCategory = getReviewCategoryData(category);
+---
+<div class="head">
+  <div class="head-main">
+    <a class="head-cat" href={getReviewCategoryLink(category)}>
+      <span class="head-flag"><Flag country={categoryData.country} /></span>
+      <span>{categoryData.label}</span>
+    </a>
+    <div class="head-dates">
+      <time datetime={convertToJST(publishedAt)} class="head-date"><PiClock />{formatDate(publishedAt)}</time>
+      {updatedAt && <time datetime={convertToJST(updatedAt)} class="head-date"><PiClockClockwise />{formatDate(updatedAt)}</time>}
+    </div>
+  </div>
+  <h1 class="head-title">{title}</h1>
+  <div class="head-info">
+    <ul class="head-tags">
+      {
+        tags.map((tag: string) => (
+          <li>
+            <a class="head-tag" href={getReviewTagLink(tag)}>{getReviewTagData(tag).label}</a>
+          </li>
+        ))
+      }
+    </ul>
+    
+  </div>
+  <div class="head-thumb">
+    <Image
+      src={image}
+      alt={title}
+      width={1200}
+      widths={[480, 800, 1200]}
+      sizes="(max-width: 768px) 100vw, 800px"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+</div>
+
+<style lang="scss">
+  .head {
+  }
+
+  .head-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include mixin.sp {
+      flex-direction: column;
+      align-items: flex-start;  
+    }
+  }
+
+  .head-title {
+    font-size: 3.2rem;
+    font-weight: bold;
+    letter-spacing: 0;
+    margin-top: 1.6rem;
+
+    @include mixin.sp {
+      font-size: 2.4rem;
+    }
+  }
+
+  .head-dates {
+    margin-top: 1.2rem;
+    display: flex;
+    gap: 1.6rem;
+  }
+
+  .head-info {
+  }
+
+  .head-flag {
+    display: block;
+    width: 1.8rem;
+    height: 1.2rem;
+    overflow: hidden;
+
+    :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .head-cat {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    background-color: var.$c-text;
+    padding: .3rem 1.2rem;
+    font-size: 1.3rem;
+    border-radius: 2rem;
+    margin-top: 1.6rem;
+    border: .1rem solid var.$c-text;
+    transition: all .3s;
+
+    @include mixin.sp {
+      margin-top: 0;
+      font-size: 1.2rem;
+      padding: .2rem 1rem;
+    }
+
+    @include mixin.hover {
+      &:hover {
+        background-color: #fff;
+        color: var.$c-text;
+      }
+    }
+  }
+
+  .head-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+    margin-top: 1.6rem;
+  }
+
+  .head-tag {
+    font-size: 1.2rem;
+    color: var.$c-text;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    border-radius: 2rem;
+    border: .1rem solid var.$c-text;
+    padding: .2rem .8rem;
+
+    transition: all 0.3s;
+
+    &::before {
+      content: '#';
+    }
+
+    @include mixin.hover {
+      &:hover {
+        background-color: var.$c-text;
+        color: var.$c-white;
+      }
+    }
+  }
+
+  .head-dates {
+    margin-top: 1.6rem;
+  }
+
+  .head-date {
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var.$c-text-gray;
+    letter-spacing: 0;
+
+    svg{
+      font-size: 1.5rem;
+      transform: translateY(-.1rem);
+    }
+  }
+
+  .head-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-top: 4rem;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+</style>

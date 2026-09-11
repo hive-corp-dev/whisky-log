@@ -1,0 +1,32 @@
+---
+// セクションの見出し。トップページや一覧ページの区切りに使う
+interface Props {
+  ja: string;
+  /** 見出しの HTML タグ */
+  tag?: 'h1' | 'h2';
+  align?: 'left' | 'center';
+}
+
+const { ja, tag = 'h2', align = 'left' } = Astro.props;
+const Tag = tag;
+---
+
+<Tag class:list={['heading', align]}>{ja}</Tag>
+
+<style lang="scss">
+  .heading {
+    font-family: var.$font-line;
+    font-size: 2.4rem;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+
+    &.center {
+      text-align: center;
+    }
+
+    @include mixin.sp {
+      font-size: 2rem;
+    }
+  }
+</style>

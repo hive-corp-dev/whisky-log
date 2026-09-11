@@ -1,20 +1,60 @@
 ---
 import WidgetProfile from "@/components/sidebar/widgets/WidgetProfile.astro";
+import WidgetLatest from "@/components/sidebar/widgets/WidgetLatest.astro";
+import WidgetRegions from "@/components/sidebar/widgets/WidgetRegions.astro";
+import WidgetTypes from "@/components/sidebar/widgets/WidgetTypes.astro";
+
+interface Props {
+  /** 表示中の記事の id（新着から除外する） */
+  currentId?: string;
+}
+
+const { currentId } = Astro.props;
 ---
 
 <aside class="sidebar">
-  <div class="sidebar-static">
-    <WidgetProfile />
+  <WidgetProfile />
+  {/* 新着・産地・種類だけ追従。タブレット以下ではフッターと内容が重なるので非表示にする */}
+  <div class="sticky">
+    <WidgetLatest excludeId={currentId} />
+    <WidgetRegions />
+    <WidgetTypes />
   </div>
 </aside>
 
 <style lang="scss">
+  // 固定ヘッダーの高さ + 余白
+  $sticky-top: 9.6rem;
+
+  // sticky の可動範囲 = この aside の高さ。本文と同じ高さに伸ばしておく（親の flex で align-self: stretch）
   .sidebar {
     width: 28rem;
     flex-shrink: 0;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
 
     @include mixin.tab {
       width: 100%;
+    }
+  }
+
+  .sticky {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    position: sticky;
+    top: $sticky-top;
+    // 画面に収まらないときは、この枠の中だけスクロールする
+    max-height: calc(100vh - #{$sticky-top} - 2.4rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var.$c-text, 0.2) transparent;
+
+    @include mixin.tab {
+      display: none;
     }
   }
 </style>

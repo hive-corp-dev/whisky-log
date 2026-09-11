@@ -1,0 +1,124 @@
+---
+// サイドバー: 新着レビュー 5 件
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import { getSortedReviewPosts } from '@/utils/review/posts';
+import { getReviewPostLink } from '@/utils/review/slugs';
+import Stars from '@/components/stars/Stars.astro';
+
+interface Props {
+  /** 除外する記事の id（表示中の記事） */
+  excludeId?: string;
+  limit?: number;
+}
+
+const { excludeId, limit = 5 } = Astro.props;
+
+const posts = getSortedReviewPosts(await getCollection('review', ({ data }) => data.draft === false))
+  .filter((post) => post.id !== excludeId)
+  .slice(0, limit);
+---
+
+<div class="widget">
+  <p class="widget-title">新着レビュー</p>
+  <ul class="list">
+    {
+      posts.map((post) => (
+        <li>
+          <a href={getReviewPostLink(post.id, post.data.category)} class="item">
+            <span class="thumb">
+              <Image src={post.data.image} alt="" width={160} height={90} loading="lazy" />
+            </span>
+            <span class="body">
+              <span class="title">{post.data.title}</span>
+              {post.data.rating && <Stars value={post.data.rating.overall} size={1.1} />}
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <a href="/review/" class="more">すべてのレビューを見る</a>
+</div>
+
+<style lang="scss">
+  .widget {
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.6rem;
+    background-color: var.$c-white;
+    padding: 2rem;
+  }
+
+  .widget-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding-bottom: 1rem;
+    border-bottom: 0.2rem solid var.$c-main;
+  }
+
+  .list {
+    margin-top: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+
+    @include mixin.hover {
+      &:hover .title {
+        color: var.$c-main;
+      }
+    }
+  }
+
+  .thumb {
+    flex-shrink: 0;
+    width: 8rem;
+    aspect-ratio: 16 / 9;
+    border-radius: 0.4rem;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    min-width: 0;
+  }
+
+  .title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    transition: color 0.2s;
+  }
+
+  .more {
+    display: block;
+    margin-top: 1.6rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: right;
+    color: var.$c-text-gray;
+
+    @include mixin.hover {
+      &:hover {
+        color: var.$c-main;
+      }
+    }
+  }
+</style>

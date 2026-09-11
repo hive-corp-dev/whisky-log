@@ -1,0 +1,96 @@
+---
+// 記事冒頭の「結論」ボックス。frontmatter の verdict を表示する
+// 上にオレンジの帯、本文は番号つきの行（B 案）
+interface Props {
+  items: string[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="verdict">
+  <h2 class="heading">この記事の結論</h2>
+  <ol class="list">
+    {
+      items.map((item, i) => (
+        <li class="item">
+          <span class="num">{i + 1}</span>
+          <span class="text">{item}</span>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style lang="scss">
+  .verdict {
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    background-color: var.$c-white;
+  }
+
+  // 本文 h2 の装飾（帯・余白）を打ち消して、この箱用の帯にする
+  .heading {
+    margin: 0 !important;
+    padding: 1rem 2rem !important;
+    background-color: var.$c-main !important;
+    color: var.$c-white !important;
+    font-size: 1.5rem !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.08em;
+
+    @include mixin.sp {
+      padding: 0.9rem 1.6rem !important;
+      font-size: 1.4rem !important;
+    }
+  }
+
+  .list {
+    margin: 0 !important;
+    padding: 1.6rem 2rem !important;
+    background: none !important;
+    list-style: none;
+
+    @include mixin.sp {
+      padding: 1.4rem 1.6rem !important;
+    }
+  }
+
+  .item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0 !important;
+    font-weight: bold;
+    line-height: 1.8;
+
+    &::before {
+      display: none;
+    }
+
+    & + & {
+      margin-top: 1rem !important;
+      padding-top: 1rem !important;
+      border-top: 0.1rem dashed var.$c-line;
+    }
+  }
+
+  .num {
+    flex-shrink: 0;
+    width: 2.2rem;
+    height: 2.2rem;
+    margin-top: 0.4rem;
+    border-radius: 50%;
+    background-color: var.$c-main-light;
+    color: var.$c-main;
+    font-size: 1.2rem;
+    line-height: 2.2rem;
+    text-align: center;
+  }
+
+  .text {
+    min-width: 0;
+  }
+</style>

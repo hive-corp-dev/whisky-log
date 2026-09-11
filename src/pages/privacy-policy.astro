@@ -1,0 +1,170 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Container from '@/components/container/Container.astro';
+import SectionHeading from '@/components/section-heading/SectionHeading.astro';
+import Breadcrumb from '@/components/breadcrumb/Breadcrumb.astro';
+import { SITE_NAME, SITE_URL } from '@/data/siteData';
+
+const title = 'プライバシーポリシー';
+const established = '2026年9月7日';
+---
+
+<Layout title={title} description={`${SITE_NAME}のプライバシーポリシー、広告・アフィリエイトの表記、アクセス解析、免責事項について。`}>
+  <div class="page">
+    <Container type="narrow">
+      <Breadcrumb items={[{ label: 'ホーム', href: '/' }, { label: title }]} />
+      <article class="doc">
+        <SectionHeading ja={title} tag="h1" />
+
+        <p>
+          {SITE_NAME}（{SITE_URL}、以下「当サイト」）は、以下の方針に基づいて運営しています。当サイトを利用された場合、本ポリシーに同意いただいたものとみなします。
+        </p>
+
+        <h2>広告・アフィリエイトについて</h2>
+        <p>
+          当サイトは、第三者配信のアフィリエイトプログラムに参加しており、記事内の商品リンク等から収入を得ることがあります。アフィリエイト広告を含む記事には、その旨を記事冒頭に表記しています。
+        </p>
+        <ul>
+          <li>
+            <strong>Amazonアソシエイト</strong>: Amazonのアソシエイトとして、{SITE_NAME}は適格販売により収入を得ています。
+          </li>
+          <li><strong>楽天アフィリエイト</strong>（楽天グループ株式会社）</li>
+          <li><strong>バリューコマース</strong>（バリューコマース株式会社）を通じたYahoo!ショッピング等の広告</li>
+          <li><strong>もしもアフィリエイト</strong>（株式会社もしも）</li>
+        </ul>
+        <p>
+          記事内の価格は、記載時点または取得時点のもので、税込表示です。実際の販売価格や在庫は各ショップのページでご確認ください。商品の購入やサービスの申し込みは、各ショップの規約に基づいて行われ、当サイトはその取引に責任を負いません。
+        </p>
+
+        <h2>アクセス解析ツールについて</h2>
+        <p>
+          当サイトは、利用状況の把握と改善のために、以下のアクセス解析ツールを利用しています。これらのツールはトラフィックデータの収集のためにCookieを使用しますが、データは匿名で収集されており、個人を特定するものではありません。
+        </p>
+        <ul>
+          <li>
+            <strong>Googleアナリティクス</strong>（Google LLC）。データの収集・処理については
+            <a href="https://policies.google.com/technologies/partner-sites?hl=ja" target="_blank" rel="noopener noreferrer">Googleのポリシーと規約</a>
+            をご確認ください。
+          </li>
+          <li>
+            <strong>Microsoft Clarity</strong>（Microsoft Corporation）。サイト内での操作や閲覧状況を記録し、使い勝手の改善に利用します。詳細は
+            <a href="https://privacy.microsoft.com/ja-jp/privacystatement" target="_blank" rel="noopener noreferrer">Microsoftのプライバシーステートメント</a>
+            をご確認ください。
+          </li>
+        </ul>
+        <p>
+          Cookieの利用は、お使いのブラウザの設定で無効にすることができます。
+        </p>
+
+        <h2>Cookieについて</h2>
+        <p>
+          当サイトおよび当サイトが利用する第三者のサービスは、広告の配信やアクセス解析のためにCookieを使用することがあります。Cookieには氏名や住所、メールアドレスなどの個人情報は含まれません。
+        </p>
+
+        <h2>個人情報について</h2>
+        <p>
+          当サイトでは、お問い合わせフォームで氏名（ニックネーム可）やメールアドレスをお預かりする場合があります。取得した個人情報は、お問い合わせへの回答および必要な連絡のためにのみ利用し、法令に基づく場合を除いて第三者に開示することはありません。フォームの送信にはHyperFormを利用しており、入力内容は同サービスを通じて当サイトに届きます。
+        </p>
+
+        <h2>免責事項</h2>
+        <ul>
+          <li>
+            当サイトの記事は、筆者が実際に飲んだ感想と、公開されている情報をもとに作成しています。正確な情報の掲載に努めていますが、内容の正確性・完全性を保証するものではありません。商品の仕様や価格は変更されることがあります。
+          </li>
+          <li>
+            当サイトの情報を利用したことによって生じた損害等について、当サイトは一切の責任を負いません。
+          </li>
+          <li>
+            当サイトからリンクしている外部サイトの内容については、当サイトは責任を負いません。
+          </li>
+        </ul>
+
+        <h2>お酒に関する注意</h2>
+        <p>
+          20歳未満の者の飲酒は法律で禁止されています。妊娠中や授乳期の飲酒は、胎児・乳児の発育に悪影響を与えるおそれがあります。飲酒運転は法律で禁止されています。お酒は適量を心がけてください。
+        </p>
+
+        <h2>著作権について</h2>
+        <p>
+          当サイトに掲載している文章・写真の著作権は当サイトに帰属します。引用の範囲を超える無断転載はご遠慮ください。当サイトが引用している商品名・ブランド名等は、各権利者に帰属します。
+        </p>
+
+        <h2>お問い合わせ</h2>
+        <p>
+          記事の内容、掲載や広告のご相談、個人情報の取り扱いに関するご質問は、<a href="/contact/">お問い合わせフォーム</a>からお送りください。
+        </p>
+
+        <h2>本ポリシーの変更について</h2>
+        <p>
+          本ポリシーは、法令の変更やサービスの変更に応じて、予告なく改定することがあります。改定後の内容は当ページに掲載した時点で効力を生じます。
+        </p>
+
+        <p class="date">制定日: {established}</p>
+      </article>
+    </Container>
+  </div>
+</Layout>
+
+<style lang="scss">
+  .page {
+    padding: 3.2rem 0 8rem;
+
+    @include mixin.sp {
+      padding: 2rem 0 6.4rem;
+    }
+  }
+
+  .doc {
+    margin-top: 1.6rem;
+    background-color: var.$c-white;
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.6rem;
+    padding: 5.6rem 4.8rem;
+    font-size: 1.5rem;
+    line-height: 2;
+
+    @include mixin.sp {
+      padding: 3.2rem 2rem;
+      font-size: 1.4rem;
+    }
+
+    h2 {
+      margin-top: 4rem;
+      padding-left: 1.2rem;
+      border-left: 0.4rem solid var.$c-main;
+      font-size: 1.9rem;
+      font-weight: bold;
+      line-height: 1.5;
+
+      @include mixin.sp {
+        margin-top: 3.2rem;
+        font-size: 1.7rem;
+      }
+    }
+
+    p {
+      margin-top: 1.6rem;
+    }
+
+    ul {
+      margin-top: 1.6rem;
+      padding-left: 1.4em;
+      list-style: disc;
+
+      li + li {
+        margin-top: 0.6rem;
+      }
+    }
+
+    a {
+      color: var.$c-main;
+      text-decoration: underline;
+    }
+
+    .date {
+      margin-top: 4rem;
+      font-size: 1.3rem;
+      color: var.$c-text-gray;
+    }
+  }
+</style>

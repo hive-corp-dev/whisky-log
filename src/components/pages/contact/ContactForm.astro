@@ -1,0 +1,273 @@
+---
+// お問い合わせフォーム。HyperForm にそのまま POST する（JavaScript での送信処理はしない）。
+// 送信先は siteData.ts の CONTACT_FORM_ACTION。送信後の完了ページ（/contact/thanks/）は HyperForm の管理画面で設定する。
+import { CONTACT_FORM_ACTION } from "@/data/siteData";
+
+const action = CONTACT_FORM_ACTION;
+
+const categories = [
+  "記事の内容について",
+  "記事の誤りの指摘",
+  "レビュー・掲載のご依頼（企業・PR）",
+  "広告・アフィリエイトについて",
+  "その他",
+];
+---
+
+<form class="form" action={action} method="post">
+  <div class="row">
+    <label class="head" for="contact-name">お名前<span class="required">必須</span></label>
+    <div class="body">
+      <input class="input" type="text" id="contact-name" name="name" placeholder="ニックネームでもかまいません" required autocomplete="name" />
+    </div>
+  </div>
+
+  <div class="row">
+    <label class="head" for="contact-email">メールアドレス<span class="required">必須</span></label>
+    <div class="body">
+      <input class="input" type="email" id="contact-email" name="email" placeholder="example@mail.com" required autocomplete="email" />
+    </div>
+  </div>
+
+  <div class="row">
+    <label class="head" for="contact-category">お問い合わせの種類<span class="required">必須</span></label>
+    <div class="body">
+      <select class="input select" id="contact-category" name="category" required>
+        <option value="">選択してください</option>
+        {categories.map((c) => <option value={c}>{c}</option>)}
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <label class="head" for="contact-company">会社名・サイト名<span class="optional">任意</span></label>
+    <div class="body">
+      <input class="input" type="text" id="contact-company" name="company" placeholder="企業・メディアの方はご記入ください" autocomplete="organization" />
+    </div>
+  </div>
+
+  <div class="row">
+    <label class="head" for="contact-url">該当する記事のURL<span class="optional">任意</span></label>
+    <div class="body">
+      <input class="input" type="url" id="contact-url" name="article_url" placeholder="https://whisky-log.com/review/..." />
+    </div>
+  </div>
+
+  <div class="row">
+    <label class="head" for="contact-message">お問い合わせ内容<span class="required">必須</span></label>
+    <div class="body">
+      <textarea class="input textarea" id="contact-message" name="message" rows="8" placeholder="内容をご記入ください" required></textarea>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="head" aria-hidden="true"></div>
+    <div class="body">
+      <label class="agree">
+        <input type="checkbox" name="agree" value="同意する" required />
+        <span><a href="/privacy-policy/" target="_blank" rel="noopener">プライバシーポリシー</a>に同意する<span class="required">必須</span></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="head" aria-hidden="true"></div>
+    <div class="body">
+      <button type="submit" class="btn">送信する</button>
+    </div>
+  </div>
+</form>
+
+<style lang="scss">
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.8rem;
+
+    @include mixin.sp {
+      gap: 2rem;
+    }
+  }
+
+  .row {
+    display: flex;
+    align-items: flex-start;
+    gap: 2.4rem;
+
+    @include mixin.sp {
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+  }
+
+  .head {
+    flex: none;
+    width: 20rem;
+    padding-top: 1.2rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.6rem;
+
+    @include mixin.sp {
+      width: auto;
+      padding-top: 0;
+      font-size: 1.4rem;
+    }
+  }
+
+  .required,
+  .optional {
+    flex: none;
+    display: inline-block;
+    white-space: nowrap;
+    padding: 0.1rem 0.6rem;
+    border-radius: 0.3rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    line-height: 1.6;
+  }
+
+  .required {
+    background-color: var.$c-main;
+    color: var.$c-white;
+  }
+
+  .optional {
+    background-color: var.$c-bg-deep;
+    color: var.$c-text-gray;
+  }
+
+  .body {
+    flex-grow: 1;
+    min-width: 0;
+
+    @include mixin.sp {
+      width: 100%;
+    }
+  }
+
+  .input {
+    appearance: none;
+    width: 100%;
+    margin: 0;
+    padding: 1.1rem 1.4rem;
+    font-size: 1.6rem;
+    line-height: 1.6;
+    color: var.$c-text;
+    background-color: var.$c-bg;
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.6rem;
+    transition: border-color 0.2s;
+
+    &::placeholder {
+      color: #b5aca4;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var.$c-main;
+    }
+  }
+
+  // 未選択のセレクトはプレースホルダーと同じ色にする
+  .select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%237a6f66' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.4rem center;
+    padding-right: 3.6rem;
+
+    &:invalid {
+      color: #b5aca4;
+    }
+  }
+
+  .textarea {
+    resize: vertical;
+    min-height: 16rem;
+  }
+
+  .agree {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+
+    // リセット CSS で見た目が消えるので、チェックボックスは自前で描く
+    input {
+      appearance: none;
+      flex: none;
+      width: 2rem;
+      height: 2rem;
+      margin: 0;
+      border: 0.2rem solid #b5aca4;
+      border-radius: 0.4rem;
+      background-color: var.$c-white;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+
+      &:checked {
+        border-color: var.$c-main;
+        background-color: var.$c-main;
+      }
+
+      &:checked::after {
+        content: "";
+        position: absolute;
+        left: 0.55rem;
+        top: 0.2rem;
+        width: 0.5rem;
+        height: 1rem;
+        border: solid var.$c-white;
+        border-width: 0 0.2rem 0.2rem 0;
+        transform: rotate(45deg);
+      }
+
+      &:focus-visible {
+        outline: 0.2rem solid var.$c-main;
+        outline-offset: 0.2rem;
+      }
+    }
+
+    a {
+      text-decoration: underline;
+      color: var.$c-main;
+    }
+
+    .required {
+      margin-left: 0.6rem;
+    }
+  }
+
+  .btn {
+    appearance: none;
+    display: inline-block;
+    min-width: 20rem;
+    padding: 1.3rem 3.2rem;
+    text-align: center;
+    border-radius: 999px;
+    background-color: var.$c-main;
+    border: 0.1rem solid var.$c-main;
+    color: var.$c-white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    @include mixin.sp {
+      width: 100%;
+    }
+
+    @include mixin.hover {
+      &:hover {
+        background-color: var.$c-white;
+        color: var.$c-main;
+      }
+    }
+  }
+</style>

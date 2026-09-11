@@ -1,0 +1,105 @@
+---
+// こんな人におすすめ / おすすめしない人（1 枚のカードに 2 段、見出しはピル型）
+// goodLabel / badLabel を渡せば「良い声 / 気になる声」のような別の用途にも使える
+interface Props {
+  good: string[];
+  bad: string[];
+  goodLabel?: string;
+  badLabel?: string;
+}
+
+const { good, bad, goodLabel = "こんな人におすすめ", badLabel = "おすすめしない人" } = Astro.props;
+---
+
+<div class="pros-cons">
+  <section class="sec good">
+    <h4 class="pill">{goodLabel}</h4>
+    <ul class="list">{good.map((item) => <li>{item}</li>)}</ul>
+  </section>
+  <section class="sec bad">
+    <h4 class="pill">{badLabel}</h4>
+    <ul class="list">{bad.map((item) => <li>{item}</li>)}</ul>
+  </section>
+</div>
+
+<style lang="scss">
+  .pros-cons {
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.8rem;
+    background-color: #fcfcfc;
+    padding: 2rem 2.2rem;
+    font-size: 1.5rem;
+    line-height: 1.9;
+
+    @include mixin.sp {
+      padding: 1.6rem;
+      font-size: 1.4rem;
+    }
+  }
+
+  .sec + .sec {
+    margin-top: 1.8rem;
+    padding-top: 1.8rem;
+    border-top: 0.1rem dashed var.$c-line;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 0.3rem 1.4rem;
+    border-radius: 999px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+    line-height: 1.6;
+  }
+
+  .good .pill {
+    background-color: var.$c-main;
+    color: var.$c-white;
+  }
+
+  .bad .pill {
+    background-color: var.$c-bg-deep;
+    color: var.$c-text-gray;
+  }
+
+  .list {
+    margin: 1rem 0 0 !important;
+    padding: 0 !important;
+    background: none !important;
+
+    li {
+      position: relative;
+      padding-left: 2.6rem !important;
+
+      & + li {
+        margin-top: 0.4rem !important;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.45em;
+        width: 1.8rem;
+        height: 1.8rem;
+        border-radius: 50%;
+        font-size: 1.1rem;
+        line-height: 1.8rem;
+        text-align: center;
+        color: var.$c-white;
+        background-color: var.$c-main;
+      }
+    }
+  }
+
+  .good .list li::before {
+    content: "✓";
+    background-color: var.$c-main !important;
+  }
+
+  .bad .list li::before {
+    content: "–";
+    background-color: #b5aca4 !important;
+  }
+</style>

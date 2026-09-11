@@ -1,0 +1,94 @@
+---
+// レビュー一覧（すべて／産地別／種類別）の共通レイアウト。
+// PC: 一覧 + 追従するサイドバー（産地・種類）。タブレット以下: 見出しの下に絞り込みを出す
+import type { CollectionEntry } from "astro:content";
+import SectionHeading from "@/components/section-heading/SectionHeading.astro";
+import ReviewPostList from "@/components/pages/review/ReviewPostList.astro";
+import ReviewFilters from "@/components/pages/review/review-filters/ReviewFilters.astro";
+import ReviewListSidebar from "@/components/sidebar/ReviewListSidebar.astro";
+
+interface Props {
+  title: string;
+  /** 表示する記事 */
+  posts: CollectionEntry<"review">[];
+  /** 公開中の全記事（絞り込みの件数用） */
+  allPosts: CollectionEntry<"review">[];
+  currentCategory?: string;
+  currentTag?: string;
+}
+
+const { title, posts, allPosts, currentCategory, currentTag } = Astro.props;
+---
+
+<div class="content">
+  <SectionHeading ja={title} tag="h1" />
+  <div class="filters-mobile">
+    <ReviewFilters posts={allPosts} currentCategory={currentCategory} currentTag={currentTag} />
+  </div>
+  <div class="columns">
+    <div class="primary">
+      <ReviewPostList reviewPosts={posts} />
+    </div>
+    <ReviewListSidebar currentCategory={currentCategory} currentTag={currentTag} />
+  </div>
+</div>
+
+<style lang="scss">
+  .content {
+    max-width: 120rem;
+    width: 100%;
+    margin: 0 auto;
+    padding: 6.4rem 4rem 8rem;
+
+    @include mixin.sp {
+      padding: 4rem 1rem 6.4rem;
+    }
+  }
+
+  .filters-mobile {
+    display: none;
+
+    @include mixin.tab {
+      display: block;
+    }
+  }
+
+  .columns {
+    display: flex;
+    align-items: flex-start;
+    gap: 4rem;
+    margin-top: 3.2rem;
+
+    @include mixin.tab {
+      flex-direction: column;
+      margin-top: 0;
+    }
+  }
+
+  .primary {
+    flex-grow: 1;
+    min-width: 0;
+
+    @include mixin.tab {
+      width: 100%;
+    }
+
+    // サイドバーがあるぶん幅が狭いので、PC では 2 列にする（ホームの 3 列とカード幅をそろえる）
+    :global(.list) {
+      margin-top: 0;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @include mixin.tab {
+      :global(.list) {
+        margin-top: 2.4rem;
+      }
+    }
+
+    @include mixin.sp {
+      :global(.list) {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  }
+</style>

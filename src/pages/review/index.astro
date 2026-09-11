@@ -1,0 +1,13 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import ReviewListPage from '@/components/pages/review/ReviewListPage.astro';
+import { getCollection } from 'astro:content';
+import { getSortedReviewPosts } from '@/utils/review/posts';
+
+const reviewPosts = await getCollection('review', ({ data }) => data.draft === false);
+const sortedPosts = getSortedReviewPosts(reviewPosts);
+---
+
+<Layout title="ウイスキーのレビュー一覧" description="飲んだウイスキーをストレート・ロック・ハイボールで飲み比べたレビューの一覧です。">
+  <ReviewListPage title="レビュー一覧" posts={sortedPosts} allPosts={reviewPosts} />
+</Layout>

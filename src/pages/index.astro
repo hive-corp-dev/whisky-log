@@ -1,107 +1,166 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { Image } from 'astro:assets';
 import Container from '@/components/container/Container.astro';
-import coverImg from '@/assets/images/cover.png';
-import NewBlog from '@/components/pages/home/NewBlog.astro';
+import SectionHeading from '@/components/section-heading/SectionHeading.astro';
+import ReviewPostList from '@/components/pages/review/ReviewPostList.astro';
+import Flag from '@/components/flag/Flag.astro';
+import { getCollection } from 'astro:content';
+import { getSortedReviewPosts } from '@/utils/review/posts';
+import { reviewCategories } from '@/data/review/category';
+import { getReviewCategoryLink } from '@/utils/review/slugs';
+
+const reviewPosts = await getCollection('review', ({ data }) => data.draft === false);
+const sortedPosts = getSortedReviewPosts(reviewPosts);
+const latest = sortedPosts.slice(0, 12);
+
+// 記事があるカテゴリだけ、本数つきで出す
+const regions = reviewCategories
+  .map((category) => ({
+    ...category,
+    count: reviewPosts.filter((post) => post.data.category === category.slug).length,
+  }))
+  .filter((category) => category.count > 0);
 ---
 
 <Layout>
-  <!-- <div class="cover">
-    <Image class="cover" src={coverImg} alt='WHISKY LOGのカバー画像' />
-
-    <div class="cover-content">
-        <h1 class="cover-title">Whisky Log</h1>
-        <p class="cover-text">ウイスキーの感想・レビューをシェアするサイトです。<br>おすすめのウイスキーを見つけてみましょう！
-        </p>
-    </div>
-  </div> -->
-  
-  <NewBlog />
-
-  <div class="sale">
+  <section class="section">
     <Container>
-      <h2 class="sec-title">新着セール情報</h2>
-      <p>Amazonや楽天などのセール情報を更新しています！<br />※個人で更新しておりますので、ズレや記載漏れがある場合がございます。</p>
+      <div class="section-head">
+        <SectionHeading ja="新着レビュー" />
+        <a href="/review/" class="more">すべてのレビュー（{reviewPosts.length}本）</a>
+      </div>
+      <ReviewPostList reviewPosts={latest} />
+      <div class="section-foot">
+        <a href="/review/" class="button">すべてのレビューを見る</a>
+      </div>
     </Container>
-  </div>
+  </section>
 
+  <section class="section regions" id="regions">
+    <Container>
+      <SectionHeading ja="産地から探す" />
+      <ul class="region-list">
+        {
+          regions.map((region) => (
+            <li>
+              <a href={getReviewCategoryLink(region.slug)} class="region">
+                <span class="region-flag"><Flag country={region.country} /></span>
+                <span class="region-name">{region.label}</span>
+                <span class="region-count">{region.count}本</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </Container>
+  </section>
 </Layout>
 
-
 <style lang="scss">
-	.cover {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 5/ 2;
+  .section {
+    padding: 6.4rem 0 7.2rem;
 
-    img {
+    @include mixin.sp {
+      padding: 4.8rem 0;
+    }
+  }
+
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .more {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var.$c-text-gray;
+    white-space: nowrap;
+    padding-bottom: 0.6rem;
+
+    @include mixin.sp {
+      display: none;
+    }
+
+    @include mixin.hover {
+      &:hover {
+        color: var.$c-main;
+      }
+    }
+  }
+
+  .section-foot {
+    margin-top: 4rem;
+    text-align: center;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 1.4rem 3.2rem;
+    border-radius: 0.4rem;
+    background-color: var.$c-main;
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    transition: opacity 0.2s;
+
+    @include mixin.hover {
+      &:hover {
+        opacity: 0.85;
+      }
+    }
+  }
+
+  .regions {
+    padding-top: 0;
+  }
+
+  .region-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin-top: 2.4rem;
+  }
+
+  .region-flag {
+    display: block;
+    width: 2.1rem;
+    height: 1.4rem;
+    overflow: hidden;
+
+    :global(img) {
+      width: 100%;
       height: 100%;
       object-fit: cover;
     }
-
-    &::after {
-      content: '';
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      backdrop-filter: blur(1rem);
-      background-color: rgba(#303030, .2);
-    }
   }
 
-  .sec-title {
-    font-size: 2.4rem;
-    font-weight: bold;
-    text-align: center;
-    letter-spacing: .08em;
-    border-top: .2rem solid;
-    border-bottom: .2rem solid;
-    padding-top: 1.2rem;
-    padding-bottom: 1.2rem;
-
-    @include mixin.sp {
-      font-size: 2rem;
-      padding-top: .8rem;
-      padding-bottom: .8rem;
-    }
-  }
-
-  .cover-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  .region {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-    z-index: 1;
-  }
+    gap: 0.8rem;
+    padding: 1.2rem 2rem;
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.4rem;
+    background-color: var.$c-white;
+    transition: border-color 0.2s;
 
-  .cover-title {
-    font-size: 4.8rem;
-    font-weight: bold;
-  }
-
-  .cover-text {
-    font-size: 1.6rem;
-    letter-spacing: .1em;
-    margin-top: 1.6rem;
-    line-height: 2;
-  }
-
-  .sale {
-    padding: 12rem 0;
-    background-color: #fff;
-
-    @include mixin.sp {
-      padding: 8rem 0;
+    @include mixin.hover {
+      &:hover {
+        border-color: var.$c-main;
+      }
     }
+  }
+
+  .region-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .region-count {
+    font-size: 1.2rem;
+    color: var.$c-text-gray;
   }
 </style>

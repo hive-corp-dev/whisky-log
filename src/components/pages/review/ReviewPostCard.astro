@@ -1,0 +1,147 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import Flag from "@/components/flag/Flag.astro";
+import { getReviewPostLink } from "@/utils/review/slugs";
+import { formatDate, convertToJST } from '@/utils/date/date';
+import { getReviewCategoryData } from "@/utils/review/category";
+import Stars from "@/components/stars/Stars.astro";
+
+interface Props {
+  article: CollectionEntry<'review'>;
+}
+
+const { article } = Astro.props;
+
+const { id } = article;
+const { title, image, category, publishedAt, rating } = article.data;
+const categoryData = getReviewCategoryData(category);
+---
+
+<a href={getReviewPostLink(id, category)} class="card">
+  <div class="thumb">
+    <Image
+      src={image}
+      alt={title}
+      width={800}
+      widths={[400, 800]}
+      sizes="(max-width: 768px) 100vw, 400px"
+      loading="lazy"
+    />
+    <div class="cat">
+      <span class="flag"><Flag country={categoryData.country} /></span>
+      <span>{categoryData.label}</span>
+    </div>
+  </div>
+  <div class="body">
+    <h2 class="title">{title}</h2>
+    <div class="meta">
+      {rating && <span class="score"><Stars value={rating.overall} size={1.4} /><span class="num">{rating.overall.toFixed(1)}</span></span>}
+      <time datetime={convertToJST(publishedAt)} class="date">{formatDate(publishedAt)}</time>
+    </div>
+  </div>
+</a>
+
+<style lang="scss">
+  .card {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: var.$c-white;
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+
+    @include mixin.hover {
+      &:hover {
+        box-shadow: 0 0.6rem 1.6rem rgba(var.$c-text, 0.1);
+
+        .thumb img {
+          transform: scale(1.04);
+        }
+      }
+    }
+  }
+
+  .thumb {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: var.$c-bg;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+  }
+
+  .cat {
+    position: absolute;
+    left: 0.8rem;
+    top: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem 0.4rem 0.6rem;
+    border-radius: 2rem;
+    background-color: #303030;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+
+  .flag {
+    display: block;
+    width: 1.8rem;
+    height: 1.2rem;
+    overflow: hidden;
+
+    :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .body {
+    padding: 1.4rem 1.6rem 1.6rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.6;
+  }
+
+  .meta {
+    margin-top: auto;
+    padding-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem 1rem;
+  }
+
+  .score {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .num {
+    font-size: 1.2rem;
+    color: var.$c-text-gray;
+  }
+
+  .date {
+    font-size: 1.1rem;
+    color: var.$c-text-gray;
+  }
+</style>

@@ -1,0 +1,32 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import ReviewListPage from '@/components/pages/review/ReviewListPage.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { reviewCategories } from '@/data/review/category';
+import { getSortedReviewPosts } from '@/utils/review/posts';
+
+export async function getStaticPaths() {
+  const reviewPosts = await getCollection('review', ({ data }) => data.draft === false);
+
+  // 記事が1件以上あるカテゴリだけページを生成する
+  return reviewCategories.flatMap((category) => {
+    const posts = reviewPosts.filter((post) => post.data.category === category.slug);
+    if (posts.length === 0) return [];
+    return [{ params: { category: category.slug }, props: { category, posts: getSortedReviewPosts(posts), allPosts: reviewPosts } }];
+  });
+}
+
+interface Props {
+  category: (typeof reviewCategories)[number];
+  posts: CollectionEntry<'review'>[];
+  allPosts: CollectionEntry<'review'>[];
+}
+
+const { category, posts, allPosts } = Astro.props;
+const title = `${category.label}ウイスキーのレビュー一覧`;
+---
+
+<Layout title={title} description={`${category.label}ウイスキーをストレート・ロック・ハイボールで飲み比べたレビューの一覧です。`}>
+  <ReviewListPage title={title} posts={posts} allPosts={allPosts} currentCategory={category.slug} />
+</Layout>

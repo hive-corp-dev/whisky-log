@@ -1,0 +1,19 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import styles from './text-link.module.scss';
+
+type Props = HTMLAttributes<'a'> & { external?: boolean };
+const { class: className, external, href, target, rel, ...attributes } = Astro.props;
+const hrefText = href?.toString();
+const isExternal = external ?? (hrefText != null && /^(https?:\/\/|\/\/)/i.test(hrefText) && new URL(hrefText, Astro.url).origin !== Astro.url.origin);
+const linkTarget = target ?? (isExternal ? '_blank' : undefined);
+const linkRel = [...new Set([...(rel?.split(/\s+/).filter(Boolean) ?? []), ...(linkTarget === '_blank' ? ['noopener', 'noreferrer'] : [])])].join(' ') || undefined;
+---
+
+<a {...attributes} href={href} target={linkTarget} rel={linkRel} class:list={['text-link', styles.link, className]}>
+  <slot />{isExternal && (
+    <svg class={styles.icon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M14 3h7v7M21 3 10 14M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5" />
+    </svg>
+  )}{linkTarget === '_blank' && <span class={styles.srOnly}>（新しいタブで開きます）</span>}
+</a>
