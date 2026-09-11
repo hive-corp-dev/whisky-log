@@ -12,6 +12,9 @@ export const SITE_URL = "https://whisky-log.com";
 
 export const X_PROFILE_URL = "https://x.com/ta_whiskylog";
 
+// Google Search Console の所有権確認用メタタグの値（公開値）。削除すると確認が外れる
+export const GOOGLE_SITE_VERIFICATION = "CIsJNSDQztPNTWKgZLY35s4nlMMEdjex_V33TY9boYg";
+
 // Google アナリティクス（GA4）の測定 ID。公開値なので環境変数にはしない。本番ビルドのときだけ読み込む
 export const GA_MEASUREMENT_ID = "G-FQD24S9GQL";
 
