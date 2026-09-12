@@ -1,0 +1,235 @@
+---
+// 本文中に置く、サイト内の別記事へのリンクカード（ブログカード）。
+//   <LinkCard slug="black-nikka-special" />
+//   <LinkCard slug="black-nikka-special" label="カフェグレーンについて" />
+// slug は src/content/review のファイル名。記事のサムネ・タイトル・説明文・産地を自動で出す。
+// 非公開（draft）や存在しない slug のときは何も出さない（ビルドは通す）。
+import { getEntry } from "astro:content";
+import { Image } from "astro:assets";
+import Flag from "@/components/flag/Flag.astro";
+import Stars from "@/components/stars/Stars.astro";
+import { getReviewPostLink } from "@/utils/review/slugs";
+import { getReviewCategoryData } from "@/utils/review/category";
+
+interface Props {
+  slug: string;
+  /** カード上部の小さな見出し。既定は「関連記事」 */
+  label?: string;
+}
+
+const { slug, label = "関連記事" } = Astro.props;
+const entry = await getEntry("review", slug);
+const post = entry && entry.data.draft === false ? entry : undefined;
+const categoryData = post ? getReviewCategoryData(post.data.category) : undefined;
+---
+
+{
+  post && categoryData && (
+    <a href={getReviewPostLink(post.id, post.data.category)} class="card">
+      <span class="thumb">
+        <Image src={post.data.image} alt="" width={480} widths={[240, 480]} sizes="240px" loading="lazy" />
+      </span>
+      <span class="body">
+        <span class="label">{label}</span>
+        <span class="title">{post.data.title}</span>
+        <span class="desc">{post.data.description}</span>
+        <span class="meta">
+          <span class="cat">
+            <span class="flag"><Flag country={categoryData.country} /></span>
+            {categoryData.label}
+          </span>
+          {post.data.rating && (
+            <span class="score">
+              <Stars value={post.data.rating.overall} size={1.3} />
+              <span class="num">{post.data.rating.overall.toFixed(1)}</span>
+            </span>
+          )}
+        </span>
+      </span>
+    </a>
+  )
+}
+
+<style lang="scss">
+  .card {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    gap: 2rem;
+    margin: 2.4rem 0;
+    padding: 3.2rem 1.6rem 1.6rem; // 上はラベルの分だけ広く
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.8rem;
+    background-color: var.$c-white;
+    line-height: 1.6;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    @include mixin.sp {
+      gap: 1.2rem;
+      padding: 2.8rem 1.2rem 1.2rem;
+    }
+
+    @include mixin.hover {
+      &:hover {
+        border-color: var.$c-main;
+        box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.06);
+
+        .thumb img {
+          transform: scale(1.04);
+        }
+
+        .title {
+          color: var.$c-main;
+        }
+      }
+    }
+  }
+
+  .thumb {
+    flex: none;
+    width: 20rem;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 0.6rem;
+    align-self: center;
+
+    @include mixin.sp {
+      width: 8.8rem;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex-grow: 1;
+  }
+
+  // 左上に固定するラベル（カードの角に合わせて左上だけ丸める）
+  .label {
+    position: absolute;
+    top: -0.1rem;
+    left: -0.1rem;
+    padding: 0.3rem 1.2rem;
+    border-radius: 0.8rem 0 0.6rem 0;
+    background-color: var.$c-main;
+    color: var.$c-white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+
+    // スマホではラベルの余白を詰めて小さく
+    @include mixin.sp {
+      padding: 0.15rem 0.8rem;
+      font-size: 1rem;
+    }
+  }
+
+  .title {
+    margin-top: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    transition: color 0.2s;
+
+    @include mixin.sp {
+      font-size: 1.4rem;
+    }
+  }
+
+  .desc {
+    margin-top: 0.6rem;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: var.$c-text-gray;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+
+    @include mixin.sp {
+      display: none;
+    }
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 1.2rem;
+    margin-top: auto;
+    padding-top: 0.8rem;
+    font-size: 1.2rem;
+    color: var.$c-text-gray;
+
+    // SP では必ず 1 行に収める（産地・星とも小さくして折り返さない）
+    @include mixin.sp {
+      flex-wrap: nowrap;
+      gap: 0.8rem;
+      font-size: 1.1rem;
+    }
+  }
+
+  .cat {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  .flag {
+    display: block;
+    width: 1.8rem;
+    height: 1.2rem;
+    overflow: hidden;
+
+    @include mixin.sp {
+      width: 1.5rem;
+      height: 1rem;
+    }
+
+    :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .score {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+
+    @include mixin.sp {
+      gap: 0.3rem;
+
+      // 星の部品は inline で font-size を持つので、SP は上書きして小さくする
+      :global(.stars) {
+        font-size: 1.1rem !important;
+      }
+    }
+  }
+
+  .num {
+    font-size: 1.2rem;
+
+    @include mixin.sp {
+      font-size: 1.1rem;
+    }
+  }
+
+</style>
