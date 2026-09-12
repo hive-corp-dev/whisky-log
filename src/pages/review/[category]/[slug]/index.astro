@@ -44,24 +44,25 @@ const breadcrumb = [
 const ogImageAsset = await getImage({ src: image, width: 1200, format: 'jpg' });
 const ogImage = Astro.site ? new URL(ogImageAsset.src, Astro.site).toString() : undefined;
 
-// 構造化データ: Review + パンくず
-const reviewLd = rating
+// 商品スニペット用に Product.review として個別レビューを紐付ける。
+// 筆者の評価なので aggregateRating（複数人の集計）や販売情報は追加しない。
+const productLd = rating
   ? {
       "@context": "https://schema.org",
-      "@type": "Review",
-      name: title,
-      itemReviewed: {
-        "@type": "Product",
-        name: name ?? title,
-        ...(maker ? { brand: { "@type": "Brand", name: maker } } : {}),
-        ...(ogImage ? { image: ogImage } : {}),
+      "@type": "Product",
+      name: name ?? title,
+      ...(maker ? { brand: { "@type": "Brand", name: maker } } : {}),
+      ...(ogImage ? { image: ogImage } : {}),
+      review: {
+        "@type": "Review",
+        name: title,
+        author: { "@type": "Organization", name: SITE_NAME },
+        publisher: { "@type": "Organization", name: SITE_NAME },
+        datePublished: publishedAt.toISOString(),
+        ...(updatedAt ? { dateModified: updatedAt.toISOString() } : {}),
+        reviewRating: { "@type": "Rating", ratingValue: rating.overall, bestRating: 5, worstRating: 1 },
+        reviewBody: description,
       },
-      author: { "@type": "Organization", name: SITE_NAME },
-      publisher: { "@type": "Organization", name: SITE_NAME },
-      datePublished: publishedAt.toISOString(),
-      ...(updatedAt ? { dateModified: updatedAt.toISOString() } : {}),
-      reviewRating: { "@type": "Rating", ratingValue: rating.overall, bestRating: 5, worstRating: 1 },
-      reviewBody: description,
     }
   : null;
 
@@ -78,7 +79,7 @@ const breadcrumbLd = {
 ---
 
 <Layout title={title} description={description} ogImage={ogImage} ogType="article">
-  {reviewLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(reviewLd)} />}
+  {productLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(productLd)} />}
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
 
   <div class="content">
