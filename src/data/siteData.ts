@@ -31,6 +31,12 @@ export const AFFILIATE = {
   // 楽天アフィリエイト: 記事ごとの links.rakuten に管理画面で生成した URL を貼る運用。
   // ここに ID を入れると検索結果リンクも計測対象にできる（例: "1a2b3c4d.5e6f7g8h"）
   rakutenId: "",
+  // Yahoo!ショッピング（バリューコマース MyLink）。sid はサイト ID、pid は MyLink 用広告コードの ID。
+  // 空にすると通常の検索リンクになる
+  valueCommerce: {
+    sid: "3781252",
+    pid: "892701837",
+  },
 };
 
 // 記事冒頭に出す広告表記（景品表示法・ステマ規制対応）
