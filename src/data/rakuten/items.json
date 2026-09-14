@@ -193,5 +193,31 @@
     "reviewAverage": 4.8,
     "reviewCount": 35,
     "fetchedAt": "2026-09-11T04:15:59.855Z"
+  },
+  "kavalan-distillery-select-no1": {
+    "query": "{\"keyword\":\"カバラン ディスティラリーセレクト No.1 700ml\",\"volume\":700}",
+    "itemCode": "rakuten24:10848033",
+    "itemName": "カバラン ディスティラリーセレクト No.1(700ml)【KAVALAN(カバラン)】",
+    "itemPrice": 5970,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00r1366.60j6w957.g00r1366.60j6x46d/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakuten24%2F4710085230471%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Frakuten24%2Fi%2F10848033%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00r1366.60j6w957.g00r1366.60j6x46d/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakuten24%2F4710085230471%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Frakuten24%2Fi%2F10848033%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/rakuten24/cabinet/471/4710085230471.jpg?_ex=400x400",
+    "shopName": "楽天24",
+    "reviewAverage": 4.27,
+    "reviewCount": 22,
+    "fetchedAt": "2026-09-14T04:08:16.238Z"
+  },
+  "nikka-coffey-grain": {
+    "query": "{\"keyword\":\"ニッカ カフェグレーン 700ml\",\"volume\":700}",
+    "itemCode": "ricaoh:10002264",
+    "itemName": "正規 ニッカ カフェグレーン 700ml 箱なし 【ウィスキー お酒 日本 ニッカウイスキー ウイスキー 洋酒 誕生日 酒 蒸留酒 自宅 自宅用 20歳 ��飲み パーティー ジャパニーズウイスキー bbq バーベキュー 父の日 父の日ギフト 祖父 】【ワインならリカオー】",
+    "itemPrice": 7780,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00pjsk6.60j6w14d.g00pjsk6.60j6x1b3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fricaoh%2F188452%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fricaoh%2Fi%2F10002264%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00pjsk6.60j6w14d.g00pjsk6.60j6x1b3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fricaoh%2F188452%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fricaoh%2Fi%2F10002264%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ricaoh/cabinet/299999/1/209454.jpg?_ex=400x400",
+    "shopName": "リカオー",
+    "reviewAverage": 0,
+    "reviewCount": 0,
+    "fetchedAt": "2026-09-14T04:32:09.338Z"
   }
 }
