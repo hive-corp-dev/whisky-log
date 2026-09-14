@@ -40,4 +40,4 @@ export const AFFILIATE = {
 };
 
 // 記事冒頭に出す広告表記（景品表示法・ステマ規制対応）
-export const AFFILIATE_DISCLOSURE = "本記事にはアフィリエイト広告（Amazon・楽天市場・Yahoo!ショッピング）が含まれます。";
+export const AFFILIATE_DISCLOSURE = "本記事にはアフィリエイト広告が含まれます。";
