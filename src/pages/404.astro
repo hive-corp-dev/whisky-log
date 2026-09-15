@@ -8,7 +8,7 @@ import Layout from '@/layouts/Layout.astro';
     <Container>
       <p class="code">404</p>
       <h1 class="title">ページが見つかりません</h1>
-      <p class="text">URLが変わったか、削除された可能性があります。</p>
+      <p class="text"><span>URLが変わったか、</span><span>削除された可能性があります。</span></p>
       <a href="/" class="btn">ホームへ</a>
     </Container>
   </section>
@@ -37,6 +37,13 @@ import Layout from '@/layouts/Layout.astro';
     margin-top: 1.2rem;
     font-size: 1.5rem;
     color: var.$c-text-gray;
+
+    // スマホでは「、」の後で改行する
+    @include mixin.sp {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   .btn {
