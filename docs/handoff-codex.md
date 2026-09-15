@@ -20,7 +20,7 @@
 
 - **技術:** Astro 7 + MDX + SCSS、静的ビルド、Vercel にデプロイ（公開前で Basic 認証中）。Node 22.12 以上。
 - **記事:** `src/content/review/<slug>.mdx`。frontmatter に基本情報・結論・点数（`rating`）・検索キーワードなど、本文に「○○とは → 香り・味・余韻 → 飲み方別の評価 → ○○の評価まとめ」。スキーマは `src/content.config.ts`。
-- **本文で使う部品:** `<KeyPoints>`（とはの末尾の要点）、`<TastingNote way rating image>`（飲み方別）、`<Rating>`（点数表）、`<ProsCons>`（おすすめする人・しない人／良い声・気になる声）、`<AffiliateBox>`（主商品以外の購入ボックス）、`<LinkCard slug="..." label="..." />`（本文中に置く別記事へのリンクカード。slug は記事ファイル名、非公開や存在しない slug なら何も出ない）。実体は `src/components/pages/posts/post-content/parts/`。
+- **本文で使う部品:** `<KeyPoints>`（とはの末尾の要点）、`<TastingNote way rating image>`（飲み方別）、`<Rating>`（点数表）、`<ProsCons>`（おすすめする人・しない人／良い声・気になる声）、`<AffiliateBox>`（主商品以外の購入ボックス）、`<LinkCard slug="..." label="..." />`（本文中に置く別記事へのリンクカード。slug は記事ファイル名、非公開や存在しない slug なら何も出ない）、`<Quote source="出典名" href="URL（省略可）">引用文</Quote>`（公式のテイスティングノートなどの引用ボックス。href を省くと出典名は文字だけ）。実体は `src/components/pages/posts/post-content/parts/`。
 - **写真:** `src/content/review/images/<slug>/thumb.jpg`（16:9、幅 2000px）。飲み方別は `straight.jpg` / `rock.jpg` / `highball.jpg`。
 - **楽天の商品情報:** `npm run fetch:rakuten -- --slug <slug>` で `src/data/rakuten/items.json` に画像・価格・リンクをキャッシュする。API キーは `.env`（`.env.example` 参照）。
 - **一覧:** 産地別 `/review/<category>/`、種類別 `/review/type/<tag>/`。産地は `src/data/review/category.ts`、種類は `src/data/review/tag.ts`。

@@ -13,6 +13,7 @@ import TastingNote from '@/components/pages/posts/post-content/parts/tasting-not
 import ProsCons from '@/components/pages/posts/post-content/parts/pros-cons/ProsCons.astro';
 import KeyPoints from '@/components/pages/posts/post-content/parts/key-points/KeyPoints.astro';
 import LinkCard from '@/components/pages/posts/post-content/parts/link-card/LinkCard.astro';
+import Quote from '@/components/pages/posts/post-content/parts/quote/Quote.astro';
 import TextLink from '@/components/pages/posts/post-content/parts/text-link/TextLink.astro';
 import ExternalLink from '@/components/pages/posts/post-content/parts/text-link/ExternalLink.astro';
 
@@ -60,7 +61,7 @@ const tocItems = [
   {data.affiliate && <AffiliateButtons slug={post.id} title={data.name ?? data.title} keyword={keyword} links={data.links} />}
 
   {/* MDX 側: 「○○とは → 香り・味・余韻 → 飲み方別の評価 → ○○の評価まとめ（<Rating /> + 文章 + <ProsCons />）」 */}
-  <Content components={{ a: TextLink, TextLink, ExternalLink, CitedFigure, Img, Spacer, Speech, TastingNote, ProsCons, AffiliateBox, Rating, KeyPoints, LinkCard }} />
+  <Content components={{ a: TextLink, TextLink, ExternalLink, CitedFigure, Img, Spacer, Speech, TastingNote, ProsCons, AffiliateBox, Rating, KeyPoints, LinkCard, Quote }} />
 
   {data.affiliate && <AffiliateButtons slug={post.id} title={data.name ?? data.title} keyword={keyword} links={data.links} />}
 </div>
