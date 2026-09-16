@@ -219,5 +219,18 @@
     "reviewAverage": 0,
     "reviewCount": 0,
     "fetchedAt": "2026-09-14T04:32:09.338Z"
+  },
+  "white-horse-nagomi": {
+    "query": "{\"keyword\":\"ホワイトホース なごみ 700ml\",\"volume\":700}",
+    "itemCode": "whisky:10008601",
+    "itemName": "ホワイトホース なごみ 40度 700ml コースター2枚付スコッチ ウイスキー white horse nagomi scotch whisky 長S",
+    "itemPrice": 1980,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00scs56.60j6wc6f.g00scs56.60j6xaf1/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fwhisky%2F521986%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fwhisky%2Fi%2F10008601%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00scs56.60j6wc6f.g00scs56.60j6xaf1/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fwhisky%2F521986%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fwhisky%2Fi%2F10008601%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/whisky/cabinet/rakuten77/521986_cos2.jpg?_ex=400x400",
+    "shopName": "ウイスキー専門店 WHISKY LIFE",
+    "reviewAverage": 3,
+    "reviewCount": 1,
+    "fetchedAt": "2026-09-16T06:32:52.519Z"
   }
 }
