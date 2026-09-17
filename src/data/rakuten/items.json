@@ -232,5 +232,18 @@
     "reviewAverage": 3,
     "reviewCount": 1,
     "fetchedAt": "2026-09-16T06:32:52.519Z"
+  },
+  "busker-single-pot-still": {
+    "query": "{\"keyword\":\"バスカー シングルポットスチル 700ml 44.3\",\"volume\":700}",
+    "itemCode": "ledled:10039399",
+    "itemName": "ロイヤルオーク蒸溜所 バスカー シングルポットスチル アイリッシュウイスキー 正規 44.3度 箱なし 700ml",
+    "itemPrice": 2980,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-bsk-new-sps%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10039399%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-bsk-new-sps%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10039399%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img317/3-bsk-new-sps_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 4,
+    "reviewCount": 2,
+    "fetchedAt": "2026-09-17T04:31:28.509Z"
   }
 }

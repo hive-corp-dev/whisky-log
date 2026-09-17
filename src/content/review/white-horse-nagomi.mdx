@@ -24,6 +24,12 @@ verdict:
   - "果実やバニラの甘い香りに、穏やかなスモーキーさ"
   - "ハイボールはクリーミーで甘く、後味にほどよいほろ苦さ"
   - "甘みのある、口当たりのやわらかいハイボールが好きな人に"
+rating:
+  straight: 3
+  rock: 3.5
+  highball: 4
+  cost: 3.5
+  overall: 3.5
 recommendedWay: "highball"
 searchKeyword: "ホワイトホース なごみ 700ml"
 ---
@@ -102,25 +108,31 @@ import labelImage from './images/white-horse-nagomi/label.jpg';
 
 ストレート・ロック・ハイボールの3つの飲み方で試してみます。
 
-### ストレート
+<TastingNote way="straight" rating={frontmatter.rating.straight}>
 
 <strong>果実感とバニラの甘さ</strong>を感じられますが、アルコールの刺激もあります。香りは華やかな一方、味の厚みは控えめで、じっくり濃い甘さを楽しむタイプとは少し違いますね。
 
 樽の風味やスパイスもあり、甘いだけではありません。ただ、そのままで飲むには少し硬さがあり、まろやかさだけを期待すると刺激が気になる飲み方です。
 
-### ロック
+</TastingNote>
+
+<TastingNote way="rock" rating={frontmatter.rating.rock}>
 
 氷を入れると香りは落ち着き、バニラや果実の甘さが穏やかに感じられます。一方で、<strong>木の風味とスパイシーさ</strong>も目立ちますね。
 
 甘くやわらかくなるだけではなく、少し渋みのある味わい。氷が溶けると果実感も拾いやすくなりますが、樽の風味があるので、軽くすっきり飲むハイボールとは違った印象です。
 
-### ハイボール
+</TastingNote>
+
+<TastingNote way="highball" rating={frontmatter.rating.highball}>
 
 炭酸で割ると、<strong>クリーミーな口当たりと甘さ</strong>がしっかり感じられます。飲んだあとも甘みが残り、最後には少しビターな風味もあります。
 
 今回はファインオールドともハイボールで飲み比べました。なごみのほうが甘みが強く、何よりも<strong>余韻のビターさがかなり抑えられている</strong>と感じます。
 
 苦みがまったくないわけではありませんが、甘さと一緒にほどよく残るくらい。ファインオールドの後味と比べると、こちらのほうがやわらかく飲めますね。
+
+</TastingNote>
 
 <Speech style="border">
 
@@ -152,6 +164,8 @@ import labelImage from './images/white-horse-nagomi/label.jpg';
 一方で、ストレートの刺激や価格を気にする声もありました。2,100円くらいの購入価格をどう感じるかは、どの飲み方を目当てにするかでも変わりそうですね。今回はハイボールの味が気に入ったので、安さだけで選ぶのとは違う買う理由があります。
 
 ## ホワイトホース なごみの評価まとめ
+
+<Rating rating={frontmatter.rating} recommendedWay={frontmatter.recommendedWay} />
 
 いちばん気に入ったのは、ハイボールにしたときのクリーミーな甘さです。炭酸で割っても味が薄くなるだけではなく、やわらかな甘みが残るところが良いですね。
 

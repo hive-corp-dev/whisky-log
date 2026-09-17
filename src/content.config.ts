@@ -15,6 +15,7 @@ const ReviewTags = [
   "blended-malt",
   "grain",
   "single-grain",
+  "single-pot-still",
   "bourbon",
   "rye",
   "corn",

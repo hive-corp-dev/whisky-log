@@ -22,6 +22,10 @@ export const reviewTags: ReviewTag[] = [
     label: "シングルグレーン",
   },
   {
+    slug: "single-pot-still",
+    label: "シングルポットスチル",
+  },
+  {
     slug: "bourbon",
     label: "バーボン",
   },
