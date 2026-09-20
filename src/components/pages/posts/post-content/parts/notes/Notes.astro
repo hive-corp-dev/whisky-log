@@ -1,0 +1,51 @@
+---
+interface Props {
+  items: string[];
+}
+
+const { items } = Astro.props;
+---
+
+<aside class="notes" aria-label="補足">
+  <ul class="list" role="list">
+    {items.map((item) => <li>{item}</li>)}
+  </ul>
+</aside>
+
+<style lang="scss">
+  aside.notes {
+    margin-top: 0.8rem;
+    color: var.$c-text-gray;
+    font-size: 1.2rem;
+    line-height: 1.7;
+  }
+
+  aside.notes ul.list {
+    margin: 0;
+    padding: 0;
+    background: none;
+    list-style: none;
+  }
+
+  aside.notes ul.list li {
+    position: relative;
+    margin: 0;
+    padding-left: 1.3em;
+
+    & + li {
+      margin-top: 0.3rem;
+    }
+
+    &::before {
+      content: "※";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: auto;
+      height: auto;
+      border-radius: 0;
+      background: none;
+      color: inherit;
+    }
+  }
+</style>

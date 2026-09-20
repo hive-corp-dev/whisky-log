@@ -245,5 +245,44 @@
     "reviewAverage": 4,
     "reviewCount": 2,
     "fetchedAt": "2026-09-17T04:31:28.509Z"
+  },
+  "white-horse-fine-old": {
+    "query": "{\"keyword\":\"ホワイトホース ファインオールド 700ml\",\"volume\":700}",
+    "itemCode": "ledled:10003969",
+    "itemName": "ホワイトホース ファインオールド 40度 箱なし 700ml 正規",
+    "itemPrice": 1125,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-white-horse-fine-old-p%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10003969%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-white-horse-fine-old-p%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10003969%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img035/e3ea48374299f95f9_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 4.8,
+    "reviewCount": 85,
+    "fetchedAt": "2026-09-20T08:20:18.011Z"
+  },
+  "kavalan-solist-vinho-barrique-700": {
+    "query": "{\"keyword\":\"カバラン ソリスト ヴィーニョバリック 700ml\",\"volume\":700}",
+    "itemCode": "sake-beans:10003731",
+    "itemName": "正規品 カバラン ソリスト ヴィーニョバリック カスクストレングス シングルモルトウイスキー 700ml 箱入りKavalan Solist Vinho Barrique Single Cask Strength",
+    "itemPrice": 19550,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00plql6.60j6we8d.g00plql6.60j6x945/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsake-beans%2F214723%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsake-beans%2Fi%2F10003731%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00plql6.60j6we8d.g00plql6.60j6x945/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsake-beans%2F214723%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsake-beans%2Fi%2F10003731%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/sake-beans/cabinet/03088493/4710085214723.jpg?_ex=400x400",
+    "shopName": "良酒百貨ビーンズ",
+    "reviewAverage": 5,
+    "reviewCount": 2,
+    "fetchedAt": "2026-09-20T08:45:14.250Z"
+  },
+  "suntory-chita": {
+    "query": "{\"keyword\":\"サントリー 知多 700ml\",\"volume\":700}",
+    "itemCode": "tkwine:10000978",
+    "itemName": "サントリー 知多 700ml 箱なし グレーン ウイスキー",
+    "itemPrice": 5000,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00s2ep6.60j6w87e.g00s2ep6.60j6xf94/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftkwine%2Fsuntory-tita%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Ftkwine%2Fi%2F10000978%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00s2ep6.60j6w87e.g00s2ep6.60j6xf94/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftkwine%2Fsuntory-tita%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Ftkwine%2Fi%2F10000978%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/tkwine/cabinet/07107455/whiskeyjp/07107594/imgrc0118077963.jpg?_ex=400x400",
+    "shopName": "お酒専門店JOYLAB",
+    "reviewAverage": 4.61,
+    "reviewCount": 350,
+    "fetchedAt": "2026-09-20T09:00:21.492Z"
   }
 }
