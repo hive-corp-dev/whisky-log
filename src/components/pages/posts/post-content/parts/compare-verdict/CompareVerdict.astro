@@ -1,0 +1,15 @@
+---
+// 比較記事で、飲み方ごとの結論を吹き出しで出す。口語で 1〜2 文。
+//   <CompareVerdict>ストレートで飲むなら12年ですね。</CompareVerdict>
+import Speech from "../speech/Speech.astro";
+---
+
+<div class="verdict">
+  <Speech style="border"><slot /></Speech>
+</div>
+
+<style lang="scss">
+  .verdict {
+    margin: 2.8rem 0;
+  }
+</style>

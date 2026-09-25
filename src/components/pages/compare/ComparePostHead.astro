@@ -1,0 +1,104 @@
+---
+// 比較記事のヘッダー（「比較」バッジ・日付・タイトル・サムネ）
+import { Image } from "astro:assets";
+import { PiClock, PiClockClockwise } from "react-icons/pi";
+import { formatDate, convertToJST } from "@/utils/date/date";
+
+const { title, image, publishedAt, updatedAt } = Astro.props;
+---
+
+<div class="head">
+  <div class="head-main">
+    <span class="head-badge">飲み比べ</span>
+    <div class="head-dates">
+      <time datetime={convertToJST(publishedAt)} class="head-date"><PiClock />{formatDate(publishedAt)}</time>
+      {updatedAt && <time datetime={convertToJST(updatedAt)} class="head-date"><PiClockClockwise />{formatDate(updatedAt)}</time>}
+    </div>
+  </div>
+  <h1 class="head-title">{title}</h1>
+  <div class="head-thumb">
+    <Image
+      src={image}
+      alt={title}
+      width={1200}
+      widths={[480, 800, 1200]}
+      sizes="(max-width: 768px) 100vw, 800px"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+</div>
+
+<style lang="scss">
+  .head-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include mixin.sp {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .head-badge {
+    display: inline-flex;
+    align-items: center;
+    color: var.$c-white;
+    background-color: var.$c-main;
+    padding: 0.3rem 1.2rem;
+    font-size: 1.3rem;
+    border-radius: 2rem;
+    margin-top: 1.6rem;
+
+    @include mixin.sp {
+      margin-top: 0;
+      font-size: 1.2rem;
+      padding: 0.2rem 1rem;
+    }
+  }
+
+  .head-title {
+    font-size: 3.2rem;
+    font-weight: bold;
+    letter-spacing: 0;
+    margin-top: 1.6rem;
+
+    @include mixin.sp {
+      font-size: 2.4rem;
+    }
+  }
+
+  .head-dates {
+    margin-top: 1.6rem;
+    display: flex;
+    gap: 1.6rem;
+  }
+
+  .head-date {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var.$c-text-gray;
+    letter-spacing: 0;
+
+    svg {
+      font-size: 1.5rem;
+      transform: translateY(-0.1rem);
+    }
+  }
+
+  .head-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-top: 4rem;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+</style>

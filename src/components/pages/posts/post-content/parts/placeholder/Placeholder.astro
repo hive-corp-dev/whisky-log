@@ -1,0 +1,45 @@
+---
+// まだ作っていない部品の仮置き。何が入る予定かを枠で示す。
+//   <Placeholder label="3本のグラスを並べた色比較の写真" />
+//   <Placeholder label="比較点数表コンポーネント" note="3本の飲み方別の点数を横に並べる" />
+// 公開前にすべて実物に置き換えること。
+interface Props {
+  label: string;
+  note?: string;
+}
+
+const { label, note } = Astro.props;
+---
+
+<div class="placeholder" role="note">
+  <p class="label">【仮】ここに「{label}」が入ります</p>
+  {note && <p class="note">{note}</p>}
+</div>
+
+<style lang="scss">
+  .placeholder {
+    margin: 2.4rem 0;
+    padding: 2.4rem 2rem;
+    border: 0.2rem dashed var.$c-main;
+    border-radius: 0.8rem;
+    background-color: rgba(200, 134, 46, 0.06);
+    text-align: center;
+  }
+
+  .label {
+    margin: 0 !important;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var.$c-main;
+
+    @include mixin.sp {
+      font-size: 1.4rem;
+    }
+  }
+
+  .note {
+    margin: 0.6rem 0 0 !important;
+    font-size: 1.3rem;
+    color: var.$c-text-gray;
+  }
+</style>

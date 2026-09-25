@@ -284,5 +284,31 @@
     "reviewAverage": 4.61,
     "reviewCount": 350,
     "fetchedAt": "2026-09-20T09:00:21.492Z"
+  },
+  "white-horse-12": {
+    "query": "{\"keyword\":\"ホワイトホース 12年 700ml\",\"volume\":700}",
+    "itemCode": "ledled:10001240",
+    "itemName": "ポイント3倍 ホワイトホース 12年 40度 箱なし 700ml 正規",
+    "itemPrice": 2144,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-white-horse-vt12%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10001240%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-white-horse-vt12%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10001240%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img035/367baaa0f665e9df6_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 4.38,
+    "reviewCount": 21,
+    "fetchedAt": "2026-09-23T05:50:43.954Z"
+  },
+  "four-roses": {
+    "query": "{\"keyword\":\"フォアローゼズ 700ml\",\"volume\":700}",
+    "itemCode": "ledled:10001649",
+    "itemName": "フォアローゼス（フォアローゼズ） イエロー ケンタッキー ストレート バーボン ウイスキー 40度 箱なし 700ml 正規 新ラベル",
+    "itemPrice": 1698,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-fourroses%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10001649%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-fourroses%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10001649%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img032/3-fourroses_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 4.58,
+    "reviewCount": 26,
+    "fetchedAt": "2026-09-25T03:36:05.244Z"
   }
 }

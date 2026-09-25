@@ -23,6 +23,24 @@
     }
   }
 
+  // h4: 太字 + 下に細い罫線。flex にしているのは、見出し内に置くバッジ（<Badge>）を文字と同じ高さに揃えるため
+  // :not([class]) で Markdown の見出しだけに当て、ProsCons のラベル（h4.pill）などの部品には影響させない
+  h4:not([class]) {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+    line-height: 1.5;
+    padding-bottom: 0.4rem;
+    border-bottom: 0.1rem solid var.$c-line;
+
+    @include mixin.sp {
+      font-size: 1.6rem;
+      gap: 0.6rem;
+    }
+  }
+
   h3 {
     font-size: 2.4rem;
     font-weight: bold;
@@ -114,6 +132,10 @@
 
   h3 {
     margin-top: 3em;
+  }
+
+  h4:not([class]) {
+    margin-top: 2.4em;
   }
 
   ul {

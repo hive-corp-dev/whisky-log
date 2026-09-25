@@ -1,0 +1,80 @@
+---
+// 比較記事の文字の表（スペック・香味・価格など）。本文の表と同じ見た目のまま、列幅だけ揃える。
+//   <CompareTable
+//     columns={["ファインオールド", "なごみ", "12年"]}
+//     rows={[
+//       { label: "度数", values: ["40%", "40%", "40%"] },
+//       { label: "参考価格", values: ["約1,200円", "約2,100円", "約2,200円"] },
+//     ]}
+//   />
+// values は columns と同じ数の文字列。スマホでは表を縮めず、横にスクロールさせる。
+interface Row {
+  label: string;
+  values: string[];
+}
+
+interface Props {
+  columns: string[];
+  rows: Row[];
+}
+
+const { columns, rows } = Astro.props;
+---
+
+<div class="scroll">
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th scope="col" class="corner">項目</th>
+        {columns.map((c) => <th scope="col">{c}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((row) => (
+          <tr>
+            <th scope="row">{row.label}</th>
+            {row.values.map((v) => (
+              <td>{v}</td>
+            ))}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style lang="scss">
+  // スマホでは 3 列を詰めずに横スクロール
+  .scroll {
+    margin-top: 2em;
+
+    @include mixin.sp {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  .compare-table {
+    margin-top: 0 !important;
+    table-layout: fixed;
+
+    @include mixin.sp {
+      min-width: 56rem;
+    }
+
+    // 見た目（文字サイズ・罫線・余白）は本文の table のスタイルに任せる
+    .corner {
+      width: 20%;
+    }
+
+    th[scope="row"] {
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    td {
+      vertical-align: top;
+    }
+  }
+</style>

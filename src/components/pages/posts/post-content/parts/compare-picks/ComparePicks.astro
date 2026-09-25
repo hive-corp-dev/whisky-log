@@ -1,0 +1,78 @@
+---
+// 比較記事の「タイプ別おすすめ」。ProsCons と同じ 1 枚のカードに、銘柄ごとの段を破線で区切って並べる。
+//   <ComparePicks
+//     items={[
+//       { type: "安くスモーキーなハイボールを飲みたい", name: "ファインオールド", reason: "約1,200円で煙の香りまで楽しめる。" },
+//     ]}
+//   />
+interface Item {
+  type: string;
+  name: string;
+  reason: string;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="picks">
+  {
+    items.map((item) => (
+      <section class="pick">
+        <h4 class="name">{item.name}</h4>
+        <p class="type">{item.type}人に</p>
+        <p class="reason">{item.reason}</p>
+      </section>
+    ))
+  }
+</div>
+
+<style lang="scss">
+  .picks {
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.8rem;
+    background-color: #fcfcfc;
+    padding: 2rem 2.2rem;
+    font-size: 1.5rem;
+    line-height: 1.9;
+
+    @include mixin.sp {
+      padding: 1.6rem;
+      font-size: 1.4rem;
+    }
+  }
+
+  .pick + .pick {
+    margin-top: 1.8rem;
+    padding-top: 1.8rem;
+    border-top: 0.1rem dashed var.$c-line;
+  }
+
+  // 銘柄名はピル型ラベル（本文の h4 スタイルは打ち消す）
+  .name {
+    display: inline-block !important;
+    margin: 0 !important;
+    padding: 0.3rem 1.4rem !important;
+    border: none !important;
+    border-radius: 999px;
+    background-color: var.$c-main;
+    color: var.$c-white;
+    font-size: 1.3rem !important;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+    line-height: 1.6 !important;
+  }
+
+  .type {
+    margin: 0.8rem 0 0 !important;
+    font-weight: bold;
+  }
+
+  .reason {
+    margin: 0.2rem 0 0 !important;
+    color: var.$c-text;
+  }
+</style>

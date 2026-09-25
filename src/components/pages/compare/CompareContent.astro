@@ -1,0 +1,83 @@
+---
+// 比較記事本体。「導入 → 結論 → 目次 → 本文（MDX）」の順。スペック表や購入ボタンは MDX 側で置く
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import { AFFILIATE_DISCLOSURE } from '@/data/siteData';
+
+import CitedFigure from '@/components/pages/posts/post-content/parts/cited-figure/CitedFigure.astro';
+import Img from '@/components/pages/posts/post-content/parts/img/Img.astro';
+import Spacer from '@/components/pages/posts/post-content/parts/spacer/Spacer.astro';
+import Speech from '@/components/pages/posts/post-content/parts/speech/Speech.astro';
+import ProsCons from '@/components/pages/posts/post-content/parts/pros-cons/ProsCons.astro';
+import KeyPoints from '@/components/pages/posts/post-content/parts/key-points/KeyPoints.astro';
+import LinkCard from '@/components/pages/posts/post-content/parts/link-card/LinkCard.astro';
+import Quote from '@/components/pages/posts/post-content/parts/quote/Quote.astro';
+import Notes from '@/components/pages/posts/post-content/parts/notes/Notes.astro';
+import TextLink from '@/components/pages/posts/post-content/parts/text-link/TextLink.astro';
+import ExternalLink from '@/components/pages/posts/post-content/parts/text-link/ExternalLink.astro';
+import AffiliateBox from '@/components/pages/posts/post-content/parts/affiliate/AffiliateBox.astro';
+import Placeholder from '@/components/pages/posts/post-content/parts/placeholder/Placeholder.astro';
+import CompareVerdict from '@/components/pages/posts/post-content/parts/compare-verdict/CompareVerdict.astro';
+import Badge from '@/components/pages/posts/post-content/parts/badge/Badge.astro';
+import CompareTable from '@/components/pages/posts/post-content/parts/compare-table/CompareTable.astro';
+import CompareMatrix from '@/components/pages/posts/post-content/parts/compare-matrix/CompareMatrix.astro';
+import ComparePicks from '@/components/pages/posts/post-content/parts/compare-picks/ComparePicks.astro';
+import Faq from '@/components/pages/posts/post-content/parts/faq/Faq.astro';
+import YouTube from '@/components/pages/posts/post-content/parts/youtube/YouTube.astro';
+import Verdict from '@/components/pages/posts/post-content/parts/verdict/Verdict.astro';
+import Toc from '@/components/pages/posts/post-content/parts/toc/Toc.astro';
+
+import styles from '@/components/pages/posts/post-content/post-content.module.scss';
+
+interface Props {
+  post: CollectionEntry<'compare'>;
+}
+
+const { post } = Astro.props;
+const { data } = post;
+const { Content, headings } = await render(post);
+
+const toParagraphs = (text?: string) =>
+  text ? text.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean) : [];
+const introParagraphs = toParagraphs(data.intro);
+
+const tocItems = headings.filter((h) => h.depth === 2).map((h) => ({ id: h.slug, text: h.text }));
+---
+
+<div class={styles.content}>
+  <p class={styles.disclosure}>{AFFILIATE_DISCLOSURE}</p>
+
+  {introParagraphs.map((p) => <p>{p}</p>)}
+
+  {data.speech && <Speech style="border">{data.speech}</Speech>}
+
+  {data.verdict && data.verdict.length > 0 && <Verdict items={data.verdict} />}
+
+  {tocItems.length > 0 && <Toc items={tocItems} />}
+
+  <Content
+    components={{
+      a: TextLink,
+      TextLink,
+      ExternalLink,
+      CitedFigure,
+      Img,
+      Spacer,
+      Speech,
+      ProsCons,
+      AffiliateBox,
+      KeyPoints,
+      LinkCard,
+      Quote,
+      Notes,
+      Placeholder,
+      CompareVerdict,
+      Badge,
+      CompareTable,
+      CompareMatrix,
+      ComparePicks,
+      Faq,
+      YouTube,
+    }}
+  />
+</div>

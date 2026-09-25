@@ -30,9 +30,13 @@
         "--prefix",
         "/Users/akaotatsuya/dev/whisky-blog/whisky-lab",
         "run",
-        "dev"
+        "dev",
+        "--",
+        "--ignore-lock",
+        "--port",
+        "4326"
       ],
-      "port": 4325,
+      "port": 4326,
       "autoPort": false
     }
   ]

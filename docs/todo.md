@@ -57,3 +57,10 @@
 - プライバシーポリシー、お問い合わせ（HyperForm）、サンクスページ、404、robots.txt、sitemap、ファビコン、OGP
 - Basic 認証の解除、GA4、Clarity、Amazon トラッキング ID（whiskylog-22）
 - バリューコマース承認（2026-09-14）→ Yahoo!ショッピング（プログラム 2025875、2%〜）と提携。購入ボックスの Yahoo ボタンは MyLink（sid 3781252 / pid 892701837）で検索ページをアフィリエイト化
+
+## 比較記事（/compare/）2026-09-23 追加
+
+- [ ] 一覧ページ `/compare/` を作る（パンくずの「飲み比べ」にリンクを付ける、サイドバー・フッター・トップに動線）
+- [ ] 比較点数表コンポーネント（bottles の review rating を横並びで自動表示）を作り、white-horse.mdx の `<Placeholder>` と手書きの点数表を置き換える
+- [ ] 色比較・飲み方別の写真を撮って `<Placeholder>` を差し替える（src/content/compare/images/white-horse/）
+- [ ] 本文の仮文章を直す（「見た目・色の違い」など）

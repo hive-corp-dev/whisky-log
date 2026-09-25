@@ -1,0 +1,145 @@
+---
+// 比較記事ページ。レビュー記事と同じ枠（パンくず・本文・サイドバー・関連レビュー）で表示する
+import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { getImage } from "astro:assets";
+import BlogSingleSidebar from "@/components/sidebar/BlogSingleSidebar.astro";
+import ComparePostHead from "@/components/pages/compare/ComparePostHead.astro";
+import CompareContent from "@/components/pages/compare/CompareContent.astro";
+import ReviewPostList from "@/components/pages/review/ReviewPostList.astro";
+import Breadcrumb from "@/components/breadcrumb/Breadcrumb.astro";
+import { SITE_URL } from "@/data/siteData";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("compare", ({ data }) => data.draft === false);
+  const reviews = await getCollection("review", ({ data }) => data.draft === false);
+
+  return posts.map((post) => {
+    // 記事下: 比較した銘柄のレビューを bottles の順に並べる
+    const related = post.data.bottles
+      .map((slug) => reviews.find((r) => r.id === slug))
+      .filter((r): r is NonNullable<typeof r> => Boolean(r));
+    return { params: { slug: post.id }, props: { post, related } };
+  });
+}
+
+const { post, related } = Astro.props;
+const { title, description, image, publishedAt, updatedAt } = post.data;
+
+// 一覧ページ（/compare/）はまだ無いので、パンくずの「飲み比べ」はリンクなし
+const breadcrumb = [{ label: "ホーム", href: "/" }, { label: "飲み比べ" }, { label: title }];
+
+const ogImageAsset = await getImage({ src: image, width: 1200, format: "jpg" });
+const ogImage = Astro.site ? new URL(ogImageAsset.src, Astro.site).toString() : undefined;
+
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: breadcrumb.map((item, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, SITE_URL).toString() } : {}),
+  })),
+};
+---
+
+<Layout title={title} description={description} ogImage={ogImage} ogType="article">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+
+  <div class="content">
+    <Breadcrumb items={breadcrumb} />
+    <div class="columns">
+      <div class="primary">
+        <main class="main">
+          <ComparePostHead title={title} image={image} publishedAt={publishedAt} updatedAt={updatedAt} />
+          <CompareContent post={post} />
+        </main>
+
+        {
+          related.length > 0 && (
+            <section class="related">
+              <h2 class="related-title">比較した銘柄のレビュー</h2>
+              <ReviewPostList reviewPosts={related} />
+            </section>
+          )
+        }
+      </div>
+      <BlogSingleSidebar />
+    </div>
+  </div>
+</Layout>
+
+<style lang="scss">
+  .content {
+    max-width: 120rem;
+    width: 100%;
+    margin: 0 auto;
+    padding: 3.2rem 4rem 8rem;
+
+    @include mixin.sp {
+      padding: 2rem 1rem 6.4rem;
+      --breadcrumb-bleed: 1rem;
+    }
+  }
+
+  .columns {
+    display: flex;
+    align-items: flex-start;
+    gap: 4rem;
+    margin-top: 1.6rem;
+
+    @include mixin.tab {
+      flex-direction: column;
+    }
+
+    @include mixin.sp {
+      margin-top: 1.2rem;
+    }
+  }
+
+  .primary {
+    flex-grow: 1;
+    min-width: 0;
+
+    @include mixin.tab {
+      width: 100%;
+    }
+  }
+
+  .main {
+    background-color: var.$c-white;
+    padding: 6.4rem 4.8rem;
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.6rem;
+
+    @include mixin.sp {
+      padding: 4rem 2rem;
+    }
+  }
+
+  .related {
+    margin-top: 4.8rem;
+
+    @include mixin.sp {
+      margin-top: 3.2rem;
+    }
+
+    // 3 本なので 3 列（ReviewPostList の既定）。SP は 1 列
+    @include mixin.sp {
+      :global(.list) {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  }
+
+  .related-title {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+
+    @include mixin.sp {
+      font-size: 1.8rem;
+    }
+  }
+</style>

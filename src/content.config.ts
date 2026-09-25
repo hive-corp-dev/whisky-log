@@ -87,4 +87,23 @@ const review = defineCollection({
     }),
 });
 
-export const collections = { review };
+// 比較記事（複数銘柄の飲み比べ）。URL は /compare/<slug>/
+const compare = defineCollection({
+  loader: glob({ pattern: "**/[^_]*.mdx", base: "./src/content/compare" }),
+  schema: ({ image }) =>
+    z.object({
+      draft: z.boolean(),
+      title: z.string(),
+      description: z.string(),
+      image: image(),
+      publishedAt: z.coerce.date(),
+      updatedAt: z.coerce.date().optional(),
+      // 比較する銘柄の review slug（記事下のリンクカードなどに使う）
+      bottles: z.array(z.string()).min(2),
+      intro: z.string().optional(), // 導入文。空行区切りで段落になる
+      speech: z.string().optional(), // 導入文と結論の間に出す吹き出しの一言
+      verdict: z.array(z.string()).max(4).optional(), // 冒頭の結論
+    }),
+});
+
+export const collections = { review, compare };

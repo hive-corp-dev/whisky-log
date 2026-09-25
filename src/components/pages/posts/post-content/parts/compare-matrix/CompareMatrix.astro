@@ -1,0 +1,148 @@
+---
+// 比較記事の ○△× 表。項目ごとに各銘柄の強さを 3 段階の記号で示す。見た目は本文の表に合わせる。
+//   <CompareMatrix
+//     columns={["ファインオールド", "なごみ", "12年"]}
+//     rows={[
+//       { label: "甘さ", values: ["△", "○", "○"] },
+//       { label: "スモーキーさ", values: ["○", "×", "△"] },
+//     ]}
+//     legend={[["○", "強い"], ["△", "控えめ"], ["×", "ほぼない"]]}
+//   />
+// values は "○" | "△" | "×"。legend は省略可（既定は 強い / 控えめ / ほぼない）。
+// 「向く飲み方」のような別の軸は、もう 1 つ <CompareMatrix> を置いて表を分ける。
+type MarkType = "○" | "△" | "×";
+
+interface Row {
+  label: string;
+  values: MarkType[];
+}
+
+interface Props {
+  columns: string[];
+  rows: Row[];
+  legend?: [MarkType, string][];
+}
+
+const {
+  columns,
+  rows,
+  legend = [
+    ["○", "強い"],
+    ["△", "控えめ"],
+    ["×", "ほぼない"],
+  ],
+} = Astro.props;
+---
+
+<div class="wrap">
+  <div class="scroll">
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th scope="col" class="corner">項目</th>
+          {columns.map((c) => <th scope="col">{c}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((row) => (
+            <tr>
+              <th scope="row">{row.label}</th>
+              {row.values.map((v) => (
+                <td>
+                  <span class="mark">{v}</span>
+                </td>
+              ))}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+  <p class="legend">
+    {
+      legend.map(([mark, text]) => (
+        <span class="legend-item">
+          <span class="legend-mark">{mark}</span>
+          <span>{text}</span>
+        </span>
+      ))
+    }
+  </p>
+</div>
+
+<style lang="scss">
+  .wrap {
+    margin-top: 2em;
+  }
+
+  // スマホでは 3 列を詰めずに横スクロール（CompareTable と同じ）
+  .scroll {
+    @include mixin.sp {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  // 文字サイズ・罫線・余白は本文の table のスタイルに任せ、列幅と中央寄せだけ指定する
+  .matrix {
+    margin-top: 0 !important;
+    table-layout: fixed;
+
+    @include mixin.sp {
+      min-width: 48rem;
+    }
+
+    .corner {
+      width: 26%;
+    }
+
+    thead th {
+      text-align: center;
+    }
+
+    th[scope="row"] {
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    td {
+      text-align: center;
+      vertical-align: middle;
+    }
+  }
+
+  // 記号は日本語フォントの字形で出す（○△× の太さが揃う）
+  .mark,
+  .legend-mark {
+    font-family: var.$font-base;
+    font-weight: bold;
+    line-height: 1;
+  }
+
+  .mark {
+    font-size: 2rem;
+  }
+
+  .legend {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.6rem;
+    margin: 0.8rem 0 0 !important;
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var.$c-text-gray;
+  }
+
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .legend-mark {
+    font-size: 1.5rem;
+    color: var.$c-text;
+  }
+</style>

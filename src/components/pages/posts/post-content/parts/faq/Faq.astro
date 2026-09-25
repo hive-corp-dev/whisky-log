@@ -1,0 +1,116 @@
+---
+// よくある質問。Q と A を並べ、FAQPage の構造化データも出す。
+//   <Faq items={[{ q: "なごみと12年はどっちがいい？", a: "ハイボール専用ならなごみ、いろいろな飲み方をするなら12年。" }]} />
+// a は文字列（改行は入れない）。
+interface Item {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: items.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+
+<dl class="faq">
+  {
+    items.map((item) => (
+      <div class="qa">
+        <dt class="q">
+          <span class="mark q-mark" aria-hidden="true">Q</span>
+          <span class="q-text">{item.q}</span>
+        </dt>
+        <dd class="a">
+          <span class="mark a-mark" aria-hidden="true">A</span>
+          <span class="a-text">{item.a}</span>
+        </dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style lang="scss">
+  .faq {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin: 2.4rem 0;
+  }
+
+  .qa {
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.8rem;
+    background-color: var.$c-white;
+    overflow: hidden;
+  }
+
+  .q,
+  .a {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    padding: 1.4rem 2rem;
+    line-height: 1.8;
+
+    @include mixin.sp {
+      gap: 1rem;
+      padding: 1.2rem 1.6rem;
+    }
+  }
+
+  .q {
+    background-color: var.$c-bg;
+    font-size: 1.5rem;
+    font-weight: bold;
+
+    @include mixin.sp {
+      font-size: 1.4rem;
+    }
+  }
+
+  .a {
+    margin: 0;
+    border-top: 0.1rem solid var.$c-line;
+    font-size: 1.5rem;
+
+    @include mixin.sp {
+      font-size: 1.4rem;
+    }
+  }
+
+  .mark {
+    flex: none;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    font-family: var.$font-en;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+    text-align: center;
+    margin-top: 0.15em;
+  }
+
+  .q-mark {
+    background-color: var.$c-main;
+    color: var.$c-white;
+  }
+
+  .a-mark {
+    background-color: var.$c-bg-deep;
+    color: var.$c-text-gray;
+  }
+</style>
