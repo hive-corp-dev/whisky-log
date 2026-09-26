@@ -310,5 +310,18 @@
     "reviewAverage": 4.58,
     "reviewCount": 26,
     "fetchedAt": "2026-09-25T03:36:05.244Z"
+  },
+  "four-roses-black": {
+    "query": "{\"keyword\":\"フォアローゼズ ブラック 700ml\",\"volume\":700}",
+    "itemCode": "ledled:10003301",
+    "itemName": "フォアローゼス（フォアローゼズ） ブラック ケンタッキー ストレート バーボン ウイスキー 40度 正規 箱付 700ml",
+    "itemPrice": 3553,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-fourroses-black-b%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10003301%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-fourroses-black-b%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10003301%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img032/28a1702e59201c7c5_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 4.14,
+    "reviewCount": 7,
+    "fetchedAt": "2026-09-25T04:05:33.336Z"
   }
 }
