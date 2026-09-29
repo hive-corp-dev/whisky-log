@@ -323,5 +323,31 @@
     "reviewAverage": 4.14,
     "reviewCount": 7,
     "fetchedAt": "2026-09-25T04:05:33.336Z"
+  },
+  "iw-harper-12": {
+    "query": "{\"itemCode\":\"biccamera:15299399\"}",
+    "itemCode": "biccamera:15299399",
+    "itemName": "I.W.ハーパー｜I.W.HARPER I.W.ハーパー 12年 750ml【ウイスキー】",
+    "itemPrice": 7980,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00r7ld6.60j6waf4.g00r7ld6.60j6xcec/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbiccamera%2F5000281004587%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbiccamera%2Fi%2F15299399%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00r7ld6.60j6waf4.g00r7ld6.60j6xcec/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbiccamera%2F5000281004587%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbiccamera%2Fi%2F15299399%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/biccamera/cabinet/product/0353/00000001576334_a01.jpg?_ex=400x400",
+    "shopName": "楽天ビック(ビックカメラ×楽天)",
+    "reviewAverage": 4,
+    "reviewCount": 2,
+    "fetchedAt": "2026-09-29T03:50:24.476Z"
+  },
+  "ardbeg-10": {
+    "query": "{\"keyword\":\"アードベッグ 10年 700ml\",\"volume\":700}",
+    "itemCode": "whisky:10003855",
+    "itemName": "【専用箱付】アードベッグ 10年 46度 700ml スコッチ ウイスキー アイラ シングルモルト ardbeg scotch whisky 長S",
+    "itemPrice": 4950,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00scs56.60j6wc6f.g00scs56.60j6xaf1/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fwhisky%2F512061%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fwhisky%2Fi%2F10003855%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00scs56.60j6wc6f.g00scs56.60j6xaf1/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fwhisky%2F512061%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fwhisky%2Fi%2F10003855%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/whisky/cabinet/item/512061_box.jpg?_ex=400x400",
+    "shopName": "ウイスキー専門店 WHISKY LIFE",
+    "reviewAverage": 4.63,
+    "reviewCount": 40,
+    "fetchedAt": "2026-09-29T04:19:41.222Z"
   }
 }
