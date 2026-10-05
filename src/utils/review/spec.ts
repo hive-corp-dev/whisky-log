@@ -20,6 +20,16 @@ export const COUNTRY_LABELS: Record<NonNullable<ReviewData["country"]>, string> 
   taiwan: "台湾",
 };
 
+/**
+ * 総合の星 = ストレート・ロック・ハイボール・コスパの平均。小数第 2 位を四捨五入して第 1 位まで（例: 4.25 → 4.3）。
+ * content.config.ts のスキーマと、MDX から生の frontmatter を受け取る <Rating /> の両方で使う
+ */
+export const calcOverall = (r: { straight: number; rock: number; highball: number; cost: number }): number =>
+  Math.round(((r.straight + r.rock + r.highball + r.cost) / 4) * 10) / 10;
+
+/** 星の数値の表示用。小数第 1 位まで（「4.0」「4.3」） */
+export const formatScore = (n: number): string => (Math.round(n * 10) / 10).toFixed(1);
+
 /** ★☆ の 5 段階表記 */
 export const stars = (n: number): string => "★".repeat(n) + "☆".repeat(5 - n);
 

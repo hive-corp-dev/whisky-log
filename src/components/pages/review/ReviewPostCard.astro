@@ -6,6 +6,7 @@ import { getReviewPostLink } from "@/utils/review/slugs";
 import { formatDate, convertToJST } from '@/utils/date/date';
 import { getReviewCategoryData } from "@/utils/review/category";
 import Stars from "@/components/stars/Stars.astro";
+import { formatScore } from "@/utils/review/spec";
 
 interface Props {
   article: CollectionEntry<'review'>;
@@ -36,7 +37,7 @@ const categoryData = getReviewCategoryData(category);
   <div class="body">
     <h2 class="title">{title}</h2>
     <div class="meta">
-      {rating && <span class="score"><Stars value={rating.overall} size={1.4} /><span class="num">{rating.overall.toFixed(1)}</span></span>}
+      {rating && <span class="score"><Stars value={rating.overall} size={1.4} /><span class="num">{formatScore(rating.overall)}</span></span>}
       <time datetime={convertToJST(publishedAt)} class="date">{formatDate(publishedAt)}</time>
     </div>
   </div>

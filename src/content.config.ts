@@ -58,14 +58,20 @@ const review = defineCollection({
       // --- 導入・評価 ---
       intro: z.string().optional(), // 導入文。空行区切りで段落になる
       verdict: z.array(z.string()).max(4).optional(), // 冒頭の結論（1〜4 行）
+      // 総合（overall）は 4 項目の平均を自動計算する（小数第 2 位を四捨五入して第 1 位まで）。
+      // frontmatter に overall を書いても無視される
       rating: z
         .object({
           straight: star,
           rock: star,
           highball: star,
           cost: star,
-          overall: star,
+          overall: z.number().optional(),
         })
+        .transform((r) => ({
+          ...r,
+          overall: Math.round(((r.straight + r.rock + r.highball + r.cost) / 4) * 10) / 10,
+        }))
         .optional(),
       // おすすめの飲み方。1 つなら文字列、複数なら配列（例: ["straight", "highball"]）
       recommendedWay: z.union([z.enum(Ways), z.array(z.enum(Ways)).min(1)]).optional(),

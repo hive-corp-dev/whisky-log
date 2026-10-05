@@ -1,15 +1,17 @@
 ---
-// 飲み方別 + コスパ + 総合の ★5 段階評価表（0.5 刻み）
-import type { ReviewData, Way } from "@/utils/review/spec";
-import { WAY_LABELS } from "@/utils/review/spec";
+// 飲み方別 + コスパ + 総合の ★5 段階評価表。4 項目は 0.5 刻み、総合はその平均（四捨五入して小数第 1 位まで）
+import type { Way } from "@/utils/review/spec";
+import { WAY_LABELS, formatScore, calcOverall } from "@/utils/review/spec";
 import Stars from "@/components/stars/Stars.astro";
 
 interface Props {
-  rating: NonNullable<ReviewData["rating"]>;
+  // MDX からは生の frontmatter（overall なし）が渡ってくるので、overall は任意にしてここで計算する
+  rating: { straight: number; rock: number; highball: number; cost: number; overall?: number };
   recommendedWay?: Way | Way[];
 }
 
 const { rating, recommendedWay } = Astro.props;
+const overall = calcOverall(rating);
 const recommended = new Set<Way>(Array.isArray(recommendedWay) ? recommendedWay : recommendedWay ? [recommendedWay] : []);
 
 const rows: { key: string; label: string; value: number; recommended?: boolean }[] = [
@@ -41,8 +43,8 @@ const fmt = (n: number) => n.toFixed(1);
     <tr class="overall">
       <th scope="row">総合</th>
       <td>
-        <Stars value={rating.overall} size={2.2} />
-        <span class="num">{fmt(rating.overall)}</span>
+        <Stars value={overall} size={2.2} />
+        <span class="num">{formatScore(overall)}</span>
       </td>
     </tr>
   </tbody>

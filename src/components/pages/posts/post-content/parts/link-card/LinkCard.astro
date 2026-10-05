@@ -10,6 +10,7 @@ import Flag from "@/components/flag/Flag.astro";
 import Stars from "@/components/stars/Stars.astro";
 import { getReviewPostLink } from "@/utils/review/slugs";
 import { getReviewCategoryData } from "@/utils/review/category";
+import { formatScore } from "@/utils/review/spec";
 
 interface Props {
   slug: string;
@@ -41,7 +42,7 @@ const categoryData = post ? getReviewCategoryData(post.data.category) : undefine
           {post.data.rating && (
             <span class="score">
               <Stars value={post.data.rating.overall} size={1.3} />
-              <span class="num">{post.data.rating.overall.toFixed(1)}</span>
+              <span class="num">{formatScore(post.data.rating.overall)}</span>
             </span>
           )}
         </span>
