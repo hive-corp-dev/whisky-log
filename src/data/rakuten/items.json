@@ -349,5 +349,83 @@
     "reviewAverage": 4.63,
     "reviewCount": 40,
     "fetchedAt": "2026-09-29T04:19:41.222Z"
+  },
+  "glen-grant-arboralis": {
+    "query": "{\"keyword\":\"グレングラント アルボラリス 700ml\",\"volume\":700}",
+    "itemCode": "ledled:10028220",
+    "itemName": "グレン グラント アルボラリス シングルモルト スコッチ ウイスキー 40度 正規 箱なし 700ml",
+    "itemPrice": 2002,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-glengrant-arb%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10028220%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-glengrant-arb%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10028220%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img066/3-glengrant-arb_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 4.29,
+    "reviewCount": 21,
+    "fetchedAt": "2026-09-29T07:51:37.425Z"
+  },
+  "monkey-shoulder": {
+    "query": "{\"keyword\":\"モンキーショルダー 700ml\",\"volume\":700}",
+    "itemCode": "ledled:10013819",
+    "itemName": "モンキー ショルダー ブレンデッド モルト スコッチウイスキー 40度 箱なし 700ml 正規 包装不可",
+    "itemPrice": 3599,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-mon-shoul%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10013819%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-mon-shoul%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10013819%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img034/3-mon-shoul_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 4.33,
+    "reviewCount": 21,
+    "fetchedAt": "2026-09-30T04:39:38.096Z"
+  },
+  "kavalan-triple-sherry-cask": {
+    "query": "{\"keyword\":\"カバラン トリプルシェリーカスク 700ml\",\"volume\":700}",
+    "itemCode": "jism:14696879",
+    "itemName": "カバラン トリプルシェリーカスク 700ml【輸入ウイスキー】 カバラン カバラントリプルシエリ-カスク",
+    "itemPrice": 10420,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00pukw6.60j6w313.g00pukw6.60j6xc9c/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fjism%2F4710085240593-75-30002640-n%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fjism%2Fi%2F14696879%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00pukw6.60j6w313.g00pukw6.60j6xc9c/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fjism%2F4710085240593-75-30002640-n%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fjism%2Fi%2F14696879%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/jism/cabinet/0039/4710085240593.jpg?_ex=400x400",
+    "shopName": "Joshin web 家電とPCの大型専門店",
+    "reviewAverage": 0,
+    "reviewCount": 0,
+    "fetchedAt": "2026-10-05T04:22:53.072Z"
+  },
+  "taketsuru-pure-malt": {
+    "query": "{\"keyword\":\"竹鶴 ピュアモルト 700ml\",\"volume\":700}",
+    "itemCode": "tkwine:10001816",
+    "itemName": "ニッカ 竹鶴 ピュアモルト 700ml 箱なし 白ラベル ウイスキー",
+    "itemPrice": 6000,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00s2ep6.60j6w87e.g00s2ep6.60j6xf94/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftkwine%2F4904230064374%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Ftkwine%2Fi%2F10001816%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00s2ep6.60j6w87e.g00s2ep6.60j6xf94/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftkwine%2F4904230064374%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Ftkwine%2Fi%2F10001816%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/tkwine/cabinet/07107455/whiskeyjp/taketsuru/imgrc0118077985.jpg?_ex=400x400",
+    "shopName": "お酒専門店JOYLAB",
+    "reviewAverage": 4.86,
+    "reviewCount": 7,
+    "fetchedAt": "2026-10-05T04:25:46.497Z"
+  },
+  "busker-single-malt": {
+    "query": "{\"keyword\":\"バスカー シングルモルト 700ml 44.3\",\"volume\":700}",
+    "itemCode": "ledled:10039355",
+    "itemName": "ロイヤルオーク蒸溜所 バスカー シングルモルト アイリッシュウイスキー 正規 44.3度 箱なし 700ml",
+    "itemPrice": 3190,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-bsk-new-sm%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10039355%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-bsk-new-sm%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10039355%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img317/3-bsk-new-sm_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 3,
+    "reviewCount": 1,
+    "fetchedAt": "2026-10-05T04:31:14.719Z"
+  },
+  "busker-single-grain": {
+    "query": "{\"keyword\":\"バスカー シングルグレーン 700ml 44.3\",\"volume\":700}",
+    "itemCode": "ricaoh:10028099",
+    "itemName": "バスカー シングルグレーン アイリッシュウイスキー 44.3度 700ml 箱なし ウィスキー【 贈答品 お酒 ウイスキー 酒 ご自宅用 パーティー 蒸留酒 祝い 出産内祝い お供え 感謝 宅飲み ひとり呑み 飲み会 ひとり飲み 洋酒 】【ワインならリカオー】",
+    "itemPrice": 3300,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00pjsk6.60j6w14d.g00pjsk6.60j6x1b3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fricaoh%2F207367%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fricaoh%2Fi%2F10028099%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00pjsk6.60j6w14d.g00pjsk6.60j6x1b3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fricaoh%2F207367%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fricaoh%2Fi%2F10028099%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ricaoh/cabinet/299999/207367_1.jpg?_ex=400x400",
+    "shopName": "リカオー",
+    "reviewAverage": 4,
+    "reviewCount": 1,
+    "fetchedAt": "2026-10-05T06:23:49.804Z"
   }
 }

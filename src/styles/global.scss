@@ -24,6 +24,19 @@
 
 html {
   font-size: 62.5%;
+
+  // 目次などページ内リンクはスムーズに移動し、固定ヘッダーの高さ分だけ手前で止める
+  // （ヘッダーの高さは Header.astro と合わせる: PC 8rem / SP 6.4rem）
+  scroll-behavior: smooth;
+  scroll-padding-top: 8rem;
+
+  @include mixin.sp {
+    scroll-padding-top: 6.4rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
 }
 
 *,
