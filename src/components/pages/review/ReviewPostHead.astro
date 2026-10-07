@@ -7,8 +7,10 @@ import { getReviewCategoryData } from '@/utils/review/category';
 import { getReviewTagData } from "@/utils/review/tag";
 import { getReviewCategoryLink, getReviewTagLink } from "@/utils/review/slugs";
 import Flag from "@/components/flag/Flag.astro";
+import Stars from "@/components/stars/Stars.astro";
+import { formatScore } from "@/utils/review/spec";
 
-const {title, image, category, tags, publishedAt, updatedAt} = Astro.props;
+const {title, image, category, tags, publishedAt, updatedAt, rating} = Astro.props;
 const categoryData: ReviewCategory = getReviewCategoryData(category);
 ---
 <div class="head">
@@ -23,6 +25,13 @@ const categoryData: ReviewCategory = getReviewCategoryData(category);
     </div>
   </div>
   <h1 class="head-title">{title}</h1>
+  {rating && (
+    <div class="head-score">
+      <span class="head-score-label">総合評価</span>
+      <Stars value={rating.overall} size={1.4} />
+      <span class="head-score-num">{formatScore(rating.overall)}</span>
+    </div>
+  )}
   <div class="head-info">
     <ul class="head-tags">
       {
@@ -33,7 +42,6 @@ const categoryData: ReviewCategory = getReviewCategoryData(category);
         ))
       }
     </ul>
-    
   </div>
   <div class="head-thumb">
     <Image
@@ -83,6 +91,20 @@ const categoryData: ReviewCategory = getReviewCategoryData(category);
   .head-info {
   }
 
+  // 記事カード（ReviewPostCard の .score / .num）と同じ見た目
+  .head-score {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+  }
+
+  .head-score-label,
+  .head-score-num {
+    font-size: 1.2rem;
+    color: var.$c-text-gray;
+  }
+
   .head-flag {
     display: block;
     width: 1.8rem;
@@ -127,7 +149,7 @@ const categoryData: ReviewCategory = getReviewCategoryData(category);
     display: flex;
     flex-wrap: wrap;
     gap: .8rem;
-    margin-top: 1.6rem;
+    margin-top: 2rem;
   }
 
   .head-tag {

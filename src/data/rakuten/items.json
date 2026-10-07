@@ -427,5 +427,18 @@
     "reviewAverage": 4,
     "reviewCount": 1,
     "fetchedAt": "2026-10-05T06:23:49.804Z"
+  },
+  "yoichi": {
+    "query": "{\"keyword\":\"ニッカ 余市 シングルモルト 700ml\",\"volume\":700}",
+    "itemCode": "komoriliquor:10000157",
+    "itemName": "ニッカウイスキー NIKKA WHISKY シングルモルト余市 カートンなし 1本 化粧箱なし 内容量700ml アルコール分45％ 贈答品 プレミアム品 お酒 礼品 レア 大人プレゼント 希少 入手難 送料無料 女子会 飲み会 プレゼント 贈り物 パーティー",
+    "itemPrice": 6560,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00uft26.60j6w1cf.g00uft26.60j6x892/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fkomoriliquor%2F416-3-1%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fkomoriliquor%2Fi%2F10000157%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00uft26.60j6w1cf.g00uft26.60j6x892/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fkomoriliquor%2F416-3-1%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fkomoriliquor%2Fi%2F10000157%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/komoriliquor/cabinet/compass1697162726.jpg?_ex=400x400",
+    "shopName": "小森リカーショップ",
+    "reviewAverage": 4.5,
+    "reviewCount": 8,
+    "fetchedAt": "2026-10-07T06:29:09.669Z"
   }
 }
