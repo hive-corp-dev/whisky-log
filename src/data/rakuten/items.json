@@ -13,17 +13,17 @@
     "fetchedAt": "2026-09-11T04:15:49.007Z"
   },
   "bushmills-black-bush": {
-    "query": "{\"keyword\":\"ブッシュミルズ ブラックブッシュ 700ml\",\"volume\":700}",
-    "itemCode": "ricaoh:10000946",
-    "itemName": "ブラック ブッシュ アイリッシュ ブッシュミルズ ウイスキー 40度 700ml 箱なし 【 ウィスキー お酒 アイリッシュウイスキー 酒 蒸留酒 お返し 記念日 さけ 祝い 自宅用 家庭用 家飲み 宅飲み ひとり呑み 飲み会 ひとり飲み 洋酒 】【ワインならリカオー】",
-    "itemPrice": 2497,
-    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00pjsk6.60j6w14d.g00pjsk6.60j6x1b3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fricaoh%2F500937%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fricaoh%2Fi%2F10000946%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
-    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00pjsk6.60j6w14d.g00pjsk6.60j6x1b3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fricaoh%2F500937%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fricaoh%2Fi%2F10000946%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
-    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ricaoh/cabinet/599999/500937-2.jpg?_ex=400x400",
-    "shopName": "リカオー",
-    "reviewAverage": 4.78,
-    "reviewCount": 18,
-    "fetchedAt": "2026-09-11T04:15:51.626Z"
+    "query": "{\"itemCode\":\"wineuki:10046344\"}",
+    "itemCode": "wineuki:10046344",
+    "itemName": "【正規品】ブッシュミルズ ブラックブッシュ アイリッシュ ウイスキー 700ml 40％ ウィスキー ハードリカーBUSHMILLS BLACK BUSH IRISH WHISKY 700ml 40% ブッシュ",
+    "itemPrice": 2418,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00pq606.60j6w1da.g00pq606.60j6x0fc/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fwineuki%2F9903000022540%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fwineuki%2Fi%2F10046344%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00pq606.60j6w1da.g00pq606.60j6x0fc/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fwineuki%2F9903000022540%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fwineuki%2Fi%2F10046344%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/wineuki/cabinet/tam01/tam041/9903000022540.jpg?_ex=400x400",
+    "shopName": "うきうきワインの玉手箱",
+    "reviewAverage": 5,
+    "reviewCount": 3,
+    "fetchedAt": "2026-10-09T13:05:26.697Z"
   },
   "glenfiddich-12": {
     "query": "{\"keyword\":\"グレンフィディック 12年 700ml\",\"volume\":700}",
@@ -440,5 +440,44 @@
     "reviewAverage": 4.5,
     "reviewCount": 8,
     "fetchedAt": "2026-10-07T06:29:09.669Z"
+  },
+  "glenallachie-12": {
+    "query": "{\"itemCode\":\"chagatapark:10064760\"}",
+    "itemCode": "chagatapark:10064760",
+    "itemName": "グレンアラヒー 12年 正規品 46度 700ml ■ワールド ウイスキー アワード 2025で「ワールドベスト シングルモルトウイスキー」獲得!",
+    "itemPrice": 7780,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00rqoy6.60j6w330.g00rqoy6.60j6x848/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fchagatapark%2F180842198%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fchagatapark%2Fi%2F10064760%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00rqoy6.60j6w330.g00rqoy6.60j6x848/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fchagatapark%2F180842198%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fchagatapark%2Fi%2F10064760%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/chagatapark/cabinet/catalog/202405/180842198.jpg?_ex=400x400",
+    "shopName": "お酒のちゃがたパーク 楽天市場店",
+    "reviewAverage": 0,
+    "reviewCount": 0,
+    "fetchedAt": "2026-10-09T13:05:28.311Z"
+  },
+  "nikka-frontier": {
+    "query": "{\"itemCode\":\"ledled:10039650\"}",
+    "itemCode": "ledled:10039650",
+    "itemName": "ニッカ フロンティア ブレンデット ウィスキー 48度 箱なし 500ml",
+    "itemPrice": 1698,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F2-nikka-frontier%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10039650%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F2-nikka-frontier%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10039650%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img318/2-nikka-frontier_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 5,
+    "reviewCount": 3,
+    "fetchedAt": "2026-10-09T15:40:51.919Z"
+  },
+  "glendronach-12": {
+    "query": "{\"itemCode\":\"ledled:10020022\"}",
+    "itemCode": "ledled:10020022",
+    "itemName": "ポイント3倍 グレンドロナック ハイランド シングルモルト スコッチウイスキー 12年 43度 正規 箱付 700ml",
+    "itemPrice": 6578,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-glendro12%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10020022%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-glendro12%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10020022%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img032/3-glendro12_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 5,
+    "reviewCount": 2,
+    "fetchedAt": "2026-10-09T15:53:12.816Z"
   }
 }
