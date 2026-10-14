@@ -531,5 +531,31 @@
     "reviewAverage": 5,
     "reviewCount": 3,
     "fetchedAt": "2026-10-14T06:40:13.023Z"
+  },
+  "suntory-old": {
+    "query": "{\"itemCode\":\"ledled:10001207\"}",
+    "itemCode": "ledled:10001207",
+    "itemName": "サントリー ウイスキー オールド 43度 箱なし 700ml 包装不可",
+    "itemPrice": 1980,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F2-old-43%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10001207%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F2-old-43%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10001207%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img030/2-old-43_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 4.8,
+    "reviewCount": 71,
+    "fetchedAt": "2026-10-14T10:30:53.383Z"
+  },
+  "dewars-12-mizunara": {
+    "query": "{\"itemCode\":\"ledled:10042484\"}",
+    "itemCode": "ledled:10042484",
+    "itemName": "デュワーズ 12年 ミズナラ ブレンデッド スコッチ ウイスキー 40度 正規 箱付 700ml",
+    "itemPrice": 3550,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-dewars-miz%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10042484%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-dewars-miz%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10042484%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img328/3-dewars-miz_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 0,
+    "reviewCount": 0,
+    "fetchedAt": "2026-10-14T10:41:29.677Z"
   }
 }
