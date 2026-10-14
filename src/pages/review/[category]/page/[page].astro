@@ -1,0 +1,40 @@
+---
+// 産地別一覧の 2 ページ目以降（/review/scotch/page/2/ ...）。1 ページ目は /review/scotch/
+import Layout from '@/layouts/Layout.astro';
+import ReviewListPage from '@/components/pages/review/ReviewListPage.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { reviewCategories } from '@/data/review/category';
+import { getSortedReviewPosts } from '@/utils/review/posts';
+import { getReviewCategoryLink } from '@/utils/review/slugs';
+import { getRestPages, getTotalPages, slicePage } from '@/utils/review/pagination';
+
+export async function getStaticPaths() {
+  const reviewPosts = await getCollection('review', ({ data }) => data.draft === false);
+
+  return reviewCategories.flatMap((category) => {
+    const sorted = getSortedReviewPosts(reviewPosts.filter((post) => post.data.category === category.slug));
+    return getRestPages(sorted.length).map((page) => ({
+      params: { category: category.slug, page: String(page) },
+      props: { category, page, posts: slicePage(sorted, page), total: sorted.length, allPosts: reviewPosts },
+    }));
+  });
+}
+
+interface Props {
+  category: (typeof reviewCategories)[number];
+  page: number;
+  posts: CollectionEntry<'review'>[];
+  total: number;
+  allPosts: CollectionEntry<'review'>[];
+}
+
+const { category, page, posts, total, allPosts } = Astro.props;
+const title = `${category.label}ウイスキーのレビュー一覧`;
+const breadcrumb = [{ label: 'ホーム', href: '/' }, { label: 'レビュー', href: '/review/' }, { label: category.label, href: getReviewCategoryLink(category.slug) + '/' }, { label: `${page}ページ目` }];
+const pagination = { currentPage: page, totalPages: getTotalPages(total), totalItems: total, baseUrl: getReviewCategoryLink(category.slug) };
+---
+
+<Layout title={`${title}（${page}ページ目）`} description={`${category.label}ウイスキーをストレート・ロック・ハイボールで飲み比べたレビューの一覧です。`}>
+  <ReviewListPage title={title} posts={posts} allPosts={allPosts} currentCategory={category.slug} pagination={pagination} breadcrumb={breadcrumb} />
+</Layout>

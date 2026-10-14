@@ -6,6 +6,10 @@ import SectionHeading from "@/components/section-heading/SectionHeading.astro";
 import ReviewPostList from "@/components/pages/review/ReviewPostList.astro";
 import ReviewFilters from "@/components/pages/review/review-filters/ReviewFilters.astro";
 import ReviewListSidebar from "@/components/sidebar/ReviewListSidebar.astro";
+import Pagination from "@/components/pagination/Pagination.astro";
+import Breadcrumb from "@/components/breadcrumb/Breadcrumb.astro";
+import { SITE_URL } from "@/data/siteData";
+import type { ReviewPagination } from "@/utils/review/pagination";
 
 interface Props {
   title: string;
@@ -15,19 +19,40 @@ interface Props {
   allPosts: CollectionEntry<"review">[];
   currentCategory?: string;
   currentTag?: string;
+  /** ページ送り（2 ページ以上あるときだけ表示される） */
+  pagination?: ReviewPagination;
+  /** パンくず（最後の項目は現在地でリンクなし） */
+  breadcrumb: { label: string; href?: string }[];
 }
 
-const { title, posts, allPosts, currentCategory, currentTag } = Astro.props;
+const { title, posts, allPosts, currentCategory, currentTag, pagination, breadcrumb } = Astro.props;
+
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: breadcrumb.map((item, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, SITE_URL).toString() } : {}),
+  })),
+};
 ---
 
+<script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+
 <div class="content">
-  <SectionHeading ja={title} tag="h1" />
+  <Breadcrumb items={breadcrumb} />
+  <div class="heading">
+    <SectionHeading ja={title} tag="h1" />
+  </div>
   <div class="filters-mobile">
     <ReviewFilters posts={allPosts} currentCategory={currentCategory} currentTag={currentTag} />
   </div>
   <div class="columns">
     <div class="primary">
       <ReviewPostList reviewPosts={posts} />
+      {pagination && <Pagination pagination={pagination} />}
     </div>
     <ReviewListSidebar currentCategory={currentCategory} currentTag={currentTag} />
   </div>
@@ -41,7 +66,16 @@ const { title, posts, allPosts, currentCategory, currentTag } = Astro.props;
     padding: 6.4rem 4rem 8rem;
 
     @include mixin.sp {
-      padding: 4rem 1rem 6.4rem;
+      padding: 2.4rem 1rem 6.4rem;
+      --breadcrumb-bleed: 1rem;
+    }
+  }
+
+  .heading {
+    margin-top: 2.4rem;
+
+    @include mixin.sp {
+      margin-top: 1.6rem;
     }
   }
 

@@ -1,0 +1,155 @@
+---
+// 一覧のページ送り。前へ／番号／次へ。番号は現在ページの前後 1 つずつと最初・最後を出し、間は「…」
+import { getPageUrl } from "@/utils/review/pagination";
+import type { ReviewPagination } from "@/utils/review/pagination";
+
+interface Props {
+  pagination: ReviewPagination;
+}
+
+const { currentPage, totalPages, baseUrl } = Astro.props.pagination;
+
+const pages: (number | "gap")[] = [];
+for (let p = 1; p <= totalPages; p++) {
+  const near = Math.abs(p - currentPage) <= 1;
+  if (p === 1 || p === totalPages || near) {
+    pages.push(p);
+  } else if (pages[pages.length - 1] !== "gap") {
+    pages.push("gap");
+  }
+}
+---
+
+{
+  totalPages > 1 && (
+    <nav class="pagination" aria-label="ページ送り">
+      <ul class="list">
+        <li>
+          {currentPage > 1 ? (
+            <a class="arrow" href={getPageUrl(baseUrl, currentPage - 1)} rel="prev" aria-label="前のページ">
+              <span class="chev prev" aria-hidden="true" />
+            </a>
+          ) : (
+            <span class="arrow disabled" aria-hidden="true">
+              <span class="chev prev" />
+            </span>
+          )}
+        </li>
+        {pages.map((p) =>
+          p === "gap" ? (
+            <li>
+              <span class="gap" aria-hidden="true">…</span>
+            </li>
+          ) : (
+            <li>
+              {p === currentPage ? (
+                <span class="num current" aria-current="page">{p}</span>
+              ) : (
+                <a class="num" href={getPageUrl(baseUrl, p)}>{p}</a>
+              )}
+            </li>
+          )
+        )}
+        <li>
+          {currentPage < totalPages ? (
+            <a class="arrow" href={getPageUrl(baseUrl, currentPage + 1)} rel="next" aria-label="次のページ">
+              <span class="chev next" aria-hidden="true" />
+            </a>
+          ) : (
+            <span class="arrow disabled" aria-hidden="true">
+              <span class="chev next" />
+            </span>
+          )}
+        </li>
+      </ul>
+    </nav>
+  )
+}
+
+<style lang="scss">
+  .pagination {
+    margin-top: 4.8rem;
+
+    @include mixin.sp {
+      margin-top: 3.2rem;
+    }
+  }
+
+  .list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+
+    @include mixin.sp {
+      gap: 0.6rem;
+    }
+  }
+
+  .num,
+  .arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: 0.1rem solid var.$c-line;
+    background-color: var.$c-white;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var.$c-text;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+
+    @include mixin.sp {
+      width: 3.6rem;
+      height: 3.6rem;
+      font-size: 1.3rem;
+    }
+  }
+
+  a.num,
+  a.arrow {
+    @include mixin.hover {
+      &:hover {
+        border-color: var.$c-main;
+        color: var.$c-main;
+      }
+    }
+  }
+
+  .current {
+    background-color: var.$c-main;
+    border-color: var.$c-main;
+    color: var.$c-white;
+  }
+
+  .disabled {
+    opacity: 0.35;
+  }
+
+  .gap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    color: var.$c-text-gray;
+    font-size: 1.4rem;
+  }
+
+  .chev {
+    display: block;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-top: 0.2rem solid currentColor;
+    border-right: 0.2rem solid currentColor;
+
+    &.prev {
+      transform: translateX(0.15rem) rotate(-135deg);
+    }
+
+    &.next {
+      transform: translateX(-0.15rem) rotate(45deg);
+    }
+  }
+</style>

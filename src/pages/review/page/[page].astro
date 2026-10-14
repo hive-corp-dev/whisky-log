@@ -1,0 +1,33 @@
+---
+// レビュー一覧の 2 ページ目以降（/review/page/2/ ...）。1 ページ目は /review/
+import Layout from '@/layouts/Layout.astro';
+import ReviewListPage from '@/components/pages/review/ReviewListPage.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { getSortedReviewPosts } from '@/utils/review/posts';
+import { getRestPages, getTotalPages, slicePage } from '@/utils/review/pagination';
+
+export async function getStaticPaths() {
+  const reviewPosts = await getCollection('review', ({ data }) => data.draft === false);
+  const sortedPosts = getSortedReviewPosts(reviewPosts);
+  return getRestPages(sortedPosts.length).map((page) => ({
+    params: { page: String(page) },
+    props: { page, posts: slicePage(sortedPosts, page), total: sortedPosts.length, allPosts: reviewPosts },
+  }));
+}
+
+interface Props {
+  page: number;
+  posts: CollectionEntry<'review'>[];
+  total: number;
+  allPosts: CollectionEntry<'review'>[];
+}
+
+const { page, posts, total, allPosts } = Astro.props;
+const breadcrumb = [{ label: 'ホーム', href: '/' }, { label: 'レビュー', href: '/review/' }, { label: `${page}ページ目` }];
+const pagination = { currentPage: page, totalPages: getTotalPages(total), totalItems: total, baseUrl: '/review' };
+---
+
+<Layout title={`ウイスキーのレビュー一覧（${page}ページ目）`} description="飲んだウイスキーをストレート・ロック・ハイボールで飲み比べたレビューの一覧です。">
+  <ReviewListPage title="レビュー一覧" posts={posts} allPosts={allPosts} pagination={pagination} breadcrumb={breadcrumb} />
+</Layout>

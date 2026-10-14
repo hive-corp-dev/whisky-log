@@ -1,25 +1,146 @@
 ---
-import imgProfile from '@/assets/images/profile.png'
-import { Image } from 'astro:assets'
+// 固定ヘッダー。PC はメニューをホバーでドロップダウン、SP はハンバーガーで開くパネル。
+// 「産地から探す」「種類から探す」の中身はサイドバーの Widget と同じ（記事があるものだけ、本数つき）
+import imgProfile from '@/assets/images/profile.png';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { reviewCategories } from '@/data/review/category';
+import { reviewTags } from '@/data/review/tag';
+import { getReviewCategoryLink, getReviewTagLink } from '@/utils/review/slugs';
+import Flag from '@/components/flag/Flag.astro';
+
+const posts = await getCollection('review', ({ data }) => data.draft === false);
+
+const regions = reviewCategories
+  .map((category) => ({ ...category, count: posts.filter((post) => post.data.category === category.slug).length }))
+  .filter((category) => category.count > 0);
+
+const types = reviewTags
+  .map((tag) => ({ ...tag, count: posts.filter((post) => (post.data.tags as string[]).includes(tag.slug)).length }))
+  .filter((tag) => tag.count > 0);
 ---
 
-<header class="header">
+<header class="header" data-header>
   <a class="logo" href="/">
     <Image class="logo-img" src={imgProfile} alt='whisky log' />
     <h1 class="title">Whisky Log</h1>
   </a>
 
-  <nav class="nav">
+  <nav class="nav" id="global-nav" aria-label="グローバルナビゲーション">
     <ul class="list">
       <li class="item">
         <a href="/" class="link">ホーム</a>
       </li>
       <li class="item">
-        <a href="/review" class="link">レビュー</a>
+        <a href="/review" class="link">レビュー一覧</a>
+      </li>
+      <li class="item has-menu">
+        <button type="button" class="link trigger" aria-expanded="false" aria-controls="menu-regions" data-menu-trigger>
+          産地から探す<span class="chev" aria-hidden="true"></span>
+        </button>
+        <div class="menu" id="menu-regions">
+          <p class="menu-title">産地から探す</p>
+          <ul class="menu-list">
+            {
+              regions.map((region) => (
+                <li>
+                  <a href={getReviewCategoryLink(region.slug)} class="menu-link">
+                    <span class="flag"><Flag country={region.country} /></span>
+                    <span class="name">{region.label}</span>
+                    <span class="count">{region.count}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </li>
+      <li class="item has-menu align-right">
+        <button type="button" class="link trigger" aria-expanded="false" aria-controls="menu-types" data-menu-trigger>
+          種類から探す<span class="chev" aria-hidden="true"></span>
+        </button>
+        <div class="menu" id="menu-types">
+          <p class="menu-title">種類から探す</p>
+          <ul class="menu-list">
+            {
+              types.map((type) => (
+                <li>
+                  <a href={getReviewTagLink(type.slug)} class="menu-link">
+                    <span class="name">{type.label}</span>
+                    <span class="count">{type.count}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
       </li>
     </ul>
   </nav>
+
+  <button type="button" class="burger" aria-expanded="false" aria-controls="global-nav" aria-label="メニューを開く" data-burger>
+    <span class="burger-bar"></span>
+    <span class="burger-bar"></span>
+    <span class="burger-bar"></span>
+  </button>
 </header>
+
+<script>
+  // SP: ハンバーガーでナビを開閉。PC: ドロップダウンはクリック／キーボードでも開閉できるようにする（ホバーは CSS）
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const burger = header?.querySelector<HTMLButtonElement>('[data-burger]');
+  const triggers = header ? Array.from(header.querySelectorAll<HTMLButtonElement>('[data-menu-trigger]')) : [];
+
+  const setOpen = (open: boolean) => {
+    if (!header || !burger) return;
+    header.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+    document.documentElement.classList.toggle('nav-open', open);
+  };
+
+  burger?.addEventListener('click', () => setOpen(!header?.classList.contains('is-open')));
+
+  // SP パネル内のリンクを押したら閉じる（同じページへの遷移でも閉じるように）
+  header?.querySelectorAll<HTMLAnchorElement>('.nav a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+
+  // ドロップダウンのトグル（PC のキーボード操作・タップ端末用。SP パネル内では折りたたみとして動く）
+  triggers.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.has-menu');
+      const open = item?.classList.toggle('is-active') ?? false;
+      btn.setAttribute('aria-expanded', String(open));
+      triggers.forEach((other) => {
+        if (other !== btn) {
+          other.closest('.has-menu')?.classList.remove('is-active');
+          other.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    setOpen(false);
+    triggers.forEach((btn) => {
+      btn.closest('.has-menu')?.classList.remove('is-active');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // ヘッダーの外をクリックしたらドロップダウンを閉じる
+  document.addEventListener('click', (e) => {
+    if (header?.contains(e.target as Node)) return;
+    triggers.forEach((btn) => {
+      btn.closest('.has-menu')?.classList.remove('is-active');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // PC 幅に戻ったら SP パネルを閉じる
+  const mq = window.matchMedia('(min-width: 769px)');
+  mq.addEventListener('change', (e) => { if (e.matches) setOpen(false); });
+</script>
 
 <style lang="scss">
   .header {
@@ -45,6 +166,8 @@ import { Image } from 'astro:assets'
   .logo {
     display: flex;
     align-items: center;
+    position: relative;
+    z-index: 2;
   }
 
   .logo-img {
@@ -62,28 +185,315 @@ import { Image } from 'astro:assets'
   }
 
   .title {
-		font-family: var.$font-line;
-		font-size: 2rem;
-		font-weight: bold;
-		letter-spacing: 0.05em;
+    font-family: var.$font-line;
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
 
     @include mixin.sp {
       font-size: 1.4rem;
     }
-	}
+  }
 
+  // ---- PC ナビ ----
   .list {
     display: flex;
-    gap: 1.6rem;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .item {
+    position: relative;
   }
 
   .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.6rem;
     font-size: 1.3rem;
     font-weight: bold;
     letter-spacing: .08em;
+    color: var.$c-text;
+    transition: background-color 0.2s, color 0.2s;
+
+    @include mixin.hover {
+      &:hover {
+        background-color: var.$c-bg;
+      }
+    }
+  }
+
+  .trigger {
+    appearance: none;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+    line-height: inherit;
+  }
+
+  // 「v」の矢印。開いたら上向き
+  .chev {
+    display: inline-block;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-right: 0.15rem solid currentColor;
+    border-bottom: 0.15rem solid currentColor;
+    transform: translateY(-0.2rem) rotate(45deg);
+    transition: transform 0.2s;
+  }
+
+  .has-menu:hover .chev,
+  .has-menu.is-active .chev,
+  .has-menu:focus-within .chev {
+    transform: translateY(0.1rem) rotate(225deg);
+  }
+
+  // ドロップダウン本体
+  .menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 0.4rem);
+    min-width: 22rem;
+    padding: 1.2rem 0.8rem;
+    margin-top: 0.8rem;
+    background-color: var.$c-white;
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.8rem;
+    box-shadow: 0 0.8rem 2.4rem rgba(var.$c-text, 0.12);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, transform 0.2s, visibility 0s linear 0.2s;
+
+    // ボタンとパネルの隙間でホバーが切れないように、透明な橋をかける
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -1.2rem;
+      height: 1.2rem;
+    }
+  }
+
+  .has-menu:hover .menu,
+  .has-menu.is-active .menu,
+  .has-menu:focus-within .menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+    transition: opacity 0.2s, transform 0.2s, visibility 0s;
+  }
+
+  // 右端のメニュー（種類から探す）はボタンの右端に揃えて、画面からはみ出さないようにする
+  .align-right .menu {
+    left: auto;
+    right: 0;
+    transform: translate(0, 0.4rem);
+  }
+
+  .align-right:hover .menu,
+  .align-right.is-active .menu,
+  .align-right:focus-within .menu {
+    transform: translate(0, 0);
+  }
+
+  .menu-title {
+    display: none; // PC ではボタンのラベルで分かるので出さない
+  }
+
+  .menu-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu-link {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.6rem;
+    font-size: 1.3rem;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+
+    @include mixin.hover {
+      &:hover {
+        background-color: var.$c-bg;
+
+        .name {
+          color: var.$c-main;
+        }
+      }
+    }
+  }
+
+  .flag {
+    display: block;
+    width: 2rem;
+    height: 1.4rem;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .name {
+    font-weight: bold;
+    transition: color 0.2s;
+  }
+
+  .count {
+    margin-left: auto;
+    padding-left: 1.6rem;
+    font-size: 1.2rem;
+    color: var.$c-text-gray;
+  }
+
+  // ---- ハンバーガー（PC では非表示） ----
+  .burger {
+    display: none;
+    position: relative;
+    z-index: 2;
+    width: 4rem;
+    height: 4rem;
+    margin-right: -0.8rem;
+    appearance: none;
+    background: none;
+    border: 0;
+    cursor: pointer;
 
     @include mixin.sp {
-      font-size: 1.2rem;
+      display: block;
     }
+  }
+
+  .burger-bar {
+    position: absolute;
+    left: 1rem;
+    width: 2rem;
+    height: 0.2rem;
+    border-radius: 0.1rem;
+    background-color: var.$c-text;
+    transition: transform 0.25s, opacity 0.2s, top 0.25s;
+
+    &:nth-child(1) { top: 1.3rem; }
+    &:nth-child(2) { top: 1.9rem; }
+    &:nth-child(3) { top: 2.5rem; }
+  }
+
+  .is-open .burger-bar {
+    &:nth-child(1) { top: 1.9rem; transform: rotate(45deg); }
+    &:nth-child(2) { opacity: 0; }
+    &:nth-child(3) { top: 1.9rem; transform: rotate(-45deg); }
+  }
+
+  // ---- SP: ナビをヘッダー下のパネルにする ----
+  @include mixin.sp {
+    .nav {
+      position: fixed;
+      top: 6.4rem;
+      left: 0;
+      width: 100%;
+      height: calc(100dvh - 6.4rem);
+      overflow-y: auto;
+      padding: 1.6rem 2rem 4rem;
+      background-color: var.$c-white;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-0.8rem);
+      transition: opacity 0.25s, transform 0.25s, visibility 0s linear 0.25s;
+    }
+
+    .is-open .nav {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition: opacity 0.25s, transform 0.25s, visibility 0s;
+    }
+
+    .list {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .item {
+      border-bottom: 0.1rem solid var.$c-line;
+    }
+
+    .link {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      padding: 1.6rem 0.4rem;
+      border-radius: 0;
+      font-size: 1.5rem;
+    }
+
+    .chev {
+      width: 0.8rem;
+      height: 0.8rem;
+      transform: translateY(-0.2rem) rotate(45deg);
+    }
+
+    // SP では hover / focus で開かず、タップ（is-active）だけで開く折りたたみにする
+    .has-menu:hover .chev,
+    .has-menu:focus-within .chev {
+      transform: translateY(-0.2rem) rotate(45deg);
+    }
+
+    .has-menu.is-active .chev {
+      transform: translateY(0.1rem) rotate(225deg);
+    }
+
+    .menu {
+      position: static;
+      transform: none;
+      min-width: 0;
+      margin: 0;
+      padding: 0 0 0.8rem;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      display: none;
+      opacity: 1;
+      visibility: visible;
+      transition: none;
+
+      &::before {
+        display: none;
+      }
+    }
+
+    .has-menu:hover .menu,
+    .has-menu:focus-within .menu {
+      display: none;
+    }
+
+    // PC 用の translate(-50%) が（詳細度が高いので）SP でも効いてしまうため、ここで打ち消す
+    .has-menu.is-active .menu {
+      display: block;
+      transform: none;
+    }
+
+    .menu-link {
+      padding: 1.2rem 0.4rem 1.2rem 1.6rem;
+      font-size: 1.4rem;
+    }
+  }
+</style>
+
+<style is:global lang="scss">
+  // SP パネルを開いている間はページをスクロールさせない
+  html.nav-open {
+    overflow: hidden;
   }
 </style>

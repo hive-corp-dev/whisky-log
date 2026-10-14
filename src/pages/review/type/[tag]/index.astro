@@ -5,6 +5,8 @@ import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { reviewTags } from '@/data/review/tag';
 import { getSortedReviewPosts } from '@/utils/review/posts';
+import { getReviewTagLink } from '@/utils/review/slugs';
+import { getTotalPages, slicePage } from '@/utils/review/pagination';
 
 export async function getStaticPaths() {
   const reviewPosts = await getCollection('review', ({ data }) => data.draft === false);
@@ -13,20 +15,24 @@ export async function getStaticPaths() {
   return reviewTags.flatMap((tag) => {
     const posts = reviewPosts.filter((post) => (post.data.tags as string[]).includes(tag.slug));
     if (posts.length === 0) return [];
-    return [{ params: { tag: tag.slug }, props: { tag, posts: getSortedReviewPosts(posts), allPosts: reviewPosts } }];
+    const sorted = getSortedReviewPosts(posts);
+    return [{ params: { tag: tag.slug }, props: { tag, posts: slicePage(sorted, 1), total: sorted.length, allPosts: reviewPosts } }];
   });
 }
 
 interface Props {
   tag: (typeof reviewTags)[number];
   posts: CollectionEntry<'review'>[];
+  total: number;
   allPosts: CollectionEntry<'review'>[];
 }
 
-const { tag, posts, allPosts } = Astro.props;
+const { tag, posts, total, allPosts } = Astro.props;
 const title = `${tag.label}ウイスキーのレビュー一覧`;
+const breadcrumb = [{ label: 'ホーム', href: '/' }, { label: 'レビュー', href: '/review/' }, { label: tag.label }];
+const pagination = { currentPage: 1, totalPages: getTotalPages(total), totalItems: total, baseUrl: getReviewTagLink(tag.slug) };
 ---
 
 <Layout title={title} description={`${tag.label}のウイスキーをストレート・ロック・ハイボールで飲み比べたレビューの一覧です。`}>
-  <ReviewListPage title={title} posts={posts} allPosts={allPosts} currentTag={tag.slug} />
+  <ReviewListPage title={title} posts={posts} allPosts={allPosts} currentTag={tag.slug} pagination={pagination} breadcrumb={breadcrumb} />
 </Layout>

@@ -3,11 +3,14 @@ import Layout from '@/layouts/Layout.astro';
 import ReviewListPage from '@/components/pages/review/ReviewListPage.astro';
 import { getCollection } from 'astro:content';
 import { getSortedReviewPosts } from '@/utils/review/posts';
+import { getTotalPages, slicePage } from '@/utils/review/pagination';
 
 const reviewPosts = await getCollection('review', ({ data }) => data.draft === false);
 const sortedPosts = getSortedReviewPosts(reviewPosts);
+const breadcrumb = [{ label: 'ホーム', href: '/' }, { label: 'レビュー' }];
+const pagination = { currentPage: 1, totalPages: getTotalPages(sortedPosts.length), totalItems: sortedPosts.length, baseUrl: '/review' };
 ---
 
 <Layout title="ウイスキーのレビュー一覧" description="飲んだウイスキーをストレート・ロック・ハイボールで飲み比べたレビューの一覧です。">
-  <ReviewListPage title="レビュー一覧" posts={sortedPosts} allPosts={reviewPosts} />
+  <ReviewListPage title="レビュー一覧" posts={slicePage(sortedPosts, 1)} allPosts={reviewPosts} pagination={pagination} breadcrumb={breadcrumb} />
 </Layout>
