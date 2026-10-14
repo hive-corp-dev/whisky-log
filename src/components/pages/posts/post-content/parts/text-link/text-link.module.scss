@@ -2,16 +2,21 @@ a.link {
   color: var.$c-main;
   text-decoration-line: underline;
   text-decoration-thickness: 0.1rem;
+  text-decoration-color: rgba(var.$c-main, 0.4);
   text-underline-offset: 0.25em;
   overflow-wrap: anywhere;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
 
-  &:visited,
-  &:hover {
+  &:visited {
     color: var.$c-main;
   }
 
-  &:hover {
-    text-decoration-thickness: 0.2rem;
+  // ホバーは線の色が薄い琥珀 → 濃い琥珀に変わるだけ（太さは変えない）
+  @include mixin.hover {
+    &:hover {
+      color: #a8701f;
+      text-decoration-color: currentColor;
+    }
   }
 
   &:focus-visible {

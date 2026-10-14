@@ -479,5 +479,57 @@
     "reviewAverage": 5,
     "reviewCount": 2,
     "fetchedAt": "2026-10-09T15:53:12.816Z"
+  },
+  "laphroaig-10": {
+    "query": "{\"itemCode\":\"ledled:10003975\"}",
+    "itemCode": "ledled:10003975",
+    "itemName": "ラフロイグ 10年 40度 並行 箱付 700ml 包装不可",
+    "itemPrice": 5022,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-laphroaig-vt10-40-h%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10003975%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-laphroaig-vt10-40-h%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10003975%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img034/e99afba8e0674bd14_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 4.75,
+    "reviewCount": 436,
+    "fetchedAt": "2026-10-10T09:48:40.892Z"
+  },
+  "johnnie-walker-blue-label": {
+    "query": "{\"itemCode\":\"sakeshopmou:10000518\"}",
+    "itemCode": "sakeshopmou:10000518",
+    "itemName": "送料無料　ジョニーウォーカー　ブルーラベル　750ML　1本　スコッチウイスキー　アルコール40度　青ラベル　ブレンデッドウイスキー　スコットランド　箱付　モルト　グレーン",
+    "itemPrice": 22800,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00u73a6.60j6w741.g00u73a6.60j6x786/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsakeshopmou%2Fcompass1716625441%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsakeshopmou%2Fi%2F10000518%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00u73a6.60j6w741.g00u73a6.60j6x786/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsakeshopmou%2Fcompass1716625441%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsakeshopmou%2Fi%2F10000518%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/sakeshopmou/cabinet/compass1716627244.jpg?_ex=400x400",
+    "shopName": "酒ショップーMOUー楽天市場店",
+    "reviewAverage": 5,
+    "reviewCount": 1,
+    "fetchedAt": "2026-10-10T10:04:00.331Z"
+  },
+  "connemara": {
+    "query": "{\"itemCode\":\"ledled:10007199\"}",
+    "itemCode": "ledled:10007199",
+    "itemName": "カネマラ 40度 正規 箱付 700ml 包装不可",
+    "itemPrice": 4367,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-connemara%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10007199%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-connemara%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10007199%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img032/3-connemara_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 4.58,
+    "reviewCount": 64,
+    "fetchedAt": "2026-10-14T06:36:34.739Z"
+  },
+  "royal-brackla-12": {
+    "query": "{\"itemCode\":\"ledled:10035779\"}",
+    "itemCode": "ledled:10035779",
+    "itemName": "ロイヤル ブラックラ 12年 シェリーカスク フィニッシュ ハイランド シングルモルト スコッチウイスキー 46度 正規 箱付 700ml 包装不可",
+    "itemPrice": 7469,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-r-brackla-4%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10035779%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-r-brackla-4%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10035779%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img175/3-r-brackla-4_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 5,
+    "reviewCount": 3,
+    "fetchedAt": "2026-10-14T06:40:13.023Z"
   }
 }
