@@ -26,17 +26,17 @@
     "fetchedAt": "2026-10-09T13:05:26.697Z"
   },
   "glenfiddich-12": {
-    "query": "{\"keyword\":\"グレンフィディック 12年 700ml\",\"volume\":700}",
-    "itemCode": "whisky:10004888",
-    "itemName": "送料無料 グレンフィディック 12年 700ml 長S ウイスキー ウィスキー シングルモルト スコッチ",
-    "itemPrice": 4280,
-    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00scs56.60j6wc6f.g00scs56.60j6xaf1/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fwhisky%2F510101sm%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fwhisky%2Fi%2F10004888%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
-    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00scs56.60j6wc6f.g00scs56.60j6xaf1/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fwhisky%2F510101sm%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fwhisky%2Fi%2F10004888%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
-    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/whisky/cabinet/rakuten6/510101sm.jpg?_ex=400x400",
-    "shopName": "ウイスキー専門店 WHISKY LIFE",
-    "reviewAverage": 4.69,
-    "reviewCount": 119,
-    "fetchedAt": "2026-09-11T04:15:57.116Z"
+    "query": "{\"itemCode\":\"ledled:10001271\"}",
+    "itemCode": "ledled:10001271",
+    "itemName": "グレンフィディック 12年 スペシャルリザーブ シングルモルト スコッチウイスキー 40度 正規 箱付 700ml 包装不可",
+    "itemPrice": 4378,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-glenfiddich-special-r-vt12%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10001271%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-glenfiddich-special-r-vt12%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10001271%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img032/78a666f0c9bd42a4f_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 4.68,
+    "reviewCount": 410,
+    "fetchedAt": "2026-10-15T15:26:29.359Z"
   },
   "glenlivet-12": {
     "query": "{\"keyword\":\"グレンリベット 12年 700ml\",\"volume\":700}",

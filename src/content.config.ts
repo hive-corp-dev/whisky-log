@@ -57,6 +57,8 @@ const review = defineCollection({
 
       // --- 導入・評価 ---
       intro: z.string().optional(), // 導入文。空行区切りで段落になる
+      speech: z.string().optional(), // 導入文の直後（結論の前）に出す吹き出しの一言
+      introAfter: z.string().optional(), // 吹き出しの後ろに続ける導入文（空行区切りで段落になる）
       verdict: z.array(z.string()).max(4).optional(), // 冒頭の結論（1〜4 行）
       // 総合（overall）は 4 項目の平均を自動計算する（小数第 2 位を四捨五入して第 1 位まで）。
       // frontmatter に overall を書いても無視される

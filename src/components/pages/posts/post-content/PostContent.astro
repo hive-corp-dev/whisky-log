@@ -41,6 +41,7 @@ const keyword = data.searchKeyword ?? data.name ?? data.title;
 const toParagraphs = (text?: string) =>
   text ? text.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean) : [];
 const introParagraphs = toParagraphs(data.intro);
+const introAfterParagraphs = toParagraphs(data.introAfter);
 
 // 目次: ページ側で描画する「基本情報」+ MDX の h2（評価まとめは MDX 側の見出し）
 const tocItems = [
@@ -53,6 +54,8 @@ const tocItems = [
   <p class={styles.disclosure}>{AFFILIATE_DISCLOSURE}</p>
 
   {introParagraphs.map((p) => <p>{p}</p>)}
+  {data.speech && <Speech style="border">{data.speech}</Speech>}
+  {introAfterParagraphs.map((p) => <p>{p}</p>)}
 
   {data.verdict && data.verdict.length > 0 && <Verdict items={data.verdict} />}
 
