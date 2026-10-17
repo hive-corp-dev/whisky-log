@@ -557,5 +557,57 @@
     "reviewAverage": 0,
     "reviewCount": 0,
     "fetchedAt": "2026-10-14T10:41:29.677Z"
+  },
+  "dewars-8-japanese-smooth": {
+    "query": "{\"itemCode\":\"ledled:10036123\"}",
+    "itemCode": "ledled:10036123",
+    "itemName": "デュワーズ ジャパニーズスムース 8年 ブレンデッド スコッチ ウイスキー 40度 正規 箱なし 700ml",
+    "itemPrice": 2398,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-dewars-jp08%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10036123%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-dewars-jp08%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10036123%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img176/3-dewars-jp08_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 4.69,
+    "reviewCount": 13,
+    "fetchedAt": "2026-10-17T07:07:05.688Z"
+  },
+  "nikka-from-the-barrel": {
+    "query": "{\"itemCode\":\"taka-sake:10007558\"}",
+    "itemCode": "taka-sake:10007558",
+    "itemName": "『ニッカ フロムザバレル 500ml 箱入』専用カートン付き 化粧箱入り 定価販売 正価【ブレンデッドウイスキー】ニッカウヰスキー モルトウイスキーとグレーンウイスキーをブレンド後に再貯蔵。フロム・ザ・バレル※当商品には、厳選した輸入原酒を一部使用しています。",
+    "itemPrice": 3520,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00pzys6.60j6w52e.g00pzys6.60j6x3c5/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftaka-sake%2Fnikka-from-the-barrel-500ml%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Ftaka-sake%2Fi%2F10007558%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00pzys6.60j6w52e.g00pzys6.60j6x3c5/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftaka-sake%2Fnikka-from-the-barrel-500ml%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Ftaka-sake%2Fi%2F10007558%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/taka-sake/cabinet/whiskey/whisky2/imgrc0161028516.jpg?_ex=400x400",
+    "shopName": "リカーショップたかはしweb",
+    "reviewAverage": 5,
+    "reviewCount": 2,
+    "fetchedAt": "2026-10-17T07:17:15.849Z"
+  },
+  "the-deacon": {
+    "query": "{\"itemCode\":\"ledled:10039997\"}",
+    "itemCode": "ledled:10039997",
+    "itemName": "ザ ディーコン ブレンデッド スコッチ ウイスキー 40度 700ml",
+    "itemPrice": 2980,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-deacon%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10039997%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-deacon%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10039997%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img319/3-deacon_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門店 フェリシティー",
+    "reviewAverage": 5,
+    "reviewCount": 3,
+    "fetchedAt": "2026-10-17T07:28:03.954Z"
+  },
+  "hakushu": {
+    "query": "{\"keyword\":\"サントリー 白州 シングルモルト 700ml\",\"volume\":700}",
+    "itemCode": "komoriliquor:10000010",
+    "itemName": "サントリー シングルモルト ウイスキー 白州NV 正規品 カートンなし 1本 化粧箱なし ノンビンテージ 内容量700ml アルコール分43％ 希少 入手難 送料無料 女子会 飲み会 プレゼント 贈り物 パーティー",
+    "itemPrice": 12496,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00uft26.60j6w1cf.g00uft26.60j6x892/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fkomoriliquor%2F8-1%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fkomoriliquor%2Fi%2F10000010%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00uft26.60j6w1cf.g00uft26.60j6x892/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fkomoriliquor%2F8-1%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fkomoriliquor%2Fi%2F10000010%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/komoriliquor/cabinet/compass1769651823.jpg?_ex=400x400",
+    "shopName": "小森リカーショップ",
+    "reviewAverage": 4.82,
+    "reviewCount": 77,
+    "fetchedAt": "2026-10-17T07:43:37.986Z"
   }
 }

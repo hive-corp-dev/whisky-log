@@ -1,5 +1,5 @@
 ---
-// 一覧のページ送り。前へ／番号／次へ。番号は現在ページの前後 1 つずつと最初・最後を出し、間は「…」
+// 一覧のページ送り。前へ／番号／次へ。番号は現在ページを含む 4 つ（連番）に最初・最後を足し、2 ページ以上飛ぶところだけ「…」
 import { getPageUrl } from "@/utils/review/pagination";
 import type { ReviewPagination } from "@/utils/review/pagination";
 
@@ -9,10 +9,20 @@ interface Props {
 
 const { currentPage, totalPages, baseUrl } = Astro.props.pagination;
 
+const WINDOW = 4;
+const start = Math.max(1, Math.min(currentPage - 1, totalPages - WINDOW + 1));
+const end = Math.min(totalPages, start + WINDOW - 1);
+
+const shown = new Set<number>([1, totalPages]);
+for (let p = start; p <= end; p++) shown.add(p);
+// 飛ぶのが 1 ページだけなら「…」にせずその番号を出す
+for (let p = 2; p < totalPages; p++) {
+  if (!shown.has(p) && shown.has(p - 1) && shown.has(p + 1)) shown.add(p);
+}
+
 const pages: (number | "gap")[] = [];
 for (let p = 1; p <= totalPages; p++) {
-  const near = Math.abs(p - currentPage) <= 1;
-  if (p === 1 || p === totalPages || near) {
+  if (shown.has(p)) {
     pages.push(p);
   } else if (pages[pages.length - 1] !== "gap") {
     pages.push("gap");

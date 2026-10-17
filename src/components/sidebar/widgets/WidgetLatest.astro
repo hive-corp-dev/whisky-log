@@ -5,6 +5,7 @@ import { Image } from 'astro:assets';
 import { getSortedReviewPosts } from '@/utils/review/posts';
 import { getReviewPostLink } from '@/utils/review/slugs';
 import Stars from '@/components/stars/Stars.astro';
+import { formatScore } from '@/utils/review/spec';
 
 interface Props {
   /** 除外する記事の id（表示中の記事） */
@@ -31,7 +32,12 @@ const posts = getSortedReviewPosts(await getCollection('review', ({ data }) => d
             </span>
             <span class="body">
               <span class="title">{post.data.title}</span>
-              {post.data.rating && <Stars value={post.data.rating.overall} size={1.1} />}
+              {post.data.rating && (
+                <span class="score">
+                  <Stars value={post.data.rating.overall} size={1.1} />
+                  <span class="num">{formatScore(post.data.rating.overall)}</span>
+                </span>
+              )}
             </span>
           </a>
         </li>
@@ -94,6 +100,18 @@ const posts = getSortedReviewPosts(await getCollection('review', ({ data }) => d
     flex-direction: column;
     gap: 0.4rem;
     min-width: 0;
+  }
+
+  .score {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .num {
+    font-size: 1.1rem;
+    line-height: 1;
+    color: var.$c-text-gray;
   }
 
   .title {
