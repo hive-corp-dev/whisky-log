@@ -609,5 +609,31 @@
     "reviewAverage": 4.82,
     "reviewCount": 77,
     "fetchedAt": "2026-10-17T07:43:37.986Z"
+  },
+  "arran-quarter-cask": {
+    "query": "{\"keyword\":\"アラン クォーターカスク 700ml\",\"volume\":700}",
+    "itemCode": "sakecolle:10000457",
+    "itemName": "アラン クォーターカスク 700ml 56.2度 並行 Arran Single Malt Quarter Cask \"The Bothy\" | ノンチルフィルタード カスクストレングス クオーターカスク アイランズ シングルモルト スコッチ ウイスキー アランモルト ウイスキー ウィスキー お酒 酒 ハイボール",
+    "itemPrice": 5890,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00tdmb6.60j6w3d1.g00tdmb6.60j6xd31/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsakecolle%2F5060044483790%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsakecolle%2Fi%2F10000457%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00tdmb6.60j6w3d1.g00tdmb6.60j6xd31/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsakecolle%2F5060044483790%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsakecolle%2Fi%2F10000457%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/sakecolle/cabinet/images_product/images_product2/5060044483790_101.jpg?_ex=400x400",
+    "shopName": "サケコレ",
+    "reviewAverage": 0,
+    "reviewCount": 0,
+    "fetchedAt": "2026-10-19T05:28:57.309Z"
+  },
+  "glenlivet-18": {
+    "query": "{\"keyword\":\"グレンリベット 18年 700ml\",\"volume\":700}",
+    "itemCode": "ledled:10001267",
+    "itemName": "ザ グレンリベット 18年 40度 箱付 700ml 正規",
+    "itemPrice": 11399,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-the-glenlivet-vt18%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10001267%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00q8is6.60j6w1b3.g00q8is6.60j6xb8b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fledled%2F3-the-glenlivet-vt18%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fledled%2Fi%2F10001267%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ledled/cabinet/img034/05ee94c0afa2c89eb_1.jpg?_ex=400x400",
+    "shopName": "酒類の総合専門��� フェリシティー",
+    "reviewAverage": 4.8,
+    "reviewCount": 55,
+    "fetchedAt": "2026-10-19T06:22:10.526Z"
   }
 }

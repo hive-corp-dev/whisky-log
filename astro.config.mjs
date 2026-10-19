@@ -7,11 +7,14 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 
 import { SITE_URL } from "./src/data/siteData.ts";
+import viteMidAffiliate from "./src/plugins/vite-mid-affiliate.mjs";
 
 // https://astro.build/config
 export default defineConfig({
   site: SITE_URL,
   vite: {
+    // レビュー記事の「飲み方別の評価」の直後に購入ボックスを差し込む（src/plugins/vite-mid-affiliate.mjs）
+    plugins: [viteMidAffiliate()],
     css: {
       preprocessorOptions: {
         scss: {
