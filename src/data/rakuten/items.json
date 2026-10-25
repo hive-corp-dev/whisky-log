@@ -635,5 +635,31 @@
     "reviewAverage": 4.8,
     "reviewCount": 55,
     "fetchedAt": "2026-10-19T06:22:10.526Z"
+  },
+  "the-deacon-black": {
+    "query": "{\"keyword\":\"ディーコン ブラック ブレンデッド スコッチ 700ml\",\"volume\":700}",
+    "itemCode": "whisky:10008679",
+    "itemName": "【全品P3倍 10/25限定】ザ ディーコン ブラック 40度 700ml スコッチ ブレンデッド ウイスキー THE DEACON BLACK scotch whisky 長S",
+    "itemPrice": 3470,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00scs56.60j6wc6f.g00scs56.60j6xaf1/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fwhisky%2F510969%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fwhisky%2Fi%2F10008679%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00scs56.60j6wc6f.g00scs56.60j6xaf1/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fwhisky%2F510969%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fwhisky%2Fi%2F10008679%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/whisky/cabinet/rakuten79/510969_500_2.jpg?_ex=400x400",
+    "shopName": "ウイスキー専門店 WHISKY LIFE",
+    "reviewAverage": 0,
+    "reviewCount": 0,
+    "fetchedAt": "2026-10-25T11:40:20.617Z"
+  },
+  "black-nikka-deep-blend": {
+    "query": "{\"keyword\":\"ブラックニッカ ディープブレンド 700ml\",\"volume\":700}",
+    "itemCode": "ricaoh:10002548",
+    "itemName": "ブラックニッカ ディープブレンド 700ml 箱なし【 ウィスキー お酒 ニッカウイスキー ウイスキー ニッカ 国産ウイスキー ご 蒸留酒 父親 贈答 挨拶 祖母 記念日 国産ウィスキー 家庭用 宅飲み ひとり呑み 飲み会 ひとり飲み 洋酒 】【ワインならリカオー】",
+    "itemPrice": 1450,
+    "itemUrl": "https://hb.afl.rakuten.co.jp/hgc/g00pjsk6.60j6w14d.g00pjsk6.60j6x1b3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fricaoh%2F188224%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fricaoh%2Fi%2F10002548%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "affiliateUrl": "https://hb.afl.rakuten.co.jp/hgc/g00pjsk6.60j6w14d.g00pjsk6.60j6x1b3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fricaoh%2F188224%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fricaoh%2Fi%2F10002548%2F&rafcid=wsc_i_is_aad9bb87-088a-4109-9df2-3d1b730a70da",
+    "imageUrl": "https://thumbnail.image.rakuten.co.jp/@0_mall/ricaoh/cabinet/199999/2/188224.jpg?_ex=400x400",
+    "shopName": "リカオー",
+    "reviewAverage": 4.89,
+    "reviewCount": 9,
+    "fetchedAt": "2026-10-25T16:05:14.037Z"
   }
 }
