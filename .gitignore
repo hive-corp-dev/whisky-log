@@ -24,3 +24,5 @@ pnpm-debug.log*
 .idea/
 
 memo.md
+# 参考用に集めた他サイトの図（コミットしない）
+docs/solera-refs/
