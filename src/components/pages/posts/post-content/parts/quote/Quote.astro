@@ -53,25 +53,32 @@ const { source, href } = Astro.props;
     }
   }
 
+  // 出典行: 「出典」ラベルの後ろに出典名を文章として続ける（折り返しても左寄せで自然に流れる）
   .source {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
+    display: block;
     font-size: 1.2rem;
+    line-height: 1.7;
+    text-align: left;
     color: var.$c-text-gray;
   }
 
   .source-label {
-    flex: none;
+    display: inline;
+    margin-right: 0.8rem;
     font-weight: bold;
     letter-spacing: 0.08em;
+  }
+
+  .source-link,
+  .source-name {
+    display: inline;
   }
 
   .source-link {
     color: var.$c-main;
     text-decoration: underline;
     text-underline-offset: 0.2em;
-    word-break: break-all;
+    overflow-wrap: anywhere;
     transition: opacity 0.2s;
 
     @include mixin.hover {
