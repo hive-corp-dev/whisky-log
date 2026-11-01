@@ -65,7 +65,7 @@ const fetchedAt = item
   {
     item?.imageUrl && (
       <div class="image">
-        <a href={rakutenHref} target="_blank" rel="nofollow sponsored noopener" tabindex="-1" aria-hidden="true">
+        <a href={rakutenHref} target="_blank" rel="nofollow sponsored noopener" tabindex="-1" aria-hidden="true" data-aff-shop="rakuten" data-aff-item={slug} data-aff-part="image">
           <img src={item.imageUrl} alt="" width="120" height="120" loading="lazy" decoding="async" />
         </a>
       </div>
@@ -91,7 +91,7 @@ const fetchedAt = item
       buttons.map((b) => (
         <div class:list={["btnwrap", b.shop, { "on-sale": !!b.sale }]}>
           {b.sale && <div class="sale">{b.sale}</div>}
-          <a href={b.href} class="btn" target="_blank" rel="nofollow sponsored noopener">
+          <a href={b.href} class="btn" target="_blank" rel="nofollow sponsored noopener" data-aff-shop={b.shop} data-aff-item={slug} data-aff-part="button">
             {b.shop === "yahoo" && vcPixel && <img src={vcPixel} height="1" width="0" alt="" aria-hidden="true" class="vc-pixel" />}
             <span>{b.label}</span>
           </a>
@@ -100,6 +100,26 @@ const fetchedAt = item
     }
   </div>
 </aside>
+
+<script>
+  // 購入リンクのクリックを GA4 に affiliate_click として送る（GA は本番ビルドだけ読み込むので、gtag が無ければ何もしない）。
+  //   shop: amazon / rakuten / yahoo、item: items.json のキー、part: button / image、
+  //   box: ページ内で何番目の購入ボックスか（1 = 基本情報の下。記事により本文中のボックスが間に入る）
+  document.addEventListener("click", (e) => {
+    const a = (e.target as Element | null)?.closest<HTMLAnchorElement>("a[data-aff-shop]");
+    const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
+    if (!a || typeof gtag !== "function") return;
+    const box = a.closest("aside.box");
+    const boxes = [...document.querySelectorAll("aside.box[aria-label='購入リンク']")];
+    gtag("event", "affiliate_click", {
+      shop: a.dataset.affShop,
+      item: a.dataset.affItem,
+      part: a.dataset.affPart,
+      box: box ? boxes.indexOf(box) + 1 : 0,
+      link_url: a.href,
+    });
+  });
+</script>
 
 <style lang="scss">
   $c-amazon: #f99a0c;

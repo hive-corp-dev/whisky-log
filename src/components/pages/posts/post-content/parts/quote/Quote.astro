@@ -143,5 +143,9 @@ const { source, href } = Astro.props;
   .source {
     margin-top: 1.2rem;
     padding-right: 2.8rem; // 右下の引用符と重ならないように
+
+    @include mixin.sp {
+      padding-right: 0; // SP はボックスの padding だけで引用符をよけられる
+    }
   }
 </style>
