@@ -9,9 +9,12 @@ import '@fontsource-variable/noto-sans-jp';
 import { SEO } from 'astro-seo';
 import Header from '@/components/header/Header.astro';
 import Footer from '@/components/footer/Footer.astro';
-import { SITE_NAME, SITE_DESCRIPTION, GA_MEASUREMENT_ID, CLARITY_PROJECT_ID, GOOGLE_SITE_VERIFICATION } from '@/data/siteData';
+import { SITE_NAME, SITE_DESCRIPTION, GA_MEASUREMENT_ID, CLARITY_PROJECT_ID, GOOGLE_SITE_VERIFICATION, SITE_URL } from '@/data/siteData';
 import { getImage } from 'astro:assets';
 import imgOgp from '@/assets/images/ogp.png';
+
+// 計測（GA4 / Clarity）を動かすホスト。`astro preview` も本番ビルドなので、PROD だけだと localhost の閲覧まで計測されてしまう
+const ANALYTICS_HOST = new URL(SITE_URL).hostname;
 
 interface Props {
   title?: string;
@@ -50,14 +53,14 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString(
         <>
           {/* Google tag (gtag.js) */}
           <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
-          <script is:inline set:html={`window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ngtag('config', '${GA_MEASUREMENT_ID}');`} />
+          <script is:inline set:html={`if (location.hostname !== '${ANALYTICS_HOST}') window['ga-disable-${GA_MEASUREMENT_ID}'] = true;\nwindow.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ngtag('config', '${GA_MEASUREMENT_ID}');`} />
         </>
       )
     }
     {
       import.meta.env.PROD && CLARITY_PROJECT_ID && (
-        <script is:inline define:vars={{ CLARITY_PROJECT_ID }}>
-          (function(c,l,a,r,i,t,y){
+        <script is:inline define:vars={{ CLARITY_PROJECT_ID, ANALYTICS_HOST }}>
+          if (location.hostname === ANALYTICS_HOST) (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
