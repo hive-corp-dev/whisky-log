@@ -1,9 +1,9 @@
 ---
 // 比較記事の「どれを選ぶべきか」で、条件の見出し（### …）の下に置く 1 件分。
-// 左に商品画像、右に「おすすめは○○です。」と理由の文を出す。枠や背景は付けない。
+// 左に商品画像（生成りの枠つき）、右に「○○がおすすめ」と理由の文を出す。全体を囲む枠や背景は付けない。
 //   ### ハイボールを中心に飲みたい
 //
-//   <ComparePick id="glenfiddich-12" name="12年">
+//   <ComparePick id="glenfiddich-12" name="グレンフィディック12年">
 //     炭酸で割ると…
 //   </ComparePick>
 // id は楽天の商品キャッシュ（src/data/rakuten/items.json）のキー。画像は楽天の商品ページへのリンクにする
@@ -13,7 +13,7 @@ import { getRakutenItem } from "@/utils/review/rakuten";
 
 interface Props {
   id: string;
-  /** おすすめの銘柄の短い名前（例: "12年"） */
+  /** おすすめの銘柄名（例: "グレンフィディック12年"）。「○○がおすすめ」の形で出る */
   name: string;
 }
 
@@ -30,12 +30,14 @@ const hasImage = Boolean(item?.imageUrl && href);
   {
     hasImage && (
       <a class="image" href={href} target="_blank" rel="nofollow sponsored noopener" data-aff-shop="rakuten" data-aff-item={id} data-aff-part="pick">
-        <img src={item?.imageUrl} alt={productName} width="120" height="120" loading="lazy" decoding="async" />
+        <span class="frame">
+          <img src={item?.imageUrl} alt={productName} width="120" height="120" loading="lazy" decoding="async" />
+        </span>
         <span class="shop">楽天市場で見る</span>
       </a>
     )
   }
-  <p class="answer">おすすめは<strong>{name}</strong>です。</p>
+  <p class="answer"><strong>{name}</strong>がおすすめ</p>
   <div class="reason">
     <slot />
   </div>
@@ -83,12 +85,27 @@ const hasImage = Boolean(item?.imageUrl && href);
       height: auto;
       aspect-ratio: 1;
       object-fit: contain;
+      // 楽天の商品画像は白背景なので、乗算で枠の地色になじませる
+      mix-blend-mode: multiply;
     }
 
     @include mixin.hover {
       &:hover {
         opacity: 0.8;
       }
+    }
+  }
+
+  // 画像の枠（生成りの地色 + 罫線）
+  .frame {
+    display: block;
+    padding: 0.8rem;
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.6rem;
+    background-color: var.$c-bg;
+
+    @include mixin.sp {
+      padding: 0.6rem;
     }
   }
 
