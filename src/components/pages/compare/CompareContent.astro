@@ -16,6 +16,7 @@ import Notes from '@/components/pages/posts/post-content/parts/notes/Notes.astro
 import TextLink from '@/components/pages/posts/post-content/parts/text-link/TextLink.astro';
 import ExternalLink from '@/components/pages/posts/post-content/parts/text-link/ExternalLink.astro';
 import AffiliateBox from '@/components/pages/posts/post-content/parts/affiliate/AffiliateBox.astro';
+import AffiliateBoxRow from '@/components/pages/posts/post-content/parts/affiliate/AffiliateBoxRow.astro';
 import Placeholder from '@/components/pages/posts/post-content/parts/placeholder/Placeholder.astro';
 import CompareVerdict from '@/components/pages/posts/post-content/parts/compare-verdict/CompareVerdict.astro';
 import Badge from '@/components/pages/posts/post-content/parts/badge/Badge.astro';
@@ -66,6 +67,7 @@ const tocItems = headings.filter((h) => h.depth === 2).map((h) => ({ id: h.slug,
       Speech,
       ProsCons,
       AffiliateBox,
+      AffiliateBoxRow,
       KeyPoints,
       LinkCard,
       Quote,

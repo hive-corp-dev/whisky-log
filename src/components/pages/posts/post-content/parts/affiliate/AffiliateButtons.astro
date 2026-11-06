@@ -3,6 +3,7 @@
 //   色: Amazon #f99a0c / 楽天 #e0423c / Yahoo #438ee8
 //   PC: 画像 100px 左、右に商品名・価格、その下にボタン 3 つ横並び
 //   SP: 画像を中央（最大 120px）、商品名・価格、ボタン縦積み
+//   横並び（AffiliateBoxRow の中）: 幅が狭いので PC でも SP と同じ縦積み。ボタンは下端にそろえる
 // 画像・商品名・価格・楽天の商品リンクは scripts/fetch-rakuten.mjs のキャッシュ（src/data/rakuten/items.json）から出す
 import { AFFILIATE } from "@/data/siteData";
 import { getRakutenItem } from "@/utils/review/rakuten";
@@ -148,6 +149,14 @@ const fetchedAt = item
       display: block;
       font-size: 1.4rem;
     }
+
+    // 横並びのときは、商品名の行数が違ってもボタンの位置がそろうように縦の flex にする
+    :global(.affiliate-box-row) & {
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      font-size: 1.4rem;
+    }
   }
 
   .image {
@@ -168,7 +177,7 @@ const fetchedAt = item
       border-radius: 0.1rem;
     }
 
-    @include mixin.sp {
+    @mixin stacked {
       width: 100%;
       margin-bottom: 1.6rem;
 
@@ -177,6 +186,14 @@ const fetchedAt = item
         max-width: 12rem;
         margin: 0 auto;
       }
+    }
+
+    @include mixin.sp {
+      @include stacked;
+    }
+
+    :global(.affiliate-box-row) & {
+      @include stacked;
     }
   }
 
@@ -215,6 +232,11 @@ const fetchedAt = item
     width: calc(100% + 0.8rem);
     margin: 1.2rem 0 0;
     padding: 0;
+
+    :global(.affiliate-box-row) & {
+      margin-top: auto;
+      padding-top: 1.2rem;
+    }
   }
 
   .btnwrap {
@@ -229,6 +251,11 @@ const fetchedAt = item
     }
 
     @include mixin.sp {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+
+    :global(.affiliate-box-row) & {
       flex-basis: 100%;
       max-width: 100%;
     }

@@ -1,0 +1,26 @@
+---
+// 購入ボックスを横に 2 つ並べる枠（比較記事で、比べた銘柄を並べて出す用）。
+//   <AffiliateBoxRow>
+//     <AffiliateBox id="glenfiddich-12" title="グレンフィディック 12年" keyword="グレンフィディック 12年 700ml" />
+//     <AffiliateBox id="glenfiddich-15" title="グレンフィディック 15年 ソレラリザーブ" keyword="グレンフィディック 15年 700ml" />
+//   </AffiliateBoxRow>
+// PC は 2 列、SP は 1 列。3 つ以上入れると 3 つ目から次の段に折り返す。
+// 中の購入ボックスは幅が狭くなるので、AffiliateButtons 側で縦積みの並びに切り替えている（.affiliate-box-row の中かどうかで判定）
+---
+
+<div class="affiliate-box-row">
+  <slot />
+</div>
+
+<style lang="scss">
+  .affiliate-box-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+
+    @include mixin.sp {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.6rem;
+    }
+  }
+</style>
