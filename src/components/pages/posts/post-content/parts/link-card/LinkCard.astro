@@ -3,26 +3,53 @@
 //   <LinkCard slug="black-nikka-special" />
 //   <LinkCard slug="black-nikka-special" label="カフェグレーンについて" />
 // slug は src/content/review のファイル名。記事のサムネ・タイトル・説明文・産地を自動で出す。
+// 比較記事（src/content/compare）にリンクするときは、slug の代わりに compare を渡す。
+//   <LinkCard compare="glenfiddich-12-vs-15" label="15年との飲み比べ" />
 // 非公開（draft）や存在しない slug のときは何も出さない（ビルドは通す）。
 import { getEntry } from "astro:content";
 import { Image } from "astro:assets";
 import Flag from "@/components/flag/Flag.astro";
 import Stars from "@/components/stars/Stars.astro";
 import { getReviewPostLink } from "@/utils/review/slugs";
+import { getComparePostLink } from "@/utils/compare/slugs";
 import { getReviewCategoryData } from "@/utils/review/category";
 import { formatScore } from "@/utils/review/spec";
 
 interface Props {
-  slug: string;
+  /** レビュー記事の slug */
+  slug?: string;
+  /** 比較記事の slug（slug の代わりに指定する） */
+  compare?: string;
   /** カード上部の小さな見出し。既定は「関連記事」 */
   label?: string;
 }
 
-const { slug, label = "関連記事" } = Astro.props;
-const entry = await getEntry("review", slug);
+const { slug, compare, label = "関連記事" } = Astro.props;
+const entry = slug ? await getEntry("review", slug) : undefined;
 const post = entry && entry.data.draft === false ? entry : undefined;
 const categoryData = post ? getReviewCategoryData(post.data.category) : undefined;
+
+const compareEntry = compare ? await getEntry("compare", compare) : undefined;
+const comparePost = compareEntry && compareEntry.data.draft === false ? compareEntry : undefined;
 ---
+
+{
+  comparePost && (
+    <a href={getComparePostLink(comparePost.id)} class="card">
+      <span class="thumb">
+        <Image src={comparePost.data.image} alt="" width={480} widths={[240, 480]} sizes="240px" loading="lazy" />
+      </span>
+      <span class="body">
+        <span class="label">{label}</span>
+        <span class="title">{comparePost.data.title}</span>
+        <span class="desc">{comparePost.data.description}</span>
+        <span class="meta">
+          <span class="cat">飲み比べ</span>
+        </span>
+      </span>
+    </a>
+  )
+}
 
 {
   post && categoryData && (
