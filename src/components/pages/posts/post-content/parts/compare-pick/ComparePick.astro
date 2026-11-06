@@ -1,0 +1,125 @@
+---
+// 比較記事の「どれを選ぶべきか」で、条件の見出し（### …）の下に置く 1 件分。
+// 左に商品画像、右に「おすすめは○○です。」と理由の文を出す。枠や背景は付けない。
+//   ### ハイボールを中心に飲みたい
+//
+//   <ComparePick id="glenfiddich-12" name="12年">
+//     炭酸で割ると…
+//   </ComparePick>
+// id は楽天の商品キャッシュ（src/data/rakuten/items.json）のキー。画像は楽天の商品ページへのリンクにする
+// （楽天の商品画像はリンクとセットで使う決まり）。画像が無いときは文だけ出す。
+import { getEntry } from "astro:content";
+import { getRakutenItem } from "@/utils/review/rakuten";
+
+interface Props {
+  id: string;
+  /** おすすめの銘柄の短い名前（例: "12年"） */
+  name: string;
+}
+
+const { id, name } = Astro.props;
+
+const item = getRakutenItem(id);
+const href = item?.affiliateUrl ?? item?.itemUrl;
+const review = await getEntry("review", id);
+const productName = review?.data.name ?? name;
+const hasImage = Boolean(item?.imageUrl && href);
+---
+
+<div class:list={["pick", { "no-image": !hasImage }]}>
+  {
+    hasImage && (
+      <a class="image" href={href} target="_blank" rel="nofollow sponsored noopener" data-aff-shop="rakuten" data-aff-item={id} data-aff-part="pick">
+        <img src={item?.imageUrl} alt={productName} width="120" height="120" loading="lazy" decoding="async" />
+        <span class="shop">楽天市場で見る</span>
+      </a>
+    )
+  }
+  <p class="answer">おすすめは<strong>{name}</strong>です。</p>
+  <div class="reason">
+    <slot />
+  </div>
+</div>
+
+<style lang="scss">
+  .pick {
+    display: grid;
+    grid-template-areas:
+      "img answer"
+      "img reason";
+    grid-template-columns: 11rem minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    gap: 0.6rem 2.4rem;
+
+    // スマホでは理由の文を画像の下まで広げて、1 行が短くなりすぎないようにする
+    @include mixin.sp {
+      grid-template-areas:
+        "img answer"
+        "reason reason";
+      grid-template-columns: 8rem minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      align-items: center;
+      gap: 1.2rem 1.6rem;
+    }
+
+    &.no-image {
+      grid-template-areas:
+        "answer"
+        "reason";
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .image {
+    grid-area: img;
+    align-self: start;
+    display: block;
+    text-align: center;
+    transition: opacity 0.2s;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1;
+      object-fit: contain;
+    }
+
+    @include mixin.hover {
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .shop {
+    display: block;
+    margin-top: 0.4rem;
+    color: var.$c-text-gray;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    letter-spacing: 0;
+    white-space: nowrap;
+    text-decoration: underline;
+
+    @include mixin.sp {
+      font-size: 1rem;
+    }
+  }
+
+  .answer {
+    grid-area: answer;
+    margin: 0 !important;
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+
+  .reason {
+    grid-area: reason;
+    min-width: 0;
+
+    :global(p + p) {
+      margin-top: 1em;
+    }
+  }
+</style>

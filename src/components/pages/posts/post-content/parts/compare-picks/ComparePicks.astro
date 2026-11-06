@@ -1,23 +1,14 @@
 ---
-// 比較記事の「どれを選ぶべきか」。条件ごとに 1 枚のカードで、左に商品画像、右に「おすすめの銘柄・条件・理由」を出す。
+// 比較記事の「タイプ別おすすめ」。ProsCons と同じ 1 枚のカードに、銘柄ごとの段を破線で区切って並べる。
 //   <ComparePicks
 //     items={[
-//       { id: "glenfiddich-12", name: "12年", type: "ハイボールを中心に飲みたい", reason: "炭酸で割ると…" },
+//       { type: "安くスモーキーなハイボールを飲みたい", name: "ファインオールド", reason: "約1,200円で煙の香りまで楽しめる。" },
 //     ]}
 //   />
-// id は楽天の商品キャッシュ（src/data/rakuten/items.json）のキー。画像は楽天の商品ページへのリンクにする
-// （楽天の商品画像はリンクとセットで使う決まり）。id が無い、または画像が無いときは画像なしで出す。
-// 銘柄ラベルの色は、items に出てきた順に 1 本目・2 本目・3 本目で分ける。
-import { getEntry } from "astro:content";
-import { getRakutenItem } from "@/utils/review/rakuten";
-
 interface Item {
-  /** 条件（例: "ハイボールを中心に飲みたい"） */
   type: string;
-  /** おすすめの銘柄の短い名前（例: "12年"） */
   name: string;
   reason: string;
-  id?: string;
 }
 
 interface Props {
@@ -25,170 +16,63 @@ interface Props {
 }
 
 const { items } = Astro.props;
-
-const names = [...new Set(items.map((item) => item.name))];
-
-const picks = await Promise.all(
-  items.map(async (item) => {
-    const rakuten = item.id ? getRakutenItem(item.id) : undefined;
-    const review = item.id ? await getEntry("review", item.id) : undefined;
-    return {
-      ...item,
-      tone: (names.indexOf(item.name) % 3) + 1,
-      imageUrl: rakuten?.imageUrl,
-      href: rakuten?.affiliateUrl ?? rakuten?.itemUrl,
-      productName: review?.data.name ?? item.name,
-    };
-  }),
-);
 ---
 
 <div class="picks">
   {
-    picks.map((pick) => (
-      <section class:list={["pick", `tone-${pick.tone}`, { "no-image": !(pick.imageUrl && pick.href) }]}>
-        {pick.imageUrl && pick.href && (
-          <a
-            class="image"
-            href={pick.href}
-            target="_blank"
-            rel="nofollow sponsored noopener"
-            data-aff-shop="rakuten"
-            data-aff-item={pick.id}
-            data-aff-part="pick"
-          >
-            <img src={pick.imageUrl} alt={`${pick.productName}を楽天市場で見る`} width="120" height="120" loading="lazy" decoding="async" />
-          </a>
-        )}
-        <div class="head">
-          <p class="name">{pick.name}がおすすめ</p>
-          <h3 class="type">{pick.type}</h3>
-        </div>
-        <p class="reason">{pick.reason}</p>
+    items.map((item) => (
+      <section class="pick">
+        <h4 class="name">{item.name}</h4>
+        <p class="type">{item.type}人に</p>
+        <p class="reason">{item.reason}</p>
       </section>
     ))
   }
 </div>
 
 <style lang="scss">
-  // 銘柄ラベルの色（1 本目・2 本目・3 本目）
-  $c-tone-1: #4f7f2a;
-  $c-tone-2: var.$c-main;
-  $c-tone-3: #3f6f9f;
-
   .picks {
-    display: flex;
-    flex-direction: column;
-    gap: 1.6rem;
-
-    @include mixin.sp {
-      gap: 1.2rem;
-    }
-  }
-
-  .pick {
-    display: grid;
-    grid-template-areas:
-      "img head"
-      "img reason";
-    grid-template-columns: 10rem minmax(0, 1fr);
-    grid-template-rows: auto 1fr;
-    gap: 0.8rem 2rem;
-    padding: 2rem;
     border: 0.1rem solid var.$c-line;
     border-radius: 0.8rem;
-    background-color: var.$c-white;
+    background-color: #fcfcfc;
+    padding: 2rem 2.2rem;
     font-size: 1.5rem;
     line-height: 1.9;
 
-    // スマホでは理由の文を画像の下まで広げて、1 行が短くなりすぎないようにする
     @include mixin.sp {
-      grid-template-areas:
-        "img head"
-        "reason reason";
-      grid-template-columns: 7.2rem minmax(0, 1fr);
-      grid-template-rows: auto auto;
-      align-items: center;
-      gap: 1.2rem 1.4rem;
       padding: 1.6rem;
       font-size: 1.4rem;
     }
-
-    &.no-image {
-      grid-template-areas:
-        "head"
-        "reason";
-      grid-template-columns: minmax(0, 1fr);
-    }
   }
 
-  .image {
-    grid-area: img;
-    align-self: start;
-    display: block;
-    transition: opacity 0.2s;
-
-    img {
-      display: block;
-      width: 100%;
-      height: auto;
-      aspect-ratio: 1;
-      object-fit: contain;
-    }
-
-    @include mixin.hover {
-      &:hover {
-        opacity: 0.8;
-      }
-    }
+  .pick + .pick {
+    margin-top: 1.8rem;
+    padding-top: 1.8rem;
+    border-top: 0.1rem dashed var.$c-line;
   }
 
-  .head {
-    grid-area: head;
-    min-width: 0;
-  }
-
+  // 銘柄名はピル型ラベル（本文の h4 スタイルは打ち消す）
   .name {
-    display: inline-block;
+    display: inline-block !important;
     margin: 0 !important;
-    padding: 0.2rem 1.2rem;
+    padding: 0.3rem 1.4rem !important;
+    border: none !important;
     border-radius: 999px;
+    background-color: var.$c-main;
     color: var.$c-white;
-    font-size: 1.3rem;
+    font-size: 1.3rem !important;
     font-weight: bold;
     letter-spacing: 0.06em;
-    line-height: 1.6;
-
-    .tone-1 & {
-      background-color: $c-tone-1;
-    }
-
-    .tone-2 & {
-      background-color: $c-tone-2;
-    }
-
-    .tone-3 & {
-      background-color: $c-tone-3;
-    }
+    line-height: 1.6 !important;
   }
 
-  // 条件は見出し（本文の h3 スタイルは打ち消す）
   .type {
-    margin: 0.6rem 0 0 !important;
-    padding: 0 !important;
-    border: none !important;
-    font-size: 1.8rem !important;
+    margin: 0.8rem 0 0 !important;
     font-weight: bold;
-    line-height: 1.5 !important;
-
-    @include mixin.sp {
-      font-size: 1.6rem !important;
-    }
   }
 
   .reason {
-    grid-area: reason;
-    margin: 0 !important;
+    margin: 0.2rem 0 0 !important;
     color: var.$c-text;
   }
 </style>

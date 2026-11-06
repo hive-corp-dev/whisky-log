@@ -23,6 +23,7 @@ import Badge from '@/components/pages/posts/post-content/parts/badge/Badge.astro
 import CompareTable from '@/components/pages/posts/post-content/parts/compare-table/CompareTable.astro';
 import CompareMatrix from '@/components/pages/posts/post-content/parts/compare-matrix/CompareMatrix.astro';
 import ComparePicks from '@/components/pages/posts/post-content/parts/compare-picks/ComparePicks.astro';
+import ComparePick from '@/components/pages/posts/post-content/parts/compare-pick/ComparePick.astro';
 import Faq from '@/components/pages/posts/post-content/parts/faq/Faq.astro';
 import YouTube from '@/components/pages/posts/post-content/parts/youtube/YouTube.astro';
 import Verdict from '@/components/pages/posts/post-content/parts/verdict/Verdict.astro';
@@ -78,6 +79,7 @@ const tocItems = headings.filter((h) => h.depth === 2).map((h) => ({ id: h.slug,
       CompareTable,
       CompareMatrix,
       ComparePicks,
+      ComparePick,
       Faq,
       YouTube,
     }}
