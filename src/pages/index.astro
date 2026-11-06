@@ -3,17 +3,24 @@ import Layout from '@/layouts/Layout.astro';
 import Container from '@/components/container/Container.astro';
 import SectionHeading from '@/components/section-heading/SectionHeading.astro';
 import ReviewPostList from '@/components/pages/review/ReviewPostList.astro';
+import ComparePostList from '@/components/pages/compare/ComparePostList.astro';
 import Flag from '@/components/flag/Flag.astro';
 import { getCollection } from 'astro:content';
 import { getSortedReviewPosts } from '@/utils/review/posts';
 import { reviewCategories } from '@/data/review/category';
 import { reviewTags } from '@/data/review/tag';
 import { getReviewCategoryLink, getReviewTagLink } from '@/utils/review/slugs';
+import { getComparePosts } from '@/utils/compare/posts';
+import { COMPARE_LIST_LINK } from '@/utils/compare/slugs';
 import { SITE_NAME, SITE_NAME_JA, SITE_URL, SITE_DESCRIPTION } from '@/data/siteData';
 
 const reviewPosts = await getCollection('review', ({ data }) => data.draft === false);
 const sortedPosts = getSortedReviewPosts(reviewPosts);
 const latest = sortedPosts.slice(0, 12);
+
+// 比較記事は新着 3 本だけ出す。公開中の記事が無ければセクションごと出さない
+const comparePosts = await getComparePosts();
+const latestCompare = comparePosts.slice(0, 3);
 
 // 記事があるカテゴリだけ、本数つきで出す
 const regions = reviewCategories
@@ -57,6 +64,20 @@ const websiteLd = {
       </div>
     </Container>
   </section>
+
+  {
+    latestCompare.length > 0 && (
+      <section class="section compare" id="compare">
+        <Container>
+          <div class="section-head">
+            <SectionHeading ja="飲み比べ" />
+            <a href={COMPARE_LIST_LINK} class="more more-compare">すべての飲み比べ（{comparePosts.length}本）</a>
+          </div>
+          <ComparePostList comparePosts={latestCompare} />
+        </Container>
+      </section>
+    )
+  }
 
   <section class="section regions" id="regions">
     <Container>
@@ -130,6 +151,13 @@ const websiteLd = {
     }
   }
 
+  // 飲み比べは下にボタンを置かないので、スマホでも見出し横のリンクを残す
+  .more-compare {
+    @include mixin.sp {
+      display: block;
+    }
+  }
+
   .section-foot {
     margin-top: 4rem;
     text-align: center;
@@ -153,6 +181,7 @@ const websiteLd = {
     }
   }
 
+  .compare,
   .regions {
     padding-top: 0;
   }

@@ -1,0 +1,45 @@
+---
+// 比較記事のカード一覧。列の組み方は ReviewPostList とそろえる
+import type { CollectionEntry } from "astro:content";
+import ComparePostCard from "@/components/pages/compare/ComparePostCard.astro";
+
+interface Props {
+  comparePosts: CollectionEntry<"compare">[];
+}
+
+const { comparePosts } = Astro.props;
+---
+
+<ul class="list">
+  {
+    comparePosts.map((comparePost) => (
+      <li class="item">
+        <ComparePostCard article={comparePost} />
+      </li>
+    ))
+  }
+</ul>
+
+<style lang="scss">
+  .list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.8rem 2.4rem;
+    margin-top: 3.2rem;
+
+    @include mixin.tab {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @include mixin.sp {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2.4rem;
+      margin-top: 2.4rem;
+    }
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+  }
+</style>

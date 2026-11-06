@@ -8,10 +8,12 @@ import ComparePostHead from "@/components/pages/compare/ComparePostHead.astro";
 import CompareContent from "@/components/pages/compare/CompareContent.astro";
 import ReviewPostList from "@/components/pages/review/ReviewPostList.astro";
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb.astro";
+import { getComparePosts } from "@/utils/compare/posts";
+import { COMPARE_LIST_LINK } from "@/utils/compare/slugs";
 import { SITE_URL } from "@/data/siteData";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("compare", ({ data }) => data.draft === false);
+  const posts = await getComparePosts();
   const reviews = await getCollection("review", ({ data }) => data.draft === false);
 
   return posts.map((post) => {
@@ -26,8 +28,7 @@ export async function getStaticPaths() {
 const { post, related } = Astro.props;
 const { title, description, image, publishedAt, updatedAt } = post.data;
 
-// 一覧ページ（/compare/）はまだ無いので、パンくずの「飲み比べ」はリンクなし
-const breadcrumb = [{ label: "ホーム", href: "/" }, { label: "飲み比べ" }, { label: title }];
+const breadcrumb = [{ label: "ホーム", href: "/" }, { label: "飲み比べ", href: COMPARE_LIST_LINK }, { label: title }];
 
 const ogImageAsset = await getImage({ src: image, width: 1200, format: "jpg" });
 const ogImage = Astro.site ? new URL(ogImageAsset.src, Astro.site).toString() : undefined;

@@ -1,0 +1,128 @@
+---
+// 比較記事のカード。見た目は ReviewPostCard とそろえ、産地の代わりに「飲み比べ」、★の代わりに比較した銘柄名を出す
+import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
+import { Image } from "astro:assets";
+import { getComparePostLink } from "@/utils/compare/slugs";
+import { formatDate, convertToJST } from "@/utils/date/date";
+
+interface Props {
+  article: CollectionEntry<"compare">;
+}
+
+const { article } = Astro.props;
+
+const { id } = article;
+const { title, image, publishedAt, bottles, draft } = article.data;
+
+// レビュー記事がまだ無い銘柄は出さない
+const bottleNames = (await Promise.all(bottles.map((slug) => getEntry("review", slug))))
+  .map((review) => review?.data.name)
+  .filter((name): name is string => Boolean(name));
+---
+
+<a href={getComparePostLink(id)} class="card">
+  <div class="thumb">
+    <Image src={image} alt={title} width={800} widths={[400, 800]} sizes="(max-width: 768px) 100vw, 400px" loading="lazy" />
+    <div class="cat">飲み比べ</div>
+    {/* 下書きは開発サーバーでしか一覧に出ない */}
+    {draft && <div class="draft">下書き</div>}
+  </div>
+  <div class="body">
+    <h2 class="title">{title}</h2>
+    {bottleNames.length > 0 && <p class="bottles">{bottleNames.join(" / ")}</p>}
+    <div class="meta">
+      <time datetime={convertToJST(publishedAt)} class="date">{formatDate(publishedAt)}</time>
+    </div>
+  </div>
+</a>
+
+<style lang="scss">
+  .card {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: var.$c-white;
+    border: 0.1rem solid var.$c-line;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+
+    @include mixin.hover {
+      &:hover {
+        box-shadow: 0 0.6rem 1.6rem rgba(var.$c-text, 0.1);
+
+        .thumb img {
+          transform: scale(1.04);
+        }
+      }
+    }
+  }
+
+  .thumb {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: var.$c-bg;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+  }
+
+  .cat,
+  .draft {
+    position: absolute;
+    top: 0.8rem;
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+
+  .cat {
+    left: 0.8rem;
+    background-color: var.$c-main;
+  }
+
+  .draft {
+    right: 0.8rem;
+    background-color: #303030;
+  }
+
+  .body {
+    padding: 1.4rem 1.6rem 1.6rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.6;
+  }
+
+  .bottles {
+    margin-top: 0.6rem;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var.$c-text-gray;
+  }
+
+  .meta {
+    margin-top: auto;
+    padding-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .date {
+    font-size: 1.1rem;
+    color: var.$c-text-gray;
+  }
+</style>

@@ -1,0 +1,108 @@
+---
+// 比較記事の一覧（/compare/）。公開中の記事が 0 本のあいだは、空の一覧を公開しないようにページ自体を作らない
+import Layout from "@/layouts/Layout.astro";
+import SectionHeading from "@/components/section-heading/SectionHeading.astro";
+import ComparePostList from "@/components/pages/compare/ComparePostList.astro";
+import ReviewListSidebar from "@/components/sidebar/ReviewListSidebar.astro";
+import Breadcrumb from "@/components/breadcrumb/Breadcrumb.astro";
+import { getComparePosts } from "@/utils/compare/posts";
+import { SITE_URL } from "@/data/siteData";
+
+export async function getStaticPaths() {
+  const posts = await getComparePosts();
+  return posts.length > 0 ? [{ params: { page: undefined }, props: { posts } }] : [];
+}
+
+const { posts } = Astro.props;
+
+const breadcrumb = [{ label: "ホーム", href: "/" }, { label: "飲み比べ" }];
+
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: breadcrumb.map((item, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, SITE_URL).toString() } : {}),
+  })),
+};
+---
+
+<Layout title="ウイスキーの飲み比べ一覧" description="同じブランドや近い価格帯のウイスキーを、ストレート・ロック・ハイボールで飲み比べた記事の一覧です。">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+
+  <div class="content">
+    <Breadcrumb items={breadcrumb} />
+    <div class="heading">
+      <SectionHeading ja="飲み比べ一覧" tag="h1" />
+    </div>
+    <div class="columns">
+      <div class="primary">
+        <ComparePostList comparePosts={posts} />
+      </div>
+      <ReviewListSidebar />
+    </div>
+  </div>
+</Layout>
+
+<style lang="scss">
+  .content {
+    max-width: 120rem;
+    width: 100%;
+    margin: 0 auto;
+    padding: 6.4rem 4rem 8rem;
+
+    @include mixin.sp {
+      padding: 2.4rem 1rem 6.4rem;
+      --breadcrumb-bleed: 1rem;
+    }
+  }
+
+  .heading {
+    margin-top: 2.4rem;
+
+    @include mixin.sp {
+      margin-top: 1.6rem;
+    }
+  }
+
+  .columns {
+    display: flex;
+    align-items: flex-start;
+    gap: 4rem;
+    margin-top: 3.2rem;
+
+    @include mixin.tab {
+      flex-direction: column;
+      margin-top: 0;
+    }
+  }
+
+  .primary {
+    flex-grow: 1;
+    min-width: 0;
+
+    @include mixin.tab {
+      width: 100%;
+    }
+
+    // サイドバーがあるぶん幅が狭いので、PC では 2 列にする（レビュー一覧とカード幅をそろえる）
+    :global(.list) {
+      margin-top: 0;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @include mixin.tab {
+      :global(.list) {
+        margin-top: 2.4rem;
+      }
+    }
+
+    @include mixin.sp {
+      :global(.list) {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  }
+</style>
