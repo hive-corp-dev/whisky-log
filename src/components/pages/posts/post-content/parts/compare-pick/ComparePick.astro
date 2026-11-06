@@ -1,19 +1,18 @@
 ---
 // 比較記事の「どれを選ぶべきか」で、条件の見出し（### …）の下に置く 1 件分。
-// 左に商品画像（生成りの枠つき）、右に「○○がおすすめ」と理由の文を出す。全体を囲む枠や背景は付けない。
+// 薄い琥珀の帯に「商品画像・おすすめ・銘柄名」を出し、その下に理由の文を普通の本文として出す。
 //   ### ハイボールを中心に飲みたい
 //
 //   <ComparePick id="glenfiddich-12" name="グレンフィディック12年">
 //     炭酸で割ると…
 //   </ComparePick>
-// id は楽天の商品キャッシュ（src/data/rakuten/items.json）のキー。画像は楽天の商品ページへのリンクにする
-// （楽天の商品画像はリンクとセットで使う決まり）。画像が無いときは文だけ出す。
-import { getEntry } from "astro:content";
+// id は楽天の商品キャッシュ（src/data/rakuten/items.json）のキー。帯全体を楽天の商品ページへのリンクにする
+// （楽天の商品画像はリンクとセットで使う決まり）。商品情報が無いときは、画像なし・リンクなしの帯になる。
 import { getRakutenItem } from "@/utils/review/rakuten";
 
 interface Props {
   id: string;
-  /** おすすめの銘柄名（例: "グレンフィディック12年"）。「○○がおすすめ」の形で出る */
+  /** おすすめの銘柄名（例: "グレンフィディック12年"） */
   name: string;
 }
 
@@ -21,74 +20,68 @@ const { id, name } = Astro.props;
 
 const item = getRakutenItem(id);
 const href = item?.affiliateUrl ?? item?.itemUrl;
-const review = await getEntry("review", id);
-const productName = review?.data.name ?? name;
-const hasImage = Boolean(item?.imageUrl && href);
+const hasLink = Boolean(item?.imageUrl && href);
+const Bar = hasLink ? "a" : "div";
+const linkAttrs = hasLink
+  ? {
+      href,
+      target: "_blank",
+      rel: "nofollow sponsored noopener",
+      "aria-label": `${name}を楽天市場で見る`,
+      "data-aff-shop": "rakuten",
+      "data-aff-item": id,
+      "data-aff-part": "pick",
+    }
+  : {};
 ---
 
-<div class:list={["pick", { "no-image": !hasImage }]}>
-  {
-    hasImage && (
-      <a class="image" href={href} target="_blank" rel="nofollow sponsored noopener" data-aff-shop="rakuten" data-aff-item={id} data-aff-part="pick">
-        <span class="frame">
-          <img src={item?.imageUrl} alt={productName} width="120" height="120" loading="lazy" decoding="async" />
+<div class="pick">
+  <Bar class:list={["bar", { "no-image": !hasLink }]} {...linkAttrs}>
+    {
+      hasLink && (
+        <span class="image">
+          <img src={item?.imageUrl} alt="" width="120" height="120" loading="lazy" decoding="async" />
         </span>
-        <span class="shop">楽天市場で見る</span>
-      </a>
-    )
-  }
-  <p class="answer"><strong>{name}</strong>がおすすめ</p>
+      )
+    }
+    <span class="text">
+      <span class="label">おすすめ</span>
+      <span class="name">{name}</span>
+    </span>
+  </Bar>
   <div class="reason">
     <slot />
   </div>
 </div>
 
 <style lang="scss">
-  .pick {
+  .bar {
     display: grid;
-    grid-template-areas:
-      "img answer"
-      "img reason";
-    grid-template-columns: 11rem minmax(0, 1fr);
-    grid-template-rows: auto 1fr;
-    gap: 0.6rem 2.4rem;
+    grid-template-columns: 7.2rem minmax(0, 1fr);
+    align-items: center;
+    gap: 2rem;
+    padding: 1.2rem 2.4rem 1.2rem 1.6rem;
+    border-radius: 0.8rem;
+    background-color: var.$c-main-light;
+    transition: opacity 0.2s;
 
-    // スマホでは理由の文を画像の下まで広げて、1 行が短くなりすぎないようにする
     @include mixin.sp {
-      grid-template-areas:
-        "img answer"
-        "reason reason";
-      grid-template-columns: 8rem minmax(0, 1fr);
-      grid-template-rows: auto auto;
-      align-items: center;
-      gap: 1.2rem 1.6rem;
+      grid-template-columns: 6.4rem minmax(0, 1fr);
+      gap: 1.4rem;
+      padding: 1rem 1.4rem 1rem 1rem;
     }
 
     &.no-image {
-      grid-template-areas:
-        "answer"
-        "reason";
       grid-template-columns: minmax(0, 1fr);
+      padding: 1.6rem 2.4rem;
+
+      @include mixin.sp {
+        padding: 1.2rem 1.6rem;
+      }
     }
   }
 
-  .image {
-    grid-area: img;
-    align-self: start;
-    display: block;
-    text-align: center;
-    transition: opacity 0.2s;
-
-    img {
-      display: block;
-      width: 100%;
-      height: auto;
-      aspect-ratio: 1;
-      object-fit: contain;
-      // 楽天の商品画像は白背景なので、乗算で枠の地色になじませる
-      mix-blend-mode: multiply;
-    }
-
+  a.bar {
     @include mixin.hover {
       &:hover {
         opacity: 0.8;
@@ -96,47 +89,46 @@ const hasImage = Boolean(item?.imageUrl && href);
     }
   }
 
-  // 画像の枠（生成りの地色 + 罫線）
-  .frame {
+  .image img {
     display: block;
-    padding: 0.8rem;
-    border: 0.1rem solid var.$c-line;
-    border-radius: 0.6rem;
-    background-color: var.$c-bg;
-
-    @include mixin.sp {
-      padding: 0.6rem;
-    }
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
+    // 楽天の商品画像は白背景なので、乗算で帯の地色になじませる
+    mix-blend-mode: multiply;
   }
 
-  .shop {
-    display: block;
-    margin-top: 0.4rem;
-    color: var.$c-text-gray;
-    font-size: 1.1rem;
-    line-height: 1.4;
-    letter-spacing: 0;
-    white-space: nowrap;
-    text-decoration: underline;
-
-    @include mixin.sp {
-      font-size: 1rem;
-    }
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
   }
 
-  .answer {
-    grid-area: answer;
-    margin: 0 !important;
-    font-size: 1.1em;
+  .label {
+    color: var.$c-main;
+    font-size: 1.2rem;
     font-weight: bold;
+    letter-spacing: 0.1em;
+    line-height: 1.4;
+  }
+
+  .name {
+    font-size: 2.2rem;
+    font-weight: bold;
+    line-height: 1.4;
+
+    @include mixin.sp {
+      font-size: 1.8rem;
+    }
   }
 
   .reason {
-    grid-area: reason;
-    min-width: 0;
+    margin-top: 1.5em;
 
     :global(p + p) {
-      margin-top: 1em;
+      margin-top: 1.5em;
     }
   }
 </style>
